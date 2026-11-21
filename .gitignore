@@ -1,0 +1,24 @@
+# Model weights and datasets are never committed
+models/
+datasets/
+*.gguf
+*.safetensors
+*.npz
+
+# Environments and caches
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+
+# Local scratch
+scratch/
+.DS_Store
+
+# Third-party source built locally
+third_party/
+
+# Local run output that is regenerated or noisy
+*.log
