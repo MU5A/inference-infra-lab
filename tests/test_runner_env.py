@@ -146,10 +146,19 @@ class TestEnvironment:
 
 
 class TestPreflight:
-    def quiet(self, monkeypatch, *, load=0.4, power="Now drawing from 'AC Power'", thermal=None):
+    def quiet(
+        self,
+        monkeypatch,
+        *,
+        load=0.4,
+        power="Now drawing from 'AC Power'",
+        thermal=None,
+        gpu=None,
+    ):
         monkeypatch.setattr(env.os, "cpu_count", lambda: 8)
         monkeypatch.setattr(env.os, "getloadavg", lambda: (load, load, load))
         monkeypatch.setattr(env, "power_source", lambda: power)
+        monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: gpu)
         monkeypatch.setattr(
             env,
             "thermal_state",
@@ -194,4 +203,109 @@ class TestPreflight:
         monkeypatch.setattr(env.os, "getloadavg", lambda: (0.1, 0.1, 0.1))
         monkeypatch.setattr(env, "power_source", lambda: None)
         monkeypatch.setattr(env, "thermal_state", lambda: None)
+        monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: None)
         assert env.preflight() == []
+
+
+IOREG = (
+    '"PerformanceStatistics" = {"Tiler Utilization %"=0,"Renderer Utilization %"=0,'
+    '"Device Utilization %"=@@,"SplitSceneCount"=0}'
+)
+
+
+class TestGpuUtilization:
+    def feed(self, monkeypatch, values):
+        readings = iter(IOREG.replace("@@", str(v)) for v in values)
+        monkeypatch.setattr(env, "_run", lambda *a, **k: next(readings))
+        monkeypatch.setattr(env.time, "sleep", lambda _s: None)
+
+    def test_peak_mean_and_sample_count_are_computed(self, monkeypatch):
+        self.feed(monkeypatch, [0, 51, 0, 0])
+        assert env.gpu_utilization(samples=4) == {"peak": 51, "mean": 12.75, "samples": 4}
+
+    def test_an_unreadable_gpu_is_none_not_zero(self, monkeypatch):
+        monkeypatch.setattr(env, "_run", lambda *a, **k: None)
+        assert env.gpu_utilization(samples=3) is None
+
+    def test_output_without_the_field_is_none(self, monkeypatch):
+        monkeypatch.setattr(env, "_run", lambda *a, **k: "something else entirely")
+        monkeypatch.setattr(env.time, "sleep", lambda _s: None)
+        assert env.gpu_utilization(samples=3) is None
+
+
+class TestGpuPreflight:
+    def quiet(self, monkeypatch, gpu):
+        monkeypatch.setattr(env.os, "cpu_count", lambda: 8)
+        monkeypatch.setattr(env.os, "getloadavg", lambda: (0.4, 0.4, 0.4))
+        monkeypatch.setattr(env, "power_source", lambda: "Now drawing from 'AC Power'")
+        monkeypatch.setattr(env, "thermal_state", lambda: "Note: No thermal warning level")
+        monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: gpu)
+
+    def test_a_brief_burst_above_the_peak_limit_is_refused(self, monkeypatch):
+        """Video playback: 51% in one sample, 0% in the rest. The load average cannot see this."""
+        self.quiet(monkeypatch, {"peak": 51, "mean": 2.6, "samples": 20})
+        assert any("GPU is busy" in p for p in env.preflight())
+
+    def test_a_steadily_busy_gpu_is_refused_even_without_a_high_peak(self, monkeypatch):
+        self.quiet(monkeypatch, {"peak": 20, "mean": 9.0, "samples": 20})
+        assert any("GPU is busy" in p for p in env.preflight())
+
+    def test_an_idle_gpu_passes(self, monkeypatch):
+        self.quiet(monkeypatch, {"peak": 4, "mean": 0.5, "samples": 20})
+        assert env.preflight() == []
+
+    def test_the_limits_are_inclusive_at_the_boundary(self, monkeypatch):
+        self.quiet(monkeypatch, {"peak": 25, "mean": 5.0, "samples": 20})
+        assert env.preflight() == []
+
+    def test_an_unreadable_gpu_does_not_block(self, monkeypatch):
+        self.quiet(monkeypatch, None)
+        assert env.preflight() == []
+
+
+class TestStability:
+    def runs(self, decode_rates, ttft=0.1):
+        out = []
+        for rate in decode_rates:
+            gap = 1 / rate
+            out.append(runner.metrics(scripted(ttft, [gap] * 10)))
+        return out
+
+    def test_repeatable_runs_are_stable(self):
+        summary = runner.summarize_runs(self.runs([150, 152, 148, 151, 149]))
+        assert summary["stable"] is True
+        assert summary["cv_decode"] < 0.02
+
+    def test_one_collapsed_run_makes_the_set_unstable(self):
+        """The real failure: decode fell from about 150 to 25 to 48 tokens/s mid-benchmark."""
+        summary = runner.summarize_runs(self.runs([149, 36, 48, 44, 25]))
+        assert summary["stable"] is False
+        assert summary["cv_decode"] > runner.MAX_DECODE_CV
+
+    def test_the_limit_is_five_percent_for_decode(self):
+        steady = runner.summarize_runs(self.runs([100, 105, 95]))
+        assert steady["cv_decode"] < 0.05 and steady["stable"] is True
+        loose = runner.summarize_runs(self.runs([100, 115, 85]))
+        assert loose["cv_decode"] > 0.05 and loose["stable"] is False
+
+    def test_a_noisy_time_to_first_token_alone_is_enough(self):
+        results = iter([scripted(t, [0.01] * 5) for t in (0.05, 0.10, 0.20)])
+        report = runner.run_bench(lambda p: next(results), {"p": "x"}, runs=3, warmup=0)
+        assert report["results"]["p"]["summary"]["stable"] is False
+        assert report["stable"] is False
+
+    def test_a_single_run_cannot_be_judged_and_is_not_called_unstable(self):
+        summary = runner.summarize_runs(self.runs([150]))
+        assert summary["cv_decode"] is None and summary["stable"] is True
+
+    def test_the_report_is_stable_only_if_every_prompt_is(self):
+        good = iter([scripted(0.1, [0.0066] * 10) for _ in range(3)])
+        bad = iter([scripted(t, [0.0066] * 10) for t in (0.05, 0.1, 0.3)])
+        sends = {"a": good, "b": bad}
+        calls = iter(["a", "a", "a", "b", "b", "b"])
+        report = runner.run_bench(
+            lambda p: next(sends[next(calls)]), {"a": "1", "b": "2"}, runs=3, warmup=0
+        )
+        assert report["results"]["a"]["summary"]["stable"] is True
+        assert report["results"]["b"]["summary"]["stable"] is False
+        assert report["stable"] is False

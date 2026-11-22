@@ -69,3 +69,27 @@ def test_summarize_accepts_any_iterable_and_empty_is_all_none():
     empty = summarize([])
     assert empty["n"] == 0
     assert all(empty[k] is None for k in ("median", "p95", "p99", "min", "max", "mean"))
+
+
+class TestCoefficientOfVariation:
+    def test_known_values(self):
+        from inferlab.stats import coefficient_of_variation
+
+        assert coefficient_of_variation([10, 10, 10]) == 0.0
+        assert coefficient_of_variation([8, 12]) == pytest.approx(0.2)  # stdev 2, mean 10
+
+    def test_it_matches_numpy_on_random_samples(self):
+        from inferlab.stats import coefficient_of_variation
+
+        rng = random.Random(5)
+        for _ in range(30):
+            values = [rng.uniform(1, 500) for _ in range(rng.randint(2, 40))]
+            expected = float(np.std(values) / np.mean(values))
+            assert coefficient_of_variation(values) == pytest.approx(expected, rel=1e-12)
+
+    def test_too_few_values_or_a_zero_mean_has_none(self):
+        from inferlab.stats import coefficient_of_variation
+
+        assert coefficient_of_variation([]) is None
+        assert coefficient_of_variation([7]) is None
+        assert coefficient_of_variation([-1, 1]) is None

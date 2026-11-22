@@ -12,6 +12,15 @@ from inferlab import env
 from inferlab.fakeserver import Behavior, FakeServer
 
 
+@pytest.fixture(autouse=True)
+def relaxed_stability(monkeypatch):
+    """These tests are about refusal and override logic. A two-event fake stream is too short to be
+    repeatable, so the stability limits are lifted here and tested on their own elsewhere."""
+    monkeypatch.setattr(cli.runner, "MAX_DECODE_CV", 1e9)
+    monkeypatch.setattr(cli.runner, "MAX_TTFT_CV", 1e9)
+    monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: None)  # no real ioreg sampling
+
+
 @pytest.fixture
 def argv(tmp_path, monkeypatch):
     prompts = tmp_path / "prompts.json"
@@ -75,3 +84,25 @@ def test_the_prompt_cache_stays_off_unless_asked(argv, monkeypatch):
         argv(server.url, "--warm-cache")
         cli.main()
         assert "cache_prompt" not in server.last_request
+
+
+def test_unstable_results_are_written_but_flagged_and_the_exit_status_says_so(
+    argv, monkeypatch, capsys
+):
+    monkeypatch.setattr(env, "preflight", lambda: [])
+    real = cli.runner.run_bench
+
+    def flaky(send, prompts, **kwargs):
+        report = real(send, prompts, **kwargs)
+        report["results"]["p"]["summary"]["stable"] = False
+        report["stable"] = False
+        return report
+
+    monkeypatch.setattr(cli.runner, "run_bench", flaky)
+    with FakeServer(Behavior(n_tokens=3, first_delay_s=0.01, interval_s=0.005)) as server:
+        (out,) = argv(server.url)
+        with pytest.raises(SystemExit) as exit_info:
+            cli.main()
+    assert exit_info.value.code == 4
+    assert "UNSTABLE" in capsys.readouterr().out
+    assert json.loads(out.read_text())["stable"] is False  # kept as evidence, marked unstable

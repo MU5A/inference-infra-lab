@@ -12,6 +12,7 @@ import platform
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 
@@ -37,10 +38,39 @@ def power_source() -> str | None:
     return text.splitlines()[0] if text else None
 
 
+_GPU_FIELD = re.compile(r'"Device Utilization %"=(\d+)')
+
+
+def gpu_utilization(samples: int = 20, interval_s: float = 0.1) -> dict | None:
+    """Apple GPU device utilization in percent, sampled over about samples x interval seconds.
+
+    Readable without privileges through ioreg. Video playback and window compositing use the GPU in
+    short bursts (51% in one sample, 0% in the next), so one reading proves nothing and the peak and
+    mean over a couple of seconds are returned. None means it could not be read.
+    """
+    readings: list[int] = []
+    for _ in range(samples):
+        out = _run(["ioreg", "-r", "-d", "1", "-w", "0", "-c", "AGXAccelerator"], timeout=3)
+        if out is None:
+            return None
+        match = _GPU_FIELD.search(out)
+        if match:
+            readings.append(int(match.group(1)))
+        time.sleep(interval_s)
+    if not readings:
+        return None
+    return {"peak": max(readings), "mean": sum(readings) / len(readings), "samples": len(readings)}
+
+
 _LIMIT = re.compile(r"(CPU_Speed_Limit|CPU_Scheduler_Limit)\s*=\s*(\d+)")
 
 
-def preflight(max_load_per_core: float = 0.5, require_ac: bool = True) -> list[str]:
+def preflight(
+    max_load_per_core: float = 0.5,
+    require_ac: bool = True,
+    max_gpu_peak: int = 25,
+    max_gpu_mean: float = 5.0,
+) -> list[str]:
     """Reasons this machine is not in a fit state to benchmark. An empty list means it is.
 
     A busy machine, a laptop on battery, or a throttled chip all change the numbers, so they are
@@ -60,6 +90,12 @@ def preflight(max_load_per_core: float = 0.5, require_ac: bool = True) -> list[s
     power = power_source()
     if require_ac and power and "Battery Power" in power:
         problems.append("running on battery power")
+    gpu = gpu_utilization()
+    if gpu and (gpu["peak"] > max_gpu_peak or gpu["mean"] > max_gpu_mean):
+        problems.append(
+            f"GPU is busy: peak {gpu['peak']}%, mean {gpu['mean']:.0f}% "
+            f"over {gpu['samples']} samples"
+        )
     thermal = thermal_state() or ""
     for name, value in _LIMIT.findall(thermal):
         if int(value) < 100:
@@ -107,6 +143,7 @@ def describe(model_path: Path | None = None, llama_dir: Path | None = None) -> d
             "load_average_1_5_15": [load1, load5, load15],
             "thermal": thermal_state(),
             "power": power_source(),
+            "gpu_utilization": gpu_utilization(samples=5),
         },
         "software": {
             "python": sys.version.split()[0],

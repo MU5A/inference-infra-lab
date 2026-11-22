@@ -27,6 +27,19 @@ def percentile(values: Sequence[float], q: float) -> float:
     return float(ordered[low] + (ordered[high] - ordered[low]) * (position - low))
 
 
+def coefficient_of_variation(values: Iterable[float]) -> float | None:
+    """Population standard deviation divided by the mean. None for fewer than two values or a
+    zero mean. It is the unit-free measure of how repeatable a set of runs is."""
+    data = [float(v) for v in values]
+    if len(data) < 2:
+        return None
+    mean = sum(data) / len(data)
+    if mean == 0:
+        return None
+    variance = sum((v - mean) ** 2 for v in data) / len(data)
+    return math.sqrt(variance) / abs(mean)
+
+
 def summarize(values: Iterable[float]) -> dict[str, float | int | None]:
     """Count, median, p95, p99, min, max and mean. An empty sample gives None for each statistic."""
     data = [float(v) for v in values]

@@ -104,6 +104,42 @@ MUTATIONS = [
         "if False:",
     ),
     (
+        "gpu: a busy GPU is never refused",
+        S / "env.py",
+        'if gpu and (gpu["peak"] > max_gpu_peak or gpu["mean"] > max_gpu_mean):',
+        "if False:",
+    ),
+    (
+        "gpu: the mean limit is ignored",
+        S / "env.py",
+        ' or gpu["mean"] > max_gpu_mean',
+        "",
+    ),
+    (
+        "stability: the decode limit is disabled",
+        S / "runner.py",
+        "MAX_DECODE_CV = 0.05",
+        "MAX_DECODE_CV = 1e9",
+    ),
+    (
+        "stability: the stable flag is always true",
+        S / "runner.py",
+        '        "stable": stable,',
+        '        "stable": True,',
+    ),
+    (
+        "cli: unstable results exit successfully",
+        S / "__main__.py",
+        'if not report["stable"]:',
+        "if False:",
+    ),
+    (
+        "stats: sample instead of population deviation",
+        S / "stats.py",
+        "variance = sum((v - mean) ** 2 for v in data) / len(data)",
+        "variance = sum((v - mean) ** 2 for v in data) / (len(data) - 1)",
+    ),
+    (
         "usage not captured",
         S / "client.py",
         '                if isinstance(event.get("usage"), dict):\n                    result.usage = event["usage"]\n',

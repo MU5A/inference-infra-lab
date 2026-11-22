@@ -10,7 +10,13 @@ import httpx
 
 from . import env
 from .client import StreamResult, metrics, stream_chat
-from .stats import summarize
+from .stats import coefficient_of_variation, summarize
+
+# Runs this repeatable are trusted. The Day 1 baseline, taken on a quiet machine, had decode
+# variation of 1.8 to 3.3% and TTFT variation under 1.7%. A run disturbed by another process
+# showed 5 to 7% and, in the worst case, 83%.
+MAX_DECODE_CV = 0.05
+MAX_TTFT_CV = 0.10
 
 Send = Callable[[dict], StreamResult]
 
@@ -36,7 +42,15 @@ def summarize_runs(runs: list[dict]) -> dict:
     """Pool the per-request metrics of one prompt into the numbers worth reporting."""
     ok = [r for r in runs if r["error"] is None and r["ttft_s"] is not None]
     pooled_itl = [gap for r in ok for gap in r["itl_s"]]
+    cv_ttft = coefficient_of_variation(r["ttft_s"] for r in ok)
+    cv_decode = coefficient_of_variation(r["decode_tps"] for r in ok if r["decode_tps"] is not None)
+    stable = (cv_ttft is None or cv_ttft <= MAX_TTFT_CV) and (
+        cv_decode is None or cv_decode <= MAX_DECODE_CV
+    )
     return {
+        "stable": stable,
+        "cv_ttft": cv_ttft,
+        "cv_decode": cv_decode,
         "requests": len(runs),
         "failed": len(runs) - len(ok),
         "prompt_tokens": sorted({r["prompt_tokens"] for r in ok if r["prompt_tokens"] is not None}),
@@ -78,6 +92,8 @@ def run_bench(
         measured = [metrics(send(payload)) for _ in range(runs)]
         per_prompt[name] = {"requests": measured, "summary": summarize_runs(measured)}
     return {
+        "stable": all(block["summary"]["stable"] for block in per_prompt.values()),
+        "stability_limits": {"max_decode_cv": MAX_DECODE_CV, "max_ttft_cv": MAX_TTFT_CV},
         "settings": {
             "runs": runs,
             "warmup": warmup,

@@ -63,7 +63,15 @@ def main() -> None:
         print(
             f"{name:8} prompt {s['prompt_tokens']}  ttft median {s['ttft_s']['median']}  "
             f"decode median {s['decode_tps']['median']}  failed {s['failed']}"
+            + ("" if s["stable"] else "  UNSTABLE")
         )
+    if not report["stable"]:
+        print(
+            "the runs were not repeatable enough to trust: another process probably interfered. "
+            "The results were written, marked unstable. Do not cite them.",
+            file=sys.stderr,
+        )
+        sys.exit(4)
 
 
 if __name__ == "__main__":

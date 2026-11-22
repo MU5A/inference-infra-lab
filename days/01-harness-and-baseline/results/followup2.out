@@ -1,0 +1,5 @@
+== step3
+preflight: clean
+== step2
+preflight: ['1-minute load average 5.4 is above 4.0 (0.5 per core)']
+step2 did not run or failed

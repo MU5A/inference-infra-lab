@@ -1,0 +1,31 @@
+{
+  "preflight_problems": [
+    "1-minute load average 5.4 is above 4.0 (0.5 per core)"
+  ],
+  "environment": {
+    "machine": {
+      "chip": "Apple M3",
+      "arch": "arm64",
+      "memory_gb": 16.0,
+      "cpu_cores": 8,
+      "os": "macOS-26.2-arm64-arm-64bit"
+    },
+    "conditions": {
+      "load_average_1_5_15": [
+        5.43896484375,
+        5.1005859375,
+        6.294921875
+      ],
+      "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+      "power": "Now drawing from 'AC Power'"
+    },
+    "software": {
+      "python": "3.12.8",
+      "llama_cpp_commit": null
+    },
+    "model": {
+      "file": null,
+      "sha256": null
+    }
+  }
+}

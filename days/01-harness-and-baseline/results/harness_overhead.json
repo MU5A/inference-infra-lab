@@ -1,0 +1,78 @@
+{
+  "runs": [
+    {
+      "events": 3450,
+      "overhead_us": {
+        "n": 3450,
+        "median": 354.85400000000004,
+        "p95": 6497.323250000003,
+        "p99": 11735.203750000017,
+        "min": 43.334,
+        "max": 36162.875,
+        "mean": 1294.990016521739
+      },
+      "events_that_appeared_to_arrive_early": 0
+    },
+    {
+      "events": 3450,
+      "overhead_us": {
+        "n": 3450,
+        "median": 324.6875,
+        "p95": 3012.358150000001,
+        "p99": 11316.44625000003,
+        "min": 26.958,
+        "max": 28201.417,
+        "mean": 787.1283660869565
+      },
+      "events_that_appeared_to_arrive_early": 0
+    },
+    {
+      "events": 3450,
+      "overhead_us": {
+        "n": 3450,
+        "median": 636.3544999999999,
+        "p95": 10777.076900000002,
+        "p99": 18176.635170000027,
+        "min": 96.084,
+        "max": 88433.917,
+        "mean": 2412.511118550725
+      },
+      "events_that_appeared_to_arrive_early": 0
+    }
+  ],
+  "requests_per_run": 150,
+  "client_cpu_us_per_event_profiled": 609.545652173913,
+  "clock": {
+    "implementation": "mach_absolute_time()",
+    "resolution_s": 4.166666666666667e-08,
+    "monotonic": true
+  },
+  "preflight_problems_overridden": [],
+  "environment": {
+    "machine": {
+      "chip": "Apple M3",
+      "arch": "arm64",
+      "memory_gb": 16.0,
+      "cpu_cores": 8,
+      "os": "macOS-26.2-arm64-arm-64bit"
+    },
+    "conditions": {
+      "load_average_1_5_15": [
+        6.40234375,
+        5.70849609375,
+        6.3291015625
+      ],
+      "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+      "power": "Now drawing from 'AC Power'"
+    },
+    "software": {
+      "python": "3.12.8",
+      "llama_cpp_commit": null
+    },
+    "model": {
+      "file": null,
+      "sha256": null
+    }
+  },
+  "note": "Upper bound on the harness's own error: the send timestamp precedes server serialization and the write, so server-side work is included."
+}

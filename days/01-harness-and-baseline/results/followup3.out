@@ -1,0 +1,6 @@
+== step2
+preflight: clean
+run 1: events 3450  overhead us  median 355  p95 6497  p99 11735  max 36163  early 0
+run 2: events 3450  overhead us  median 325  p95 3012  p99 11316  max 28201  early 0
+run 3: events 3450  overhead us  median 636  p95 10777  p99 18177  max 88434  early 0
+client CPU 610 us/event (profiled)  clock mach_absolute_time()
