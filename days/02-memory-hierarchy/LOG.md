@@ -95,10 +95,41 @@ pre-flight now refuses below 30% free memory, and every results file records swa
 alone is not refused, since old pages can sit in swap without causing contention now. Tested, with
 two mutations.
 
-## 8. Not done yet
+## 8. The measurement run, and four attempts at one group
+
+The C microbenchmarks were run through `scripts/day02_run.py` after you said the machine was quiet.
+The pre-flight was not clean at that moment (the GPU was 8% busy on average, with VLC still running),
+so the runner waited, then proceeded when it passed. Free disk was 5.0 to 5.6 GiB, below the 8 GB
+rule, and I ran on your instruction.
+
+- **First run.** Bandwidth was stable. Latency on the performance cores was stable, with the same
+  four plateaus in all three sweeps. The efficiency-core latency sweep was not (6, 4 and 7 plateaus).
+  Compute was not stable: 19 of 24 entries failed, with every variant slower by about the same factor
+  in each later run at n=128 to 512. The cold read was stable but had no control (see below).
+  I looked at what was running: another Claude session was compiling and running tests.
+- **A sampler for neighbours.** A pre-flight at the start cannot see a build that starts mid-run.
+  `Watch` now records the busiest other processes every two seconds during each group, with names
+  only. It attributes interference. It does not decide stability, which is still the run-to-run
+  variation.
+- **Attempt 2 of compute** (also the redesigned cold-read, run together): 19 of 24 compute entries
+  were stable and the 5 unstable ones were all n=128. At 128 x 128 a call takes microseconds, so
+  timing one call measured the timer. A flaw in my benchmark, not in the machine.
+- **Attempt 3**: each timed sample now repeats the call until it lasts at least 20 ms. Seven entries
+  were unstable and the sampler showed `compile` at 96% and `go` at 38% CPU. Interference can only
+  slow a sample down, so a single bad sample in a best-of-3 spoils the run.
+- **Attempt 4**: best of 8 samples per run. Stable on all 24 entries, with other processes peaking at
+  47% CPU. I changed the benchmark after each failure, so all four attempts stay in the table.
+
+The cold-read group was redesigned after the first run showed a memory-mapped touch at 0.07 GB/s,
+about 100 times slower than the cached file. That could be the disk or the access pattern, and there
+was no cold sequential read to tell them apart. The redesign gives each way (touch, sequential read,
+WILLNEED, SEQUENTIAL) its own freshly made cold copy and has predictions written before the run.
+One prediction failed (see the README).
+
+## 9. What is left
 
 The measurement run (`scripts/day02_run.py`) has not been taken. The pre-flight refused it: the GPU
 was 29% busy and the 1-minute load average was 5.3. Free disk was also 5.7 GiB, below the 8 GB the
 runbook requires. Nothing in `README.md` or the evidence ledger claims a Day 2 result.
-The C microbenchmark run is the only part of Day 2 outstanding. It needs a quiet machine: no video, no
-other heavy session, plugged in, and Docker stopped.
+Nothing in Day 2 is outstanding except what the README lists under "Not claimed". Day 1's three
+open measurements are still to be done.

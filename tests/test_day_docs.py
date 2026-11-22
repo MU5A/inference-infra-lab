@@ -34,3 +34,14 @@ def test_day_two_readme_contains_the_generated_linux_tables_verbatim():
         "days/02-memory-hierarchy/README.md differs from results/linux_table.md. "
         "Regenerate with: python scripts/day02_report.py"
     )
+
+
+@pytest.mark.skipif(
+    not (DAY2 / "results" / "microbench_table.md").exists(), reason="no microbench results"
+)
+def test_day_two_readme_contains_the_generated_microbench_tables_verbatim():
+    generated = (DAY2 / "results" / "microbench_table.md").read_text().strip()
+    assert generated in (DAY2 / "README.md").read_text(), (
+        "days/02-memory-hierarchy/README.md differs from results/microbench_table.md. "
+        "Regenerate with: python scripts/day02_report.py"
+    )

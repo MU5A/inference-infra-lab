@@ -29,6 +29,10 @@ BIN = ROOT / "microbench" / "build"
 OUT = ROOT / "days" / "02-memory-hierarchy" / "results"
 MODEL = ROOT / "models" / "qwen2.5-0.5b-instruct-q4_k_m.gguf"
 KERNELS = ("copy", "scale", "add", "triad")
+# Samples per variant within one process run, of which the fastest is kept. Interference can only
+# slow a sample down, so more samples make the best one robust to a neighbour that appears for a
+# few seconds. Raised from 3 to 8 after two runs were each spoiled by another process's builds.
+COMPUTE_REPS = 8
 
 
 def run_json(args: list, extra_env: dict | None = None) -> dict:
@@ -130,7 +134,7 @@ def latency(runs: int) -> dict:
 
 def compute(runs: int) -> dict:
     def collect(extra_env=None, variants=None):
-        args = [BIN / "matmul", "--sizes", "128,256,512,1024", "--reps", 3]
+        args = [BIN / "matmul", "--sizes", "128,256,512,1024", "--reps", COMPUTE_REPS]
         if variants:
             args += ["--variants", variants]
         sweeps = []

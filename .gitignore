@@ -22,3 +22,6 @@ third_party/
 
 # Local run output that is regenerated or noisy
 *.log
+
+# Console output of measurement runs, which is regenerated
+*.out
