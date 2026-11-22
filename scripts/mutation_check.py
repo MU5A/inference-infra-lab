@@ -15,6 +15,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 S = ROOT / "src" / "inferlab"
+C = ROOT / "microbench"
 
 MUTATIONS = [
     (
@@ -138,6 +139,72 @@ MUTATIONS = [
         S / "stats.py",
         "variance = sum((v - mean) ** 2 for v in data) / len(data)",
         "variance = sum((v - mean) ** 2 for v in data) / (len(data) - 1)",
+    ),
+    (
+        "chase: Fisher-Yates instead of Sattolo (short cycles allowed)",
+        C / "chase.c",
+        "rng_next(&state) % i);",
+        "rng_next(&state) % (i + 1));",
+    ),
+    (
+        "chase: every node points at itself",
+        C / "chase.c",
+        "base + (size_t)next[i] * node_bytes;",
+        "base + i * node_bytes;",
+    ),
+    (
+        "membw: the triad kernel computes the wrong thing",
+        C / "membw.c",
+        "a[i] = b[i] + SCALAR * c[i];",
+        "a[i] = b[i] + c[i];",
+    ),
+    (
+        "membw: the scale kernel does nothing",
+        C / "membw.c",
+        "for (size_t i = j->lo; i < j->hi; i++) b[i] = SCALAR * c[i];",
+        "(void)b;",
+    ),
+    (
+        "matmul: ikj forgets to zero C between calls",
+        C / "matmul.c",
+        "static void mm_ikj(int n, const float *A, const float *B, float *C) {\n    memset(C, 0, (size_t)n * n * sizeof(float));",
+        "static void mm_ikj(int n, const float *A, const float *B, float *C) {",
+    ),
+    (
+        "matmul: blocked tiles run past the edge",
+        C / "matmul.c",
+        "jmax = jj + bs < n ? jj + bs : n;",
+        "jmax = jj + bs;",
+    ),
+    (
+        "mmap_touch: the stride is off by one",
+        C / "mmap_touch.c",
+        "off += stride) checksum",
+        "off += stride + 1) checksum",
+    ),
+    (
+        "copy_nocache: an existing destination is appended to",
+        C / "copy_nocache.c",
+        "O_WRONLY | O_CREAT | O_TRUNC",
+        "O_WRONLY | O_CREAT | O_APPEND",
+    ),
+    (
+        "memory: plateau tolerance is far too tight",
+        S / "memory.py",
+        "PLATEAU_TOLERANCE = 0.30",
+        "PLATEAU_TOLERANCE = 0.01",
+    ),
+    (
+        "memory: two points are enough for a plateau",
+        S / "memory.py",
+        "MIN_PLATEAU_POINTS = 3",
+        "MIN_PLATEAU_POINTS = 2",
+    ),
+    (
+        "memory: the bandwidth stability limit is loosened",
+        S / "memory.py",
+        '"bandwidth": 0.10',
+        '"bandwidth": 0.90',
     ),
     (
         "usage not captured",
