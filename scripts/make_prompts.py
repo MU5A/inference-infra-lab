@@ -9,7 +9,7 @@ from any source.
 import json
 import pathlib
 
-ROOT = pathlib.Path("/Users/musa/inference-infra-lab")
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 SHORT = "Explain what a KV cache is in two sentences."
 

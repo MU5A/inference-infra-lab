@@ -7,7 +7,7 @@ import json
 import pathlib
 import statistics as st
 
-DAY = pathlib.Path("/Users/musa/inference-infra-lab/days/01-harness-and-baseline")
+DAY = pathlib.Path(__file__).resolve().parents[1] / "days" / "01-harness-and-baseline"
 report = json.loads((DAY / "results" / "baseline_llama_server.json").read_text())
 
 lines = [

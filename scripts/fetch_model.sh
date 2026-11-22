@@ -6,7 +6,7 @@ set -euo pipefail
 
 REPO="$1"
 FILE="$2"
-DEST="/Users/musa/inference-infra-lab/models"
+DEST="$(cd "$(dirname "$0")/.." && pwd)/models"
 mkdir -p "$DEST"
 
 expected="$(curl -fsS --max-time 30 "https://huggingface.co/api/models/$REPO?blobs=true" | python3 -c '

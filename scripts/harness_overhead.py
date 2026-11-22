@@ -29,7 +29,7 @@ from inferlab import env
 from inferlab.client import stream_chat
 from inferlab.stats import summarize
 
-OUT = pathlib.Path("/Users/musa/inference-infra-lab/days/01-harness-and-baseline/results")
+OUT = pathlib.Path(__file__).resolve().parents[1] / "days" / "01-harness-and-baseline" / "results"
 RUNS = 3
 REQUESTS = 150
 TOKENS = 20

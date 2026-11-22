@@ -1,10 +1,10 @@
 #!/bin/bash
 # Delete model files. This is the only deletion the runbook allows, and it refuses any path that
-# is not directly inside /Users/musa/inference-infra-lab/models/.
+# is not directly inside this repository's models/ directory.
 # Usage: scripts/prune_models.sh file.gguf [file2.gguf ...]
 set -euo pipefail
 
-MODELS="/Users/musa/inference-infra-lab/models"
+MODELS="$(cd "$(dirname "$0")/.." && pwd)/models"
 
 for name in "$@"; do
   case "$name" in

@@ -3,7 +3,7 @@
 # Usage: scripts/build_llama.sh [git-ref]     (default: the current default-branch head)
 set -euo pipefail
 
-ROOT="/Users/musa/inference-infra-lab"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SRC="$ROOT/third_party/llama.cpp"
 
 if [ ! -d "$SRC/.git" ]; then

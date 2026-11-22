@@ -28,6 +28,6 @@ These are engineering claims, not measurements. Each can be checked by running t
 
 | Day | Claim | Check |
 |---|---|---|
-| 1 | A benchmark harness with a streaming client, TTFT, inter-token latency and decode-rate metrics, percentiles checked against NumPy, and an environment record | `pytest -q` (92 tests) |
+| 1 | A benchmark harness with a streaming client, TTFT, inter-token latency and decode-rate metrics, percentiles checked against NumPy, and an environment record | `pytest -q` (98 tests) |
 | 1 | The harness refuses to benchmark a busy, throttled or battery-powered machine unless overridden, and records any override | `tests/test_cli.py`, `tests/test_runner_env.py` |
 | 1 | The tests were checked by deliberately breaking the code 17 ways, and all 17 breakages fail the suite | `python scripts/mutation_check.py` |

@@ -108,7 +108,22 @@ Three prompts of 40, 257 and 1,469 tokens (the long prompt is larger than the 1,
 planned; the actual counts are what is reported). Results and the comparison with the server's own
 timer are in [README.md](README.md). Cached tokens seen: 0.
 
-## 8. Not done yet
+## 8. An intermittent test failure I could not explain
+
+After making the scripts independent of the checkout path, the suite reported 1 failure, then
+passed on the next three runs. I did not capture which test failed, only the summary line
+(1 failed, 91 passed). I tried to reproduce it with ten
+CPU-spinning processes of my own, running the client tests six times and the whole suite four
+times, at load averages up to 16. Nothing failed. The original failure happened while another
+process had the load average near 28, which I cannot recreate.
+
+Rather than guess, I removed the tests that were brittle in principle. Three assertions assumed
+wall-clock pacing (an upper bound on time to first token, a median gap, and "decode rate never
+exceeds 1 / interval", which is false when the first event is late). The arithmetic is now tested
+with exact scripted arrival times, and the HTTP tests keep only properties that hold at any speed.
+The suite went from 92 to 98 tests and the mutation check still catches all 17 breakages.
+
+## 9. Not done yet
 
 Three measurements need a quiet machine and were refused by the check. They are listed in
 [README.md](README.md) as not yet measured.

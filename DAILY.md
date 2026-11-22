@@ -7,7 +7,7 @@ safely, the run stops and says so. It never improvises around a guardrail.
 ## 1. Pre-flight (stop and notify if any check fails)
 
 1. Free disk space is at least 8 GB **and** at least three times what the day will download or
-   build (`df -h /Users/musa`). This machine ran out of space before, and starting Docker on a
+   build (`df -h .`). This machine ran out of space before, and starting Docker on a
    nearly full disk wedged it. If a day needs more than a third of the free space, stop and ask.
 2. `gh auth status` succeeds, and `git status` is clean.
 3. Find today's step: the first row in the README status table that is not `done`. Never skip a
@@ -58,8 +58,8 @@ happened, send one notification, and stop. The next run does the same day again.
   only in a session with you present and after you have said yes in that session.
 - No real cloud infrastructure and no real cluster. A local `kind` cluster is fine.
 - No destructive commands. The one exception is deleting model files under
-  `/Users/musa/inference-infra-lab/models/`, through `scripts/prune_models.sh`, which refuses any
+  this repository's `models/` directory, through `scripts/prune_models.sh`, which refuses any
   other path.
-- Touch only files under `/Users/musa/inference-infra-lab/`.
+- Touch only files inside this repository.
 - Do not change the plan, the labels or this runbook without being asked.
 - Do not publish a number you did not measure, and do not describe a simulation as a measurement.

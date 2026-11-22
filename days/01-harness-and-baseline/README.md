@@ -31,7 +31,7 @@ day reuses this harness, so a mistake here would quietly corrupt every result af
 3. Wrote the harness (`src/inferlab`): a streaming client, percentile statistics, a run loop with
    warm-up, and an environment record. Definitions are in the module docstring of `client.py`.
 4. Wrote a fake streaming server that copies the real wire format, stamps every event with its
-   send time, and can fail on purpose, then 92 tests against it.
+   send time, and can fail on purpose, then 98 tests against it.
 5. Checked that the tests can fail: 17 deliberate breakages of the code, each of which must turn
    the suite red. All 17 are caught. One was missed at first (see below).
 6. Took the baseline with `python -m inferlab bench` on a clean machine.
@@ -86,6 +86,13 @@ What the numbers show:
   and every result records the cached-token count, which is zero here.
 - **One gap in my own tests showed up under deliberate breakage.** The command-line refusal and
   override logic had no test until the breakage run exposed it. It has four now.
+- **One test failed once and I could not explain it.** The suite failed one test while the
+  machine was under heavy load, and I did not capture which one. It then passed three times in a
+  row, and ten more times under stress I created myself (six runs of the client tests, four of the
+  whole suite). I could not reproduce it. Three assertions depended on wall-clock pacing, so I
+  replaced them with tests built from exact, scripted arrival times and kept the tests over HTTP
+  to properties that hold at any speed. All 17 breakages are still caught. If it happens again in
+  CI it will be investigated, not retried.
 - **The machine would not stay quiet.** The pre-flight check reported the Mac on battery power
   and, later, load averages between 5.7 and 28 caused by another process on the machine. It
   refused to start the overhead measurement at a load of 4.1, and I did not override it. A working
