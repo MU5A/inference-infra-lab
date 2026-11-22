@@ -19,6 +19,7 @@ def relaxed_stability(monkeypatch):
     monkeypatch.setattr(cli.runner, "MAX_DECODE_CV", 1e9)
     monkeypatch.setattr(cli.runner, "MAX_TTFT_CV", 1e9)
     monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: None)  # no real ioreg sampling
+    monkeypatch.setattr(env, "memory_free_percent", lambda: None)
 
 
 @pytest.fixture

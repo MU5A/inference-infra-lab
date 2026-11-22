@@ -1,0 +1,272 @@
+{
+  "image": "python@sha256:c5ba3deef00c7758561a0f03c26f44f10589263d40e732b8748e0d1f38f6dd89",
+  "docker": "29.8.0 kernel 7.0.12-linuxkit",
+  "limit": "96m",
+  "runs": [
+    {
+      "exit_code": 0,
+      "stderr_tail": "finished info\nfinished page_cache\nfinished anonymous\nfinished mmap_read\nfinished mmap_private_write",
+      "info": {
+        "kernel": "7.0.12-linuxkit",
+        "limit_mib": 96.0,
+        "swap_limit_mib": 0.0,
+        "page_size": 4096,
+        "cgroup_v2": true
+      },
+      "page_cache": {
+        "file_mib": 48,
+        "stages": {
+          "start": {
+            "current_mib": 8.87,
+            "file_mib": 0.02,
+            "anon_mib": 7.45
+          },
+          "after_write": {
+            "current_mib": 58.0,
+            "file_mib": 48.02,
+            "anon_mib": 7.45
+          },
+          "after_read": {
+            "current_mib": 58.25,
+            "file_mib": 48.02,
+            "anon_mib": 7.45
+          },
+          "after_drop": {
+            "current_mib": 8.92,
+            "file_mib": 0.02,
+            "anon_mib": 7.45
+          },
+          "after_cold_read": {
+            "current_mib": 56.92,
+            "file_mib": 48.02,
+            "anon_mib": 7.45
+          }
+        },
+        "read_seconds": {
+          "from_cache": 0.007,
+          "after_drop": 0.0214
+        }
+      },
+      "anonymous": {
+        "returncode": -9,
+        "killed_by_signal": 9,
+        "completed": false,
+        "last_progress_mib": 72,
+        "oom_kill_events": 1,
+        "limit_hit_events": 39
+      },
+      "mmap_read": {
+        "file_mib": 192,
+        "limit_mib": 96.0,
+        "completed": true,
+        "bytes_touched_mib": 192.0,
+        "peak_current_mib": 95.89,
+        "peak_file_mib": 87.0,
+        "limit_hit_events": 123,
+        "oom_kill_events": 0
+      },
+      "mmap_private_write": {
+        "returncode": -9,
+        "killed_by_signal": 9,
+        "completed": false,
+        "last_progress_mib": 80,
+        "oom_kill_events": 1,
+        "limit_hit_events": 8025
+      }
+    },
+    {
+      "exit_code": 0,
+      "stderr_tail": "finished info\nfinished page_cache\nfinished anonymous\nfinished mmap_read\nfinished mmap_private_write",
+      "info": {
+        "kernel": "7.0.12-linuxkit",
+        "limit_mib": 96.0,
+        "swap_limit_mib": 0.0,
+        "page_size": 4096,
+        "cgroup_v2": true
+      },
+      "page_cache": {
+        "file_mib": 48,
+        "stages": {
+          "start": {
+            "current_mib": 9.11,
+            "file_mib": 0.02,
+            "anon_mib": 7.44
+          },
+          "after_write": {
+            "current_mib": 58.32,
+            "file_mib": 48.02,
+            "anon_mib": 7.44
+          },
+          "after_read": {
+            "current_mib": 58.36,
+            "file_mib": 48.02,
+            "anon_mib": 7.44
+          },
+          "after_drop": {
+            "current_mib": 8.99,
+            "file_mib": 0.02,
+            "anon_mib": 7.44
+          },
+          "after_cold_read": {
+            "current_mib": 57.04,
+            "file_mib": 48.02,
+            "anon_mib": 7.44
+          }
+        },
+        "read_seconds": {
+          "from_cache": 0.0072,
+          "after_drop": 0.0139
+        }
+      },
+      "anonymous": {
+        "returncode": -9,
+        "killed_by_signal": 9,
+        "completed": false,
+        "last_progress_mib": 72,
+        "oom_kill_events": 1,
+        "limit_hit_events": 38
+      },
+      "mmap_read": {
+        "file_mib": 192,
+        "limit_mib": 96.0,
+        "completed": true,
+        "bytes_touched_mib": 192.0,
+        "peak_current_mib": 95.97,
+        "peak_file_mib": 87.23,
+        "limit_hit_events": 125,
+        "oom_kill_events": 0
+      },
+      "mmap_private_write": {
+        "returncode": -9,
+        "killed_by_signal": 9,
+        "completed": false,
+        "last_progress_mib": 80,
+        "oom_kill_events": 1,
+        "limit_hit_events": 7653
+      }
+    },
+    {
+      "exit_code": 0,
+      "stderr_tail": "finished info\nfinished page_cache\nfinished anonymous\nfinished mmap_read\nfinished mmap_private_write",
+      "info": {
+        "kernel": "7.0.12-linuxkit",
+        "limit_mib": 96.0,
+        "swap_limit_mib": 0.0,
+        "page_size": 4096,
+        "cgroup_v2": true
+      },
+      "page_cache": {
+        "file_mib": 48,
+        "stages": {
+          "start": {
+            "current_mib": 9.09,
+            "file_mib": 0.02,
+            "anon_mib": 7.44
+          },
+          "after_write": {
+            "current_mib": 58.43,
+            "file_mib": 48.02,
+            "anon_mib": 7.44
+          },
+          "after_read": {
+            "current_mib": 58.43,
+            "file_mib": 48.02,
+            "anon_mib": 7.44
+          },
+          "after_drop": {
+            "current_mib": 9.1,
+            "file_mib": 0.02,
+            "anon_mib": 7.44
+          },
+          "after_cold_read": {
+            "current_mib": 57.35,
+            "file_mib": 48.02,
+            "anon_mib": 7.44
+          }
+        },
+        "read_seconds": {
+          "from_cache": 0.0068,
+          "after_drop": 0.0141
+        }
+      },
+      "anonymous": {
+        "returncode": -9,
+        "killed_by_signal": 9,
+        "completed": false,
+        "last_progress_mib": 72,
+        "oom_kill_events": 1,
+        "limit_hit_events": 37
+      },
+      "mmap_read": {
+        "file_mib": 192,
+        "limit_mib": 96.0,
+        "completed": true,
+        "bytes_touched_mib": 192.0,
+        "peak_current_mib": 95.89,
+        "peak_file_mib": 87.08,
+        "limit_hit_events": 117,
+        "oom_kill_events": 0
+      },
+      "mmap_private_write": {
+        "returncode": -9,
+        "killed_by_signal": 9,
+        "completed": false,
+        "last_progress_mib": 80,
+        "oom_kill_events": 1,
+        "limit_hit_events": 7972
+      }
+    }
+  ],
+  "prediction_failures_per_run": [
+    [],
+    [],
+    []
+  ],
+  "dirty_write": [
+    {
+      "unsynced": {
+        "synced": false,
+        "oom_killed": true,
+        "exit_code": 137
+      },
+      "synced": {
+        "synced": true,
+        "oom_killed": false,
+        "exit_code": 0
+      }
+    },
+    {
+      "unsynced": {
+        "synced": false,
+        "oom_killed": true,
+        "exit_code": 137
+      },
+      "synced": {
+        "synced": true,
+        "oom_killed": false,
+        "exit_code": 0
+      }
+    },
+    {
+      "unsynced": {
+        "synced": false,
+        "oom_killed": true,
+        "exit_code": 137
+      },
+      "synced": {
+        "synced": true,
+        "oom_killed": false,
+        "exit_code": 0
+      }
+    }
+  ],
+  "dirty_write_prediction_failures": [
+    [],
+    [],
+    []
+  ],
+  "all_predictions_held": true,
+  "preflight_problems_informational": [
+    "GPU is busy: peak 31%, mean 14% over 20 samples"
+  ]
+}

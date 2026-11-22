@@ -38,6 +38,26 @@ def power_source() -> str | None:
     return text.splitlines()[0] if text else None
 
 
+_FREE_PERCENT = re.compile(r"free percentage:\s*(\d+)%")
+_SWAP_USED = re.compile(r"used = ([\d.]+)M")
+
+
+def memory_free_percent() -> int | None:
+    """macOS's own measure of how much memory is free, as the system sees it (reclaimable cache
+    counts as free). Low values mean allocations will push other data out, which disturbs a
+    benchmark with a large working set."""
+    out = _run(["memory_pressure"], timeout=10)
+    match = _FREE_PERCENT.search(out) if out else None
+    return int(match.group(1)) if match else None
+
+
+def swap_used_mb() -> float | None:
+    """Swap in use. Informational: old pages can sit in swap without causing contention now."""
+    out = _run(["sysctl", "-n", "vm.swapusage"])
+    match = _SWAP_USED.search(out) if out else None
+    return float(match.group(1)) if match else None
+
+
 _GPU_FIELD = re.compile(r'"Device Utilization %"=(\d+)')
 
 
@@ -70,6 +90,7 @@ def preflight(
     require_ac: bool = True,
     max_gpu_peak: int = 25,
     max_gpu_mean: float = 5.0,
+    min_free_memory_percent: int = 30,
 ) -> list[str]:
     """Reasons this machine is not in a fit state to benchmark. An empty list means it is.
 
@@ -90,6 +111,9 @@ def preflight(
     power = power_source()
     if require_ac and power and "Battery Power" in power:
         problems.append("running on battery power")
+    free = memory_free_percent()
+    if free is not None and free < min_free_memory_percent:
+        problems.append(f"low free memory: {free}% (the minimum is {min_free_memory_percent}%)")
     gpu = gpu_utilization()
     if gpu and (gpu["peak"] > max_gpu_peak or gpu["mean"] > max_gpu_mean):
         problems.append(
@@ -144,6 +168,8 @@ def describe(model_path: Path | None = None, llama_dir: Path | None = None) -> d
             "thermal": thermal_state(),
             "power": power_source(),
             "gpu_utilization": gpu_utilization(samples=5),
+            "memory_free_percent": memory_free_percent(),
+            "swap_used_mb": swap_used_mb(),
         },
         "software": {
             "python": sys.version.split()[0],

@@ -207,6 +207,18 @@ MUTATIONS = [
         '"bandwidth": 0.90',
     ),
     (
+        "memory: low free memory is never refused",
+        S / "env.py",
+        "if free is not None and free < min_free_memory_percent:",
+        "if False:",
+    ),
+    (
+        "memory: the free-percentage regex reads the wrong number",
+        S / "env.py",
+        'r"free percentage:\\s*(\\d+)%"',
+        'r"(\\d+)%"',
+    ),
+    (
         "usage not captured",
         S / "client.py",
         '                if isinstance(event.get("usage"), dict):\n                    result.usage = event["usage"]\n',

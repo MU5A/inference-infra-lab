@@ -20,3 +20,17 @@ def test_day_one_readme_contains_the_generated_tables_verbatim():
         "days/01-harness-and-baseline/README.md differs from results/baseline_table.md. "
         "Regenerate with: python scripts/day01_report.py"
     )
+
+
+DAY2 = ROOT / "days" / "02-memory-hierarchy"
+
+
+@pytest.mark.skipif(
+    not (DAY2 / "results" / "linux_table.md").exists(), reason="no Linux results committed"
+)
+def test_day_two_readme_contains_the_generated_linux_tables_verbatim():
+    generated = (DAY2 / "results" / "linux_table.md").read_text().strip()
+    assert generated in (DAY2 / "README.md").read_text(), (
+        "days/02-memory-hierarchy/README.md differs from results/linux_table.md. "
+        "Regenerate with: python scripts/day02_report.py"
+    )

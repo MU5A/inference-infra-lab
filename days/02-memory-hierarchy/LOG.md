@@ -65,10 +65,40 @@ of Sattolo, a pointer chain where every node points at itself, wrong triad, a sc
 nothing, a matmul that does not zero its output, tiles running past the edge, an off-by-one stride,
 a copy that appends, and three analysis-limit changes).
 
-## 6. Not done yet
+## 6. The Linux container experiments
+
+Docker Desktop was started for these, after the quiet-window benchmarks were refused. It would not
+launch until an orphaned backend process from an earlier session was force-stopped (checked first:
+its parent was pid 1 and its VM was long gone). With approval, Docker's unused build cache (4.4 GB)
+was pruned, and free disk rose from 5.5 to 8.8 GiB. The image `python:3.12-alpine` (18.5 MB
+compressed, arm64, official) was pulled with approval and is pinned by digest in the results.
+
+1. **First run: exit 137, no output.** The container's main process was killed. The script printed
+   only at the end, so nothing survived. `memory.oom.group` was 0, so the kernel killed processes
+   individually.
+2. **Fix and a second hypothesis.** My leading suspect was my own writer, which called `fsync` once at
+   the end, so I synced every chunk and the script ran to the end. That is a coincidence until the
+   failure is reproduced on purpose.
+3. **A direct test killed the container again.** Adding the unsynced write as a fifth experiment gave
+   exit 137 twice and no result for it, but the parent died with it, so it was not a clean test.
+4. **A clean A/B.** One container whose only process writes the same 192 MiB, with and without a sync
+   after each chunk, using Docker's own `OOMKilled` flag. Prediction recorded before the run:
+   unsynced killed, synced completes. Result: three pairs out of three, as predicted.
+5. **Results** are in `results/linux_memory.json` and the README. Every prediction held in all
+   three runs.
+
+## 7. A memory check added to the pre-flight
+
+`memory_pressure` reported 56% free but `vm.swapusage` showed 2.3 GB of 3 GB in use, so this
+machine has been under pressure and a benchmark with a 1 GiB working set could be disturbed. The
+pre-flight now refuses below 30% free memory, and every results file records swap use. Swap in use
+alone is not refused, since old pages can sit in swap without causing contention now. Tested, with
+two mutations.
+
+## 8. Not done yet
 
 The measurement run (`scripts/day02_run.py`) has not been taken. The pre-flight refused it: the GPU
 was 29% busy and the 1-minute load average was 5.3. Free disk was also 5.7 GiB, below the 8 GB the
 runbook requires. Nothing in `README.md` or the evidence ledger claims a Day 2 result.
-The Linux container part (page cache, cgroup memory limits, the OOM killer) has not been started: it
-needs Docker, which is stopped, and an image download that has not been approved.
+The C microbenchmark run is the only part of Day 2 outstanding. It needs a quiet machine: no video, no
+other heavy session, plugged in, and Docker stopped.

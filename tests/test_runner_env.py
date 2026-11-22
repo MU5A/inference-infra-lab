@@ -159,6 +159,7 @@ class TestPreflight:
         monkeypatch.setattr(env.os, "getloadavg", lambda: (load, load, load))
         monkeypatch.setattr(env, "power_source", lambda: power)
         monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: gpu)
+        monkeypatch.setattr(env, "memory_free_percent", lambda: 80)
         monkeypatch.setattr(
             env,
             "thermal_state",
@@ -204,6 +205,7 @@ class TestPreflight:
         monkeypatch.setattr(env, "power_source", lambda: None)
         monkeypatch.setattr(env, "thermal_state", lambda: None)
         monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: None)
+        monkeypatch.setattr(env, "memory_free_percent", lambda: None)
         assert env.preflight() == []
 
 
@@ -240,6 +242,7 @@ class TestGpuPreflight:
         monkeypatch.setattr(env, "power_source", lambda: "Now drawing from 'AC Power'")
         monkeypatch.setattr(env, "thermal_state", lambda: "Note: No thermal warning level")
         monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: gpu)
+        monkeypatch.setattr(env, "memory_free_percent", lambda: 80)
 
     def test_a_brief_burst_above_the_peak_limit_is_refused(self, monkeypatch):
         """Video playback: 51% in one sample, 0% in the rest. The load average cannot see this."""
@@ -309,3 +312,41 @@ class TestStability:
         assert report["results"]["a"]["summary"]["stable"] is True
         assert report["results"]["b"]["summary"]["stable"] is False
         assert report["stable"] is False
+
+
+class TestMemoryPreflight:
+    def quiet(self, monkeypatch, free):
+        monkeypatch.setattr(env.os, "cpu_count", lambda: 8)
+        monkeypatch.setattr(env.os, "getloadavg", lambda: (0.4, 0.4, 0.4))
+        monkeypatch.setattr(env, "power_source", lambda: "Now drawing from 'AC Power'")
+        monkeypatch.setattr(env, "thermal_state", lambda: "Note: No thermal warning level")
+        monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: None)
+        monkeypatch.setattr(env, "memory_free_percent", lambda: free)
+
+    def test_the_free_percentage_is_parsed_from_memory_pressure_output(self, monkeypatch):
+        text = (
+            "The system has 17179869184 (1048576 pages)\nSystem-wide memory free percentage: 56%\n"
+        )
+        monkeypatch.setattr(env, "_run", lambda *a, **k: text)
+        assert env.memory_free_percent() == 56
+
+    def test_unparseable_or_missing_output_is_none(self, monkeypatch):
+        monkeypatch.setattr(env, "_run", lambda *a, **k: "no such line")
+        assert env.memory_free_percent() is None
+        monkeypatch.setattr(env, "_run", lambda *a, **k: None)
+        assert env.memory_free_percent() is None
+
+    def test_swap_used_is_parsed(self, monkeypatch):
+        line = "vm.swapusage: total = 3072.00M  used = 2311.56M  free = 760.44M  (encrypted)"
+        monkeypatch.setattr(env, "_run", lambda *a, **k: line)
+        assert env.swap_used_mb() == 2311.56
+
+    def test_low_free_memory_is_refused_at_the_boundary(self, monkeypatch):
+        self.quiet(monkeypatch, 29)
+        assert any("low free memory: 29%" in p for p in env.preflight())
+        self.quiet(monkeypatch, 30)
+        assert env.preflight() == []
+
+    def test_an_unreadable_memory_state_does_not_block(self, monkeypatch):
+        self.quiet(monkeypatch, None)
+        assert env.preflight() == []
