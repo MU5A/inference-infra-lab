@@ -126,7 +126,14 @@ was no cold sequential read to tell them apart. The redesign gives each way (tou
 WILLNEED, SEQUENTIAL) its own freshly made cold copy and has predictions written before the run.
 One prediction failed (see the README).
 
-## 9. What is left
+## 9. The full mutation check
+
+Run once on the final code, 42 deliberate breakages. 41 were caught. One was missed: the
+free-memory regex could read any percentage, because my test input held only one. A distractor
+percentage was added to the test and the breakage is now caught, so all 42 fail the suite. This is
+the second time a full run found a gap that the piecewise runs had not.
+
+## 10. What is left
 
 The measurement run (`scripts/day02_run.py`) has not been taken. The pre-flight refused it: the GPU
 was 29% busy and the 1-minute load average was 5.3. Free disk was also 5.7 GiB, below the 8 GB the

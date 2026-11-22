@@ -325,7 +325,10 @@ class TestMemoryPreflight:
 
     def test_the_free_percentage_is_parsed_from_memory_pressure_output(self, monkeypatch):
         text = (
-            "The system has 17179869184 (1048576 pages)\nSystem-wide memory free percentage: 56%\n"
+            "The system has 17179869184 (1048576 pages)\n"
+            "Compressor is holding 12% of memory\n"  # another percentage that must be ignored
+            "System-wide memory free percentage: 56%\n"
+            "Swap used: 90%\n"
         )
         monkeypatch.setattr(env, "_run", lambda *a, **k: text)
         assert env.memory_free_percent() == 56
