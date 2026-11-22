@@ -1,0 +1,8 @@
+removed /Users/musa/inference-infra-lab/models/day02-cold-1.gguf
+removed /Users/musa/inference-infra-lab/models/day02-cold-2.gguf
+removed /Users/musa/inference-infra-lab/models/day02-cold-3.gguf
+bandwidth: stable in 11.1 s
+latency: UNSTABLE in 175.4 s
+compute: UNSTABLE in 31.3 s
+cold_read: stable in 36.1 s
+wrote /Users/musa/inference-infra-lab/days/02-memory-hierarchy/results/microbench.json

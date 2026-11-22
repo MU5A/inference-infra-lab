@@ -17,11 +17,12 @@ import json
 import os
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 
 from inferlab import env
-from inferlab.memory import across_runs, cold_vs_warm, latency_summary
+from inferlab.memory import across_runs, check_cold_predictions, cold_vs_warm, latency_summary
 
 ROOT = Path(__file__).resolve().parents[1]
 BIN = ROOT / "microbench" / "build"
@@ -40,6 +41,46 @@ def run_json(args: list, extra_env: dict | None = None) -> dict:
     if proc.returncode != 0:
         raise RuntimeError(f"{args[0]} exited {proc.returncode}: {proc.stderr.strip()[:300]}")
     return json.loads(proc.stdout)
+
+
+class Watch:
+    """Sample which other processes are using the CPU while a measurement runs.
+
+    A pre-flight at the start cannot see a build that begins mid-run, which is what disturbed the
+    first compute run. This records the busiest processes outside the benchmark every two seconds,
+    so interference can be named. It does not decide stability: the run-to-run variation does.
+    """
+
+    def __enter__(self):
+        self.samples: list[dict] = []
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._loop, daemon=True)
+        self._thread.start()
+        return self
+
+    def _loop(self):
+        while not self._stop.wait(2.0):
+            busy = env.busy_processes(6, exclude_tree_of=os.getpid())
+            if busy is not None:
+                self.samples.append({"load1": os.getloadavg()[0], "busy": busy})
+
+    def __exit__(self, *_exc):
+        self._stop.set()
+        self._thread.join(timeout=5)
+
+    def summary(self) -> dict:
+        totals = [sum(p["cpu_percent"] for p in s["busy"]) for s in self.samples]
+        names: dict[str, float] = {}
+        for sample in self.samples:
+            for p in sample["busy"]:
+                names[p["name"]] = max(names.get(p["name"], 0.0), p["cpu_percent"])
+        worst = sorted(names.items(), key=lambda kv: kv[1], reverse=True)[:4]
+        return {
+            "samples": len(self.samples),
+            "peak_other_cpu_percent": max(totals, default=None),
+            "peak_load1": max((s["load1"] for s in self.samples), default=None),
+            "busiest_other_processes": [{"name": n, "peak_cpu_percent": c} for n, c in worst],
+        }
 
 
 def wait_quiet(limit_s: float) -> list[str]:
@@ -92,7 +133,13 @@ def compute(runs: int) -> dict:
         args = [BIN / "matmul", "--sizes", "128,256,512,1024", "--reps", 3]
         if variants:
             args += ["--variants", variants]
-        return [run_json(args, extra_env) for _ in range(runs)]
+        sweeps = []
+        for _ in range(runs):
+            with Watch() as watch:
+                sweep = run_json(args, extra_env)
+            sweep["neighbours"] = watch.summary()  # per run, so a drifting run can be explained
+            sweeps.append(sweep)
+        return sweeps
 
     groups = {
         "default": collect(),
@@ -112,31 +159,43 @@ def compute(runs: int) -> dict:
 
 
 def cold_read(runs: int) -> dict:
+    """First and second pass over a file that starts out of the page cache, four ways.
+
+    Each way gets its own fresh copy, made with the cache bypassed, because a file can only be cold
+    once. The copies are removed as soon as they are measured.
+    """
+    ways = {
+        "touch": ["--mode", "touch"],
+        "read": ["--mode", "read"],
+        "willneed": ["--mode", "touch", "--advise", "willneed"],
+        "sequential": ["--mode", "touch", "--advise", "sequential"],
+    }
     trials = []
     for trial in range(1, runs + 1):
-        copy = ROOT / "models" / f"day02-cold-{trial}.gguf"
-        try:
-            run_json([BIN / "copy_nocache", MODEL, copy])
-            cold = run_json([BIN / "mmap_touch", copy, "--mode", "touch"])
-            warm = run_json([BIN / "mmap_touch", copy, "--mode", "touch"])
-            warm_read = run_json([BIN / "mmap_touch", copy, "--mode", "read"])
-        finally:
-            subprocess.run([ROOT / "scripts" / "prune_models.sh", copy.name], check=False)
-        trials.append(
-            {
-                "cold": cold,
-                "warm": warm,
-                "warm_read": warm_read,
-                "check": cold_vs_warm(cold["gbs"], warm["gbs"]),
-            }
-        )
-    cold_stats = across_runs([t["cold"]["gbs"] for t in trials], "cold_read")
+        record: dict = {"checks": {}}
+        for way, flags in ways.items():
+            copy = ROOT / "models" / f"day02-cold-{trial}-{way}.gguf"
+            try:
+                run_json([BIN / "copy_nocache", MODEL, copy])
+                cold = run_json([BIN / "mmap_touch", copy, *flags])
+                warm = run_json([BIN / "mmap_touch", copy, *flags])
+            finally:
+                subprocess.run([ROOT / "scripts" / "prune_models.sh", copy.name], check=False)
+            record[f"cold_{way}"] = cold
+            record[f"warm_{way}"] = warm
+            record["checks"][f"cold_{way}"] = cold_vs_warm(cold["gbs"], warm["gbs"])
+        trials.append(record)
+    summary = {
+        way: across_runs([t[f"cold_{way}"]["gbs"] for t in trials], "cold_read") for way in ways
+    }
+    predictions = check_cold_predictions(trials)
+    really_cold = all(c["really_cold"] for t in trials for c in t["checks"].values())
     return {
         "trials": trials,
-        "cold_gbs": cold_stats,
-        "warm_touch_gbs": across_runs([t["warm"]["gbs"] for t in trials], "bandwidth"),
-        "all_really_cold": all(t["check"]["really_cold"] for t in trials),
-        "stable": cold_stats["stable"] and all(t["check"]["really_cold"] for t in trials),
+        "cold_gbs": summary,
+        "prediction_failures": predictions,
+        "all_really_cold": really_cold,
+        "stable": all(v["stable"] for v in summary.values()) and really_cold,
     }
 
 
@@ -190,11 +249,18 @@ def main() -> int:
             status = status or 3
             continue
         started = time.monotonic()
-        result = GROUPS[name](args.runs)
+        with Watch() as watch:
+            result = GROUPS[name](args.runs)
+        result["neighbours"] = watch.summary()
         result["preflight_problems_overridden"] = problems
         result["seconds"] = round(time.monotonic() - started, 1)
         report["groups"][name] = result
-        print(f"{name}: {'stable' if result['stable'] else 'UNSTABLE'} in {result['seconds']} s")
+        peak = result["neighbours"]["peak_other_cpu_percent"]
+        print(
+            f"{name}: {'stable' if result['stable'] else 'UNSTABLE'} in {result['seconds']} s; "
+            f"other processes peaked at {peak}% CPU",
+            flush=True,
+        )
         if not result["stable"]:
             status = status or 4
     report["environment"] = env.describe(MODEL)

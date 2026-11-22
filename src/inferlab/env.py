@@ -130,6 +130,39 @@ def preflight(
     return problems
 
 
+def busy_processes(n: int = 4, exclude_tree_of: int | None = None) -> list[dict] | None:
+    """The processes using the most CPU right now, so interference can be attributed.
+
+    `exclude_tree_of` removes a process and everything it started (the benchmark itself). Each
+    entry has the CPU percentage and the executable name, without paths or arguments, so nothing
+    private is recorded. Returns None if the process list cannot be read.
+    """
+    out = _run(["ps", "-Ao", "pid=,ppid=,pcpu=,comm="], timeout=5)
+    if out is None:
+        return None
+    rows = []
+    for line in out.splitlines():
+        parts = line.split(None, 3)
+        if len(parts) == 4 and parts[0].isdigit() and parts[1].isdigit():
+            try:
+                rows.append((int(parts[0]), int(parts[1]), float(parts[2]), parts[3]))
+            except ValueError:
+                continue
+    excluded: set[int] = set()
+    if exclude_tree_of is not None:
+        excluded = {exclude_tree_of}
+        grew = True
+        while grew:
+            grew = False
+            for pid, ppid, _, _ in rows:
+                if ppid in excluded and pid not in excluded:
+                    excluded.add(pid)
+                    grew = True
+    rows = [r for r in rows if r[0] not in excluded]
+    rows.sort(key=lambda r: r[2], reverse=True)
+    return [{"cpu_percent": r[2], "name": Path(r[3]).name} for r in rows[:n]]
+
+
 def sha256_of(path: Path) -> str | None:
     """Prefer the published digest saved beside the file, so a 500 MB file is not rehashed."""
     sidecar = path.with_name(path.name + ".sha256")

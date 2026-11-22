@@ -219,6 +219,36 @@ MUTATIONS = [
         'r"(\\d+)%"',
     ),
     (
+        "env: busiest processes sorted the wrong way round",
+        S / "env.py",
+        "rows.sort(key=lambda r: r[2], reverse=True)",
+        "rows.sort(key=lambda r: r[2])",
+    ),
+    (
+        "env: the benchmark's own process tree is not excluded",
+        S / "env.py",
+        "rows = [r for r in rows if r[0] not in excluded]",
+        "rows = list(rows)",
+    ),
+    (
+        "env: executable path is kept instead of just the name",
+        S / "env.py",
+        'return [{"cpu_percent": r[2], "name": Path(r[3]).name} for r in rows[:n]]',
+        'return [{"cpu_percent": r[2], "name": r[3]} for r in rows[:n]]',
+    ),
+    (
+        "memory: a cold read need only match a cold touch",
+        S / "memory.py",
+        'if trial["cold_read"]["gbs"] < 5 * plain:',
+        'if trial["cold_read"]["gbs"] < 0 * plain:',
+    ),
+    (
+        "memory: the willneed prediction is never checked",
+        S / "memory.py",
+        'if trial["cold_willneed"]["gbs"] < 3 * plain:',
+        "if False:",
+    ),
+    (
         "usage not captured",
         S / "client.py",
         '                if isinstance(event.get("usage"), dict):\n                    result.usage = event["usage"]\n',

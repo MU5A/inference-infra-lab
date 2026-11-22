@@ -129,6 +129,32 @@ def latency_summary(sweeps: Sequence[dict]) -> dict:
     }
 
 
+def check_cold_predictions(trials: Sequence[dict]) -> list[str]:
+    """Predictions written BEFORE the redesigned cold-read experiment was run.
+
+    The first cold run measured a memory-mapped touch at 0.07 GB/s, about 100 times slower than the
+    same file once it was cached. That could mean the disk is slow or that page-by-page faulting
+    is. So the redesigned run adds a cold sequential read() as a control, and two prefetch hints.
+    Predictions: a cold sequential read is at least 5 times faster than a cold plain mapped touch
+    (the touch is fault-latency bound, the read is bandwidth bound), a willneed hint is at least 3
+    times faster than a plain touch, and every cold pass is at least 1.5 times slower than its warm
+    pass. A violated prediction is a finding.
+    """
+    failures = []
+    for index, trial in enumerate(trials, start=1):
+        plain = trial["cold_touch"]["gbs"]
+        if trial["cold_read"]["gbs"] < 5 * plain:
+            failures.append(
+                f"trial {index}: a cold sequential read was not 5x faster than a cold touch"
+            )
+        if trial["cold_willneed"]["gbs"] < 3 * plain:
+            failures.append(f"trial {index}: a willneed hint did not make a cold touch 3x faster")
+        for name in ("cold_touch", "cold_read", "cold_willneed", "cold_sequential"):
+            if not trial["checks"][name]["really_cold"]:
+                failures.append(f"trial {index}: {name} was not clearly colder than its warm pass")
+    return failures
+
+
 def cold_vs_warm(cold_gbs: float, warm_gbs: float, min_ratio: float = 1.5) -> dict:
     """Whether a first read really was cold. If the second pass is not clearly faster than the
     first, the file was already in the page cache and the 'cold' number is not a cold number."""

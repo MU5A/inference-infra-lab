@@ -350,3 +350,33 @@ class TestMemoryPreflight:
     def test_an_unreadable_memory_state_does_not_block(self, monkeypatch):
         self.quiet(monkeypatch, None)
         assert env.preflight() == []
+
+
+class TestBusyProcesses:
+    PS = (
+        "  100     1   0.5 /sbin/launchd\n"
+        "  200   100  80.0 /Applications/Xcode.app/Contents/Developer/clang\n"
+        "  300   100   5.0 /usr/sbin/mdworker\n"
+        "  400   200  50.0 /tmp/bench/membw\n"
+        "  500     1  12.5 /Applications/Some App.app/Contents/MacOS/Some App\n"
+        "garbage line\n"
+    )
+
+    def test_the_busiest_come_first_with_names_not_paths(self, monkeypatch):
+        monkeypatch.setattr(env, "_run", lambda *a, **k: self.PS)
+        top = env.busy_processes(n=3)
+        assert [p["name"] for p in top] == ["clang", "membw", "Some App"]
+        assert top[0]["cpu_percent"] == 80.0
+
+    def test_the_benchmarks_own_process_tree_is_excluded(self, monkeypatch):
+        monkeypatch.setattr(env, "_run", lambda *a, **k: self.PS)
+        top = env.busy_processes(n=5, exclude_tree_of=200)  # 200 and its child 400
+        assert [p["name"] for p in top] == ["Some App", "mdworker", "launchd"]
+
+    def test_an_unreadable_process_list_is_none(self, monkeypatch):
+        monkeypatch.setattr(env, "_run", lambda *a, **k: None)
+        assert env.busy_processes() is None
+
+    def test_malformed_lines_are_skipped(self, monkeypatch):
+        monkeypatch.setattr(env, "_run", lambda *a, **k: "x y z\n  1 1 nope /bin/a\n")
+        assert env.busy_processes() == []

@@ -114,6 +114,15 @@ class TestMemoryMappedFile:
         assert out["checksum"] == sum(data[::stride])
         assert out["bytes"] == len(data)
 
+    @pytest.mark.parametrize("advise", ["none", "willneed", "sequential"])
+    def test_a_prefetch_hint_changes_how_pages_arrive_not_what_is_read(
+        self, bins, data_file, advise
+    ):
+        path, data = data_file
+        out = run(bins / "mmap_touch", str(path), "--stride", "4096", "--advise", advise)
+        assert out["advise"] == advise
+        assert out["checksum"] == sum(data[::4096])
+
     def test_read_mode_reports_every_byte(self, bins, data_file):
         path, data = data_file
         out = run(bins / "mmap_touch", str(path), "--mode", "read")

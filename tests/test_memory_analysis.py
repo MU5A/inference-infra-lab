@@ -191,3 +191,46 @@ class TestColdVersusWarm:
         assert cold_vs_warm(2.0, 3.0)["really_cold"] is True
         assert cold_vs_warm(2.0, 2.99)["really_cold"] is False
         assert cold_vs_warm(0.0, 5.0)["really_cold"] is True
+
+
+class TestColdPredictions:
+    def trial(self, touch=0.07, read=1.5, willneed=0.4, sequential=0.1, cold=True):
+        check = {"really_cold": cold}
+        return {
+            "cold_touch": {"gbs": touch},
+            "cold_read": {"gbs": read},
+            "cold_willneed": {"gbs": willneed},
+            "cold_sequential": {"gbs": sequential},
+            "checks": {
+                n: dict(check)
+                for n in ("cold_touch", "cold_read", "cold_willneed", "cold_sequential")
+            },
+        }
+
+    def test_predictions_that_hold_have_no_failures(self):
+        from inferlab.memory import check_cold_predictions
+
+        assert check_cold_predictions([self.trial(), self.trial()]) == []
+
+    def test_a_cold_read_that_is_not_much_faster_is_a_finding(self):
+        from inferlab.memory import check_cold_predictions
+
+        failures = check_cold_predictions([self.trial(read=0.2)])
+        assert any("5x faster" in f for f in failures)
+
+    def test_a_hint_that_does_not_help_is_a_finding(self):
+        from inferlab.memory import check_cold_predictions
+
+        failures = check_cold_predictions([self.trial(willneed=0.1)])
+        assert any("willneed" in f for f in failures)
+
+    def test_a_pass_that_was_not_cold_is_a_finding(self):
+        from inferlab.memory import check_cold_predictions
+
+        failures = check_cold_predictions([self.trial(cold=False)])
+        assert len([f for f in failures if "not clearly colder" in f]) == 4
+
+    def test_the_boundaries_are_inclusive(self):
+        from inferlab.memory import check_cold_predictions
+
+        assert check_cold_predictions([self.trial(touch=0.25, read=1.25, willneed=0.75)]) == []
