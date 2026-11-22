@@ -27,3 +27,7 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# The mutation table holds literal source lines, which are longer than the line limit.
+"scripts/mutation_check.py" = ["E501"]
