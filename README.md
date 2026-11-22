@@ -24,5 +24,36 @@ Every claim is listed in [EVIDENCE.md](EVIDENCE.md) with the file that supports 
 
 ## Status
 
-Not started. See [PLAN.md](PLAN.md) for the 28 days and [DAILY.md](DAILY.md) for how each day is
-run.
+| Day | Stage | Topic | Label | Status |
+|---|---|---|---|---|
+| 1 | 1. Systems foundations | Benchmark harness and baseline | M | in progress |
+| 2 | 1. Systems foundations | Memory hierarchy and Linux internals | M | planned |
+| 3 | 2. GPU architecture and modern silicon | Roofline model | M, L | planned |
+| 4 | 2. GPU architecture and modern silicon | GPU programming concepts on Metal | M, L | planned |
+| 5 | 3. Transformer and MoE inference anatomy | KV cache and memory calculator | M, S | planned |
+| 6 | 3. Transformer and MoE inference anatomy | Prefill, decode and arithmetic intensity | M, S | planned |
+| 7 | 4. Serving engines and constrained decoding | Serving engines on this machine | M | planned |
+| 8 | 4. Serving engines and constrained decoding | Continuous batching and paged KV memory, from scratch | S | planned |
+| 9 | 4. Serving engines and constrained decoding | Constrained decoding | M, S | planned |
+| 10 | 5. KV cache and memory hierarchies | Prefix caching and chunked prefill | M, S | planned |
+| 11 | 5. KV cache and memory hierarchies | KV quantization, offload and eviction | M, S | planned |
+| 12 | 6. Quantization and compression | The quantization ladder | M | planned |
+| 13 | 6. Quantization and compression | Quantization internals | M, S | planned |
+| 14 | 7. Speculative decoding and parallelism | Speculative decoding | M, S | planned |
+| 15 | 7. Speculative decoding and parallelism | Parallelism | S, L | planned |
+| 16 | 8. Kernel-level optimization | Attention from first principles | M, S | planned |
+| 17 | 8. Kernel-level optimization | Fusion and kernels | M, L | planned |
+| 18 | 9. Distributed and disaggregated inference | Disaggregated prefill and decode | S | planned |
+| 19 | 9. Distributed and disaggregated inference | What multi-node adds | S, L, M | planned |
+| 20 | 10. Autoscaling, FinOps and economics | Cold starts and queue-based scaling | M, S | planned |
+| 21 | 10. Autoscaling, FinOps and economics | Cost per token | M, S | planned |
+| 22 | 11. AI gateway, routing and reliability | Gateway core | M | planned |
+| 23 | 11. AI gateway, routing and reliability | Caching, limits and budgets | M | planned |
+| 24 | 11. AI gateway, routing and reliability | SLOs, session routing and chaos | M | planned |
+| 25 | 12. Edge inference and portfolio | On-device benchmark matrix | M | planned |
+| 26 | 12. Edge inference and portfolio | Write-ups and a reference deployment | M | planned |
+| 27 | 12. Edge inference and portfolio | Reproducibility and an honesty audit | M | planned |
+| 28 | 12. Edge inference and portfolio | Resume | none | planned |
+
+See [PLAN.md](PLAN.md) for what each day builds and measures, [DAILY.md](DAILY.md) for how each
+day is run, and [EVIDENCE.md](EVIDENCE.md) for every claim and what supports it.
