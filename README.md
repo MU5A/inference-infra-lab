@@ -26,7 +26,7 @@ Every claim is listed in [EVIDENCE.md](EVIDENCE.md) with the file that supports 
 
 | Day | Stage | Topic | Label | Status |
 |---|---|---|---|---|
-| 1 | 1. Systems foundations | Benchmark harness and baseline | M | in progress |
+| 1 | 1. Systems foundations | Benchmark harness and baseline | M | done |
 | 2 | 1. Systems foundations | Memory hierarchy and Linux internals | M | done |
 | 3 | 2. GPU architecture and modern silicon | Roofline model | M, L | planned |
 | 4 | 2. GPU architecture and modern silicon | GPU programming concepts on Metal | M, L | planned |

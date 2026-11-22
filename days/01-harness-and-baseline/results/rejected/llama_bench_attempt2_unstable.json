@@ -1,0 +1,212 @@
+{
+  "summary": {
+    "pp512": {
+      "tokens_per_s": 3227.39814,
+      "stddev": 3.816875,
+      "cv": 0.0011826477039489154,
+      "samples": [
+        3220.75,
+        3228.55,
+        3230.51,
+        3228.96,
+        3228.22
+      ],
+      "stable": true
+    },
+    "tg128": {
+      "tokens_per_s": 115.143264,
+      "stddev": 68.78898,
+      "cv": 0.5974207922401782,
+      "samples": [
+        166.04,
+        165.489,
+        163.733,
+        29.8168,
+        50.6377
+      ],
+      "stable": false
+    }
+  },
+  "harness_decode_tps_baseline": 152.5546548239053,
+  "server_prefill_tps_baseline": 3005.177743273128,
+  "prediction_failures": [
+    "tg128: variation 59.7% is above the limit",
+    "decode was not within 10% of the harness baseline"
+  ],
+  "neighbours": {
+    "samples": 5,
+    "peak_other_cpu_percent": 33.6,
+    "peak_load1": 1.58642578125,
+    "contended": false,
+    "busiest_other_processes": [
+      {
+        "name": "Docker Desktop Helper (Renderer)",
+        "peak_cpu_percent": 18.9
+      },
+      {
+        "name": "WallpaperAerialsExtension",
+        "peak_cpu_percent": 10.2
+      },
+      {
+        "name": "VTDecoderXPCService",
+        "peak_cpu_percent": 2.9
+      },
+      {
+        "name": "Google Chrome Helper (Aperitif Renderer)",
+        "peak_cpu_percent": 2.0
+      }
+    ]
+  },
+  "stable": false,
+  "raw_rows": [
+    {
+      "build_commit": "cbb1c1c",
+      "build_number": 1,
+      "cpu_info": "Accelerate, Apple M3",
+      "gpu_info": "Apple M3",
+      "backends": "MTL,BLAS",
+      "model_filename": "/Users/musa/inference-infra-lab/models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+      "model_type": "qwen2 1B Q4_K - Medium",
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "n_batch": 2048,
+      "n_ubatch": 512,
+      "n_threads": 4,
+      "cpu_mask": "0x0",
+      "cpu_strict": false,
+      "poll": 50,
+      "type_k": "f16",
+      "type_v": "f16",
+      "n_gpu_layers": 99,
+      "n_cpu_moe": 0,
+      "split_mode": "layer",
+      "main_gpu": 0,
+      "no_kv_offload": false,
+      "flash_attn": -1,
+      "devices": "auto",
+      "tensor_split": "0.00",
+      "tensor_buft_overrides": "none",
+      "load_mode": "auto",
+      "lazy_mode": "auto",
+      "embeddings": false,
+      "no_op_offload": 0,
+      "no_host": false,
+      "repack": true,
+      "fit_target": 0,
+      "fit_min_ctx": 0,
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "test_time": "2026-11-22T18:41:36Z",
+      "avg_ns": 158641900,
+      "stddev_ns": 188085,
+      "avg_ts": 3227.39814,
+      "stddev_ts": 3.816875,
+      "samples_ns": [
+        158969083,
+        158585125,
+        158489125,
+        158564959,
+        158601209
+      ],
+      "samples_ts": [
+        3220.75,
+        3228.55,
+        3230.51,
+        3228.96,
+        3228.22
+      ]
+    },
+    {
+      "build_commit": "cbb1c1c",
+      "build_number": 1,
+      "cpu_info": "Accelerate, Apple M3",
+      "gpu_info": "Apple M3",
+      "backends": "MTL,BLAS",
+      "model_filename": "/Users/musa/inference-infra-lab/models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+      "model_type": "qwen2 1B Q4_K - Medium",
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "n_batch": 2048,
+      "n_ubatch": 512,
+      "n_threads": 4,
+      "cpu_mask": "0x0",
+      "cpu_strict": false,
+      "poll": 50,
+      "type_k": "f16",
+      "type_v": "f16",
+      "n_gpu_layers": 99,
+      "n_cpu_moe": 0,
+      "split_mode": "layer",
+      "main_gpu": 0,
+      "no_kv_offload": false,
+      "flash_attn": -1,
+      "devices": "auto",
+      "tensor_split": "0.00",
+      "tensor_buft_overrides": "none",
+      "load_mode": "auto",
+      "lazy_mode": "auto",
+      "embeddings": false,
+      "no_op_offload": 0,
+      "no_host": false,
+      "repack": true,
+      "fit_target": 0,
+      "fit_min_ctx": 0,
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "test_time": "2026-11-22T18:41:37Z",
+      "avg_ns": 1829354316,
+      "stddev_ns": 4038244400,
+      "avg_ts": 115.143264,
+      "stddev_ts": 68.78898,
+      "samples_ns": [
+        770899250,
+        773465166,
+        781760750,
+        4292885541,
+        2527760875
+      ],
+      "samples_ts": [
+        166.04,
+        165.489,
+        163.733,
+        29.8168,
+        50.6377
+      ]
+    }
+  ],
+  "environment": {
+    "machine": {
+      "chip": "Apple M3",
+      "arch": "arm64",
+      "memory_gb": 16.0,
+      "cpu_cores": 8,
+      "os": "macOS-26.2-arm64-arm-64bit"
+    },
+    "conditions": {
+      "load_average_1_5_15": [
+        1.458984375,
+        4.03564453125,
+        7.94384765625
+      ],
+      "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+      "power": "Now drawing from 'AC Power'",
+      "gpu_utilization": {
+        "peak": 85,
+        "mean": 17.0,
+        "samples": 5
+      },
+      "memory_free_percent": 56,
+      "swap_used_mb": 1919.5
+    },
+    "software": {
+      "python": "3.12.8",
+      "llama_cpp_commit": "cbb1c1c50bba81929387dea473873d1df87a6212"
+    },
+    "model": {
+      "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+      "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    }
+  }
+}

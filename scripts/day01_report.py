@@ -1,11 +1,15 @@
-"""Render Day 1's baseline results as Markdown tables, straight from the results file.
+"""Render Day 1's results as Markdown tables, straight from the results files.
 
-No number in the write-up is typed by hand: they all come from this output.
+No number in the write-up is typed by hand: they all come from this output. Writes
+results/baseline_table.md and, for the follow-up measurements that have result files,
+results/followup_table.md.
 """
 
 import json
 import pathlib
 import statistics as st
+
+from inferlab import followup_report
 
 DAY = pathlib.Path(__file__).resolve().parents[1] / "days" / "01-harness-and-baseline"
 report = json.loads((DAY / "results" / "baseline_llama_server.json").read_text())
@@ -65,3 +69,34 @@ out = "\n\n".join(
 )
 (DAY / "results" / "baseline_table.md").write_text(out + "\n")
 print(out)
+
+# The follow-ups: only the result files that exist, each rendered by the tested module.
+RESULTS = DAY / "results"
+sections = []
+if (RESULTS / "harness_overhead.json").exists():
+    overhead = json.loads((RESULTS / "harness_overhead.json").read_text())
+    sections += [
+        "Harness overhead, three runs against a fake server with known timing:",
+        followup_report.overhead_table(overhead),
+    ]
+if (RESULTS / "cache_comparison.json").exists():
+    cache = json.loads((RESULTS / "cache_comparison.json").read_text())
+    sections += [
+        "Cold against warm prompt cache, one session:",
+        followup_report.cache_table(cache),
+        "Decode speed probes either side of each phase, to show the machine stayed up to speed:",
+        followup_report.references_table(cache),
+    ]
+if (RESULTS / "llama_bench.json").exists():
+    bench = json.loads((RESULTS / "llama_bench.json").read_text())
+    sections += [
+        "llama-bench cross-check:",
+        followup_report.bench_table(bench),
+        "Decode speed probes either side of the run:",
+        followup_report.references_table(bench),
+    ]
+if sections:
+    follow = "\n\n".join(sections)
+    (RESULTS / "followup_table.md").write_text(follow + "\n")
+    print()
+    print(follow)

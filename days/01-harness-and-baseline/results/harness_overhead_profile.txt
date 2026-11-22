@@ -1,0 +1,20 @@
+         491998 function calls (482252 primitive calls) in 1.707 seconds
+
+   Ordered by: internal time
+   List reduced from 388 to 12 due to restriction <12>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     2223    0.144    0.000    0.144    0.000 {method 'recv' of '_socket.socket' objects}
+      100    0.066    0.001    1.707    0.017 /Users/musa/inference-infra-lab/src/inferlab/client.py:88(stream_chat)
+     4523    0.056    0.000    0.178    0.000 /Users/musa/inference-infra-lab/.venv/lib/python3.12/site-packages/h11/_readers.py:156(__call__)
+     2500    0.050    0.000    0.830    0.000 /Users/musa/inference-infra-lab/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py:209(_receive_event)
+16192/13992    0.043    0.000    0.459    0.000 {built-in method builtins.next}
+39100/37100    0.043    0.000    0.057    0.000 {built-in method builtins.isinstance}
+30115/25669    0.042    0.000    0.052    0.000 {built-in method builtins.len}
+     4723    0.041    0.000    0.413    0.000 /Users/musa/inference-infra-lab/.venv/lib/python3.12/site-packages/h11/_connection.py:438(next_event)
+     2223    0.036    0.000    0.251    0.000 /Users/musa/inference-infra-lab/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py:124(read)
+     4700    0.033    0.000    0.137    0.000 /Users/musa/inference-infra-lab/src/inferlab/client.py:57(parse_data_line)
+     8246    0.030    0.000    0.041    0.000 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:104(__init__)
+    21800    0.030    0.000    0.030    0.000 {method 'get' of 'dict' objects}
+
+

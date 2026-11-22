@@ -15,6 +15,11 @@ safely, the run stops and says so. It never improvises around a guardrail.
 4. Machine state for benchmark days: on AC power, Docker Desktop quit unless the day needs it
    (16 GB is shared), and the result metadata records `pmset -g therm`, load average and free
    memory. A run that starts throttled is rescheduled, not measured.
+5. GPU measurements on this machine: it is a fanless MacBook Air, and sustained load slowed it to a
+   third of its speed for several minutes while repeats stayed steady (Day 1, attempt 3). Take a
+   short decode probe before and after every GPU phase and refuse the phase if the probe is more
+   than 20% below the Day 1 baseline (`scripts/day01_followup.py`, `reference_decode`). Re-probe
+   for up to ten minutes before giving up.
 
 ## 2. Do the day
 

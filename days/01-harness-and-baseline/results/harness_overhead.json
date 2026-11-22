@@ -1,0 +1,159 @@
+{
+  "runs": [
+    {
+      "events": 3450,
+      "overhead_us": {
+        "n": 3450,
+        "median": 268.458,
+        "p95": 448.37515000000013,
+        "p99": 737.6549100000011,
+        "min": 66.375,
+        "max": 5728.125,
+        "mean": 280.0050255072464
+      },
+      "events_that_appeared_to_arrive_early": 0
+    },
+    {
+      "events": 3450,
+      "overhead_us": {
+        "n": 3450,
+        "median": 268.14599999999996,
+        "p95": 422.07050000000044,
+        "p99": 740.7163400000002,
+        "min": 68.708,
+        "max": 3465.0,
+        "mean": 278.8894886956522
+      },
+      "events_that_appeared_to_arrive_early": 0
+    },
+    {
+      "events": 3450,
+      "overhead_us": {
+        "n": 3450,
+        "median": 271.0835,
+        "p95": 446.667,
+        "p99": 756.402580000002,
+        "min": 68.917,
+        "max": 3015.75,
+        "mean": 283.7453620289855
+      },
+      "events_that_appeared_to_arrive_early": 0
+    }
+  ],
+  "neighbours_per_run": [
+    {
+      "samples": 16,
+      "peak_other_cpu_percent": 80.0,
+      "peak_load1": 1.4580078125,
+      "contended": false,
+      "busiest_other_processes": [
+        {
+          "name": "Docker Desktop Helper (Renderer)",
+          "peak_cpu_percent": 60.5
+        },
+        {
+          "name": "launchd",
+          "peak_cpu_percent": 32.5
+        },
+        {
+          "name": "WhatsApp",
+          "peak_cpu_percent": 17.7
+        },
+        {
+          "name": "WallpaperAerialsExtension",
+          "peak_cpu_percent": 12.1
+        }
+      ]
+    },
+    {
+      "samples": 16,
+      "peak_other_cpu_percent": 77.0,
+      "peak_load1": 1.25341796875,
+      "contended": false,
+      "busiest_other_processes": [
+        {
+          "name": "Google Chrome Helper (Aperitif Renderer)",
+          "peak_cpu_percent": 59.6
+        },
+        {
+          "name": "Docker Desktop Helper (Renderer)",
+          "peak_cpu_percent": 28.5
+        },
+        {
+          "name": "WallpaperAerialsExtension",
+          "peak_cpu_percent": 12.0
+        },
+        {
+          "name": "claude",
+          "peak_cpu_percent": 10.9
+        }
+      ]
+    },
+    {
+      "samples": 16,
+      "peak_other_cpu_percent": 35.2,
+      "peak_load1": 1.36767578125,
+      "contended": false,
+      "busiest_other_processes": [
+        {
+          "name": "WallpaperAerialsExtension",
+          "peak_cpu_percent": 10.0
+        },
+        {
+          "name": "WidgetsExtension",
+          "peak_cpu_percent": 9.3
+        },
+        {
+          "name": "claude",
+          "peak_cpu_percent": 6.8
+        },
+        {
+          "name": "Docker Desktop Helper (Renderer)",
+          "peak_cpu_percent": 6.6
+        }
+      ]
+    }
+  ],
+  "upper_bound_us": {
+    "median": 271.0835,
+    "p95": 448.37515000000013,
+    "p99": 756.402580000002,
+    "max": 5728.125
+  },
+  "client_cpu_us_per_event_profiled": 744.3830434782609,
+  "events_that_appeared_to_arrive_early": 0,
+  "stable": true,
+  "environment": {
+    "machine": {
+      "chip": "Apple M3",
+      "arch": "arm64",
+      "memory_gb": 16.0,
+      "cpu_cores": 8,
+      "os": "macOS-26.2-arm64-arm-64bit"
+    },
+    "conditions": {
+      "load_average_1_5_15": [
+        1.2412109375,
+        4.39453125,
+        8.275390625
+      ],
+      "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+      "power": "Now drawing from 'AC Power'",
+      "gpu_utilization": {
+        "peak": 1,
+        "mean": 0.2,
+        "samples": 5
+      },
+      "memory_free_percent": 57,
+      "swap_used_mb": 1919.5
+    },
+    "software": {
+      "python": "3.12.8",
+      "llama_cpp_commit": null
+    },
+    "model": {
+      "file": null,
+      "sha256": null
+    }
+  }
+}

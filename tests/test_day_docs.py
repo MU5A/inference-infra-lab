@@ -22,6 +22,17 @@ def test_day_one_readme_contains_the_generated_tables_verbatim():
     )
 
 
+@pytest.mark.skipif(
+    not (DAY1 / "results" / "followup_table.md").exists(), reason="no follow-up results committed"
+)
+def test_day_one_readme_contains_the_generated_follow_up_tables_verbatim():
+    generated = (DAY1 / "results" / "followup_table.md").read_text().strip()
+    assert generated in (DAY1 / "README.md").read_text(), (
+        "days/01-harness-and-baseline/README.md differs from results/followup_table.md. "
+        "Regenerate with: python scripts/day01_report.py"
+    )
+
+
 DAY2 = ROOT / "days" / "02-memory-hierarchy"
 
 

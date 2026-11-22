@@ -25,7 +25,7 @@ PREFILL_TOLERANCE = 0.15
 MAX_BENCH_CV = 0.05
 # Added after the third attempt, not before it. That attempt ran about 3x slow from start to finish
 # with run-to-run variation under 0.5%, so the repeat limit could not see it. Anything more than 20%
-# below the clean baseline is refused; clean sessions differed from the baseline by under 8%.
+# below the clean baseline is refused. Clean probes read from 0.6% below to 10% above the baseline.
 REFERENCE_TOLERANCE = 0.20
 
 

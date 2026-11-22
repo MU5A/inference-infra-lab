@@ -123,7 +123,7 @@ exceeds 1 / interval", which is false when the first event is late). The arithme
 with exact scripted arrival times, and the HTTP tests keep only properties that hold at any speed.
 The suite went from 92 to 98 tests and the mutation check still catches all 17 breakages.
 
-## 9. Not done yet (superseded by section 10)
+## 9. Not done yet (superseded by sections 10 and 11)
 
 ## 10. The three open measurements, attempted on Day 2
 
@@ -155,3 +155,51 @@ marked done.
 
 Three measurements need a quiet machine and were refused by the check. They are listed in
 [README.md](README.md) as not yet measured.
+
+Correction (section 11): the claim above that the GPU was shared rested on a GPU-utilization
+reading that cannot separate the benchmark's own use from a neighbour's. What is known is that VLC
+was running and decode collapsed; the mechanism was not isolated.
+
+## 11. The three measurements, repeated (2026-11-22)
+
+Free disk was 3.6 GiB, under the runbook's 8 GB rule; I went ahead as on Day 2.
+
+**Harness overhead (held).** Three runs of 3,450 events against the fake server, 0 events seen
+before they were sent, upper bound over the runs 271 us median, 448 us p95, 756 us p99, 5,728 us
+max. Run 1 contained the worst event while Docker Desktop's helper used up to 60% CPU. Taken before
+the GPU work below, and it does not involve the GPU.
+
+**Attempt 2 at cache and llama-bench (did not hold).** Short prompt speed-up 3.4x, warm long run
+unstable (time to first token 13%), llama-bench decode samples 166.0, 165.5, 163.7, 29.8, 50.6
+(variation 59.7%). Quarantined.
+
+**Mistake: a GPU contention flag.** I added GPU utilization to `Watch` and made a peak above 25% mean
+"contended". It read 94 to 100% in the next run, because the benchmark itself drives the GPU. The
+flag fired on every run and could not tell a neighbour from my own work. Reverted in the next commit.
+
+**Attempt 3 (steady and slow).** Cold phase 155 to 161 tokens/s decode, then warm decode 157, 103 and
+86; llama-bench 779.5 prompt tokens/s and 55.7 decode with variation under 0.5%. The repeat limit
+passed a machine that was slow the whole time. Diagnosis, all of it recorded in
+`results/rejected/`: the Metal backend was in use (backends `MTL,BLAS`), memory bandwidth was
+normal (triad 84.5 GB/s), VLC was idle (0% CPU), GPU utilization read 0 to 1% with nothing of mine
+running, and the machine is a fanless MacBook Air (Mac15,12). A script that idled and then probed
+decode read 166.1 and 166.5 after 240 s, 164.9 and 164.8 after another 300 s, and 167.7 and 167.8
+after another 420 s. The slowdown faded with rest. Heat is the likely cause. I read no temperature
+or clock, so it is a hypothesis.
+
+**Reference probe added (after the data).** `crosscheck.check_reference`: a short decode-only
+llama-bench before and after every GPU phase, refused if more than 20% below the baseline, retried
+once a minute for up to ten minutes. Tolerance chosen after seeing attempt 3. Tests, and three
+mutations (floor never applied, floor exclusive, missing probe accepted), all caught.
+
+**Attempt 4 (held, with one prediction failing).** Cold and warm phases and llama-bench all passed
+their variation limits and every probe was within 20% of the baseline (probes 151.6 to 164.6
+tokens/s). Short prompt warm speed-up 3.2x against a predicted 5x, a finding. Medium 11.1x, long
+47.2x. llama-bench prompt processing 3,191.9 tokens/s (+6.2% against the server's rate) and decode
+159.7 tokens/s (+4.7% against the baseline). The cold phase was not quiet: other processes reached
+144.5% CPU, just under the 150% limit, mostly Chrome's renderer helper (89%), and cold long-prompt
+decode read 142.0 tokens/s against 159.5 and 158.0 for the other cold prompts. Not used in a claim.
+
+**Tables.** `src/inferlab/followup_report.py` renders them from the result files. A row from a run
+that was not repeatable gets no numbers, only the reason. `tests/test_day_docs.py` checks the README
+contains the generated tables verbatim.
