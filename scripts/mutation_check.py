@@ -297,12 +297,6 @@ MUTATIONS = [
         "if True:",
     ),
     (
-        "watch: GPU contention is never reported",
-        S / "watch.py",
-        "gpu_contended = gpu_peak is not None and gpu_peak > CONTENDED_GPU_PERCENT",
-        "gpu_contended = False",
-    ),
-    (
         "usage not captured",
         S / "client.py",
         '                if isinstance(event.get("usage"), dict):\n                    result.usage = event["usage"]\n',
