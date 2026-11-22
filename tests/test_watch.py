@@ -12,10 +12,18 @@ def busy(*pairs):
 
 
 class TestSummary:
-    def feed(self, monkeypatch, snapshots):
+    def feed(self, monkeypatch, snapshots, gpu_peaks=None):
         queue = iter(snapshots)
         monkeypatch.setattr(env, "busy_processes", lambda *a, **k: next(queue))
         monkeypatch.setattr(watch.os, "getloadavg", lambda: (2.5, 2.0, 1.0))
+        gpu = iter(gpu_peaks or [None] * len(snapshots))
+        monkeypatch.setattr(
+            env,
+            "gpu_utilization",
+            lambda *a, **k: (
+                None if (p := next(gpu)) is None else {"peak": p, "mean": 0, "samples": 3}
+            ),
+        )
         w = watch.Watch()
         for _ in snapshots:
             w.sample()
@@ -35,6 +43,21 @@ class TestSummary:
     def test_a_peak_above_one_and_a_half_cores_is_marked_contended(self, monkeypatch):
         assert self.feed(monkeypatch, [busy(("a", 151.0))]).summary()["contended"] is True
         assert self.feed(monkeypatch, [busy(("a", 150.0))]).summary()["contended"] is False
+
+    def test_a_gpu_peak_above_the_limit_is_contention_even_when_the_cpu_is_idle(self, monkeypatch):
+        """What motivated this: decode collapsed under a video player while the CPU looked idle."""
+        w = self.feed(monkeypatch, [busy(("x", 5.0)), busy(("x", 5.0))], gpu_peaks=[2, 85])
+        s = w.summary()
+        assert s["peak_gpu_percent"] == 85
+        assert s["gpu_contended"] is True and s["cpu_contended"] is False and s["contended"] is True
+
+    def test_the_gpu_limit_is_inclusive_and_an_unreadable_gpu_is_not_contention(self, monkeypatch):
+        assert (
+            self.feed(monkeypatch, [busy(("x", 1.0))], gpu_peaks=[25]).summary()["gpu_contended"]
+            is False
+        )
+        unknown = self.feed(monkeypatch, [busy(("x", 1.0))], gpu_peaks=[None]).summary()
+        assert unknown["peak_gpu_percent"] is None and unknown["gpu_contended"] is False
 
     def test_no_samples_means_unknown_not_quiet(self, monkeypatch):
         monkeypatch.setattr(env, "busy_processes", lambda *a, **k: None)
@@ -62,6 +85,7 @@ class TestSummary:
 
 def test_the_sampler_thread_collects_samples_and_stops(monkeypatch):
     monkeypatch.setattr(env, "busy_processes", lambda *a, **k: busy(("x", 1.0)))
+    monkeypatch.setattr(env, "gpu_utilization", lambda *a, **k: None)
     with watch.Watch(interval_s=0.01) as w:
         deadline = time.monotonic() + 3
         while not w.samples and time.monotonic() < deadline:

@@ -18,6 +18,9 @@ from . import env
 # Other processes using more than this much CPU in total (150 is one and a half cores) mark a run
 # as contended. Interference only ever adds error, so a contended run is not wrong, only looser.
 CONTENDED_CPU_PERCENT = 150.0
+# A GPU peak above this marks a run as contended. Decode is many small GPU kernels and collapsed
+# from 165 to 30 tokens/s when a video player shared the GPU, while the CPU looked idle.
+CONTENDED_GPU_PERCENT = 25
 
 
 class Watch:
@@ -31,7 +34,14 @@ class Watch:
     def sample(self) -> None:
         busy = env.busy_processes(self.top, exclude_tree_of=os.getpid())
         if busy is not None:
-            self.samples.append({"load1": os.getloadavg()[0], "busy": busy})
+            gpu = env.gpu_utilization(samples=3, interval_s=0.05)
+            self.samples.append(
+                {
+                    "load1": os.getloadavg()[0],
+                    "busy": busy,
+                    "gpu_peak": gpu["peak"] if gpu else None,
+                }
+            )
 
     def _loop(self) -> None:
         while not self._stop.wait(self.interval_s):
@@ -56,11 +66,18 @@ class Watch:
                 names[p["name"]] = max(names.get(p["name"], 0.0), p["cpu_percent"])
         worst = sorted(names.items(), key=lambda kv: kv[1], reverse=True)[:4]
         peak = max(totals, default=None)
+        gpu_peaks = [s["gpu_peak"] for s in self.samples if s.get("gpu_peak") is not None]
+        gpu_peak = max(gpu_peaks, default=None)
+        cpu_contended = peak is not None and peak > CONTENDED_CPU_PERCENT
+        gpu_contended = gpu_peak is not None and gpu_peak > CONTENDED_GPU_PERCENT
         return {
             "samples": len(self.samples),
             "peak_other_cpu_percent": peak,
+            "peak_gpu_percent": gpu_peak,
             "peak_load1": max((s["load1"] for s in self.samples), default=None),
-            "contended": peak is not None and peak > CONTENDED_CPU_PERCENT,
+            "cpu_contended": cpu_contended,
+            "gpu_contended": gpu_contended,
+            "contended": cpu_contended or gpu_contended,
             "busiest_other_processes": [{"name": n, "peak_cpu_percent": c} for n, c in worst],
         }
 
