@@ -7,7 +7,7 @@ import socket
 import httpx
 import pytest
 
-from inferlab.client import metrics, parse_data_line, stream_chat
+from inferlab.client import StreamResult, metrics, parse_data_line, stream_chat
 from inferlab.fakeserver import Behavior, FakeServer
 
 
@@ -42,20 +42,18 @@ class TestTiming:
     def test_ttft_is_the_first_text_event_not_the_first_event(self):
         """The role event arrives at once. Only the delayed text event counts as the first token."""
         _, m, _ = run(Behavior(first_delay_s=0.15, interval_s=0.02, n_tokens=5))
-        assert m["ttft_s"] >= 0.15
-        assert m["ttft_s"] < 0.15 + 0.4
+        assert m["ttft_s"] >= 0.15  # cannot be earlier than the server's own delay
+        assert m["ttft_s"] < 10  # a hang, not a timing claim
 
-    def test_inter_token_gaps_follow_the_interval(self):
+    def test_there_is_one_gap_between_each_pair_of_text_events(self):
         _, m, _ = run(Behavior(first_delay_s=0.02, interval_s=0.03, n_tokens=8))
         assert len(m["itl_s"]) == 7
-        assert all(gap >= 0 for gap in m["itl_s"])
-        assert 0.02 < sorted(m["itl_s"])[3] < 0.08  # the median gap
+        assert all(gap > 0 for gap in m["itl_s"])
 
     def test_decode_rate_is_events_after_the_first_over_the_time_they_took(self):
         result, m, _ = run(Behavior(first_delay_s=0.02, interval_s=0.02, n_tokens=11))
         span = (result.text_arrivals_ns[-1] - result.text_arrivals_ns[0]) / 1e9
         assert m["decode_tps"] == pytest.approx(10 / span)
-        assert 0.1 / 0.02 < m["decode_tps"] <= 1.05 / 0.02  # never faster than the server paces it
 
     def test_the_usage_based_rate_counts_the_end_token_the_event_rate_does_not(self):
         _, m, _ = run(Behavior(interval_s=0.02, n_tokens=8))
@@ -136,3 +134,44 @@ class TestClockSanity:
         assert result.events
         for arrived, event in result.events:
             assert arrived - event["x_sent_ns"] >= 0
+
+
+def scripted(arrivals_ms: list[float], usage: dict | None = None) -> StreamResult:
+    """A result whose arrival times are exact, so the arithmetic is tested with no clock at all."""
+    arrivals = [int(a * 1e6) for a in arrivals_ms]
+    return StreamResult(
+        start_ns=0, end_ns=arrivals[-1] if arrivals else 0, text_arrivals_ns=arrivals, usage=usage
+    )
+
+
+class TestArithmeticWithExactTimes:
+    def test_ttft_gaps_and_decode_rate(self):
+        m = metrics(scripted([100, 120, 140, 160]))
+        assert m["ttft_s"] == pytest.approx(0.100)
+        assert m["itl_s"] == pytest.approx([0.020, 0.020, 0.020])
+        assert m["decode_tps"] == pytest.approx(50.0)  # 3 events after the first, in 60 ms
+
+    def test_uneven_gaps_are_paired_in_order(self):
+        m = metrics(scripted([10, 15, 35, 36]))
+        assert m["itl_s"] == pytest.approx([0.005, 0.020, 0.001])
+        assert m["decode_tps"] == pytest.approx(3 / 0.026)
+
+    def test_the_usage_rate_uses_the_servers_count_and_the_event_rate_does_not(self):
+        usage = {"completion_tokens": 5, "prompt_tokens": 9}
+        m = metrics(scripted([100, 120, 140, 160], usage))
+        assert m["decode_tps"] == pytest.approx(3 / 0.060)  # 4 events
+        assert m["decode_tps_usage"] == pytest.approx(4 / 0.060)  # 5 tokens, one is the end token
+        assert m["unseen_tokens"] == 1
+
+    def test_one_event_has_a_ttft_and_nothing_else(self):
+        m = metrics(scripted([42]))
+        assert m["ttft_s"] == pytest.approx(0.042)
+        assert m["itl_s"] == [] and m["decode_tps"] is None
+
+    def test_no_events_has_nothing(self):
+        m = metrics(scripted([]))
+        assert m["ttft_s"] is None and m["itl_s"] == [] and m["decode_tps"] is None
+
+    def test_events_with_the_same_arrival_time_do_not_divide_by_zero(self):
+        m = metrics(scripted([50, 50, 50]))
+        assert m["decode_tps"] is None and m["itl_s"] == [0.0, 0.0]
