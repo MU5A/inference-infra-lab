@@ -255,6 +255,48 @@ MUTATIONS = [
         "int calls = probe_ns >= 0 ? 1 :",
     ),
     (
+        "crosscheck: the cache speed-up prediction is never checked",
+        S / "crosscheck.py",
+        'if row["speedup"] < min_speedup:',
+        "if False:",
+    ),
+    (
+        "crosscheck: a cold run that reused cached tokens passes",
+        S / "crosscheck.py",
+        'if row["cold_cached_tokens"] != 0:',
+        "if False:",
+    ),
+    (
+        "crosscheck: llama-bench variation is not limited",
+        S / "crosscheck.py",
+        "MAX_BENCH_CV = 0.05",
+        "MAX_BENCH_CV = 9.0",
+    ),
+    (
+        "crosscheck: the decode tolerance is loosened",
+        S / "crosscheck.py",
+        "DECODE_TOLERANCE = 0.10",
+        "DECODE_TOLERANCE = 0.90",
+    ),
+    (
+        "overhead: the upper bound takes the best run, not the worst",
+        S / "overhead.py",
+        'return {k: max(r["overhead_us"][k] for r in runs) for k in keys}',
+        'return {k: min(r["overhead_us"][k] for r in runs) for k in keys}',
+    ),
+    (
+        "watch: contended is never reported",
+        S / "watch.py",
+        '"contended": peak is not None and peak > CONTENDED_CPU_PERCENT,',
+        '"contended": False,',
+    ),
+    (
+        "watch: wait_quiet never waits",
+        S / "watch.py",
+        "if not problems or clock() >= deadline:",
+        "if True:",
+    ),
+    (
         "usage not captured",
         S / "client.py",
         '                if isinstance(event.get("usage"), dict):\n                    result.usage = event["usage"]\n',

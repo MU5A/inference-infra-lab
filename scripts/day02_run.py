@@ -17,12 +17,12 @@ import json
 import os
 import subprocess
 import sys
-import threading
 import time
 from pathlib import Path
 
 from inferlab import env
 from inferlab.memory import across_runs, check_cold_predictions, cold_vs_warm, latency_summary
+from inferlab.watch import Watch, wait_quiet
 
 ROOT = Path(__file__).resolve().parents[1]
 BIN = ROOT / "microbench" / "build"
@@ -45,56 +45,6 @@ def run_json(args: list, extra_env: dict | None = None) -> dict:
     if proc.returncode != 0:
         raise RuntimeError(f"{args[0]} exited {proc.returncode}: {proc.stderr.strip()[:300]}")
     return json.loads(proc.stdout)
-
-
-class Watch:
-    """Sample which other processes are using the CPU while a measurement runs.
-
-    A pre-flight at the start cannot see a build that begins mid-run, which is what disturbed the
-    first compute run. This records the busiest processes outside the benchmark every two seconds,
-    so interference can be named. It does not decide stability: the run-to-run variation does.
-    """
-
-    def __enter__(self):
-        self.samples: list[dict] = []
-        self._stop = threading.Event()
-        self._thread = threading.Thread(target=self._loop, daemon=True)
-        self._thread.start()
-        return self
-
-    def _loop(self):
-        while not self._stop.wait(2.0):
-            busy = env.busy_processes(6, exclude_tree_of=os.getpid())
-            if busy is not None:
-                self.samples.append({"load1": os.getloadavg()[0], "busy": busy})
-
-    def __exit__(self, *_exc):
-        self._stop.set()
-        self._thread.join(timeout=5)
-
-    def summary(self) -> dict:
-        totals = [sum(p["cpu_percent"] for p in s["busy"]) for s in self.samples]
-        names: dict[str, float] = {}
-        for sample in self.samples:
-            for p in sample["busy"]:
-                names[p["name"]] = max(names.get(p["name"], 0.0), p["cpu_percent"])
-        worst = sorted(names.items(), key=lambda kv: kv[1], reverse=True)[:4]
-        return {
-            "samples": len(self.samples),
-            "peak_other_cpu_percent": max(totals, default=None),
-            "peak_load1": max((s["load1"] for s in self.samples), default=None),
-            "busiest_other_processes": [{"name": n, "peak_cpu_percent": c} for n, c in worst],
-        }
-
-
-def wait_quiet(limit_s: float) -> list[str]:
-    """Poll the pre-flight until it is clean or the time is up. Returns the remaining problems."""
-    deadline = time.monotonic() + limit_s
-    while True:
-        problems = env.preflight()
-        if not problems or time.monotonic() >= deadline:
-            return problems
-        time.sleep(10)
 
 
 def bandwidth(runs: int) -> dict:
