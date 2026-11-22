@@ -112,6 +112,7 @@ static int parse_list(const char *text, int *out, int max) {
 }
 
 #define TOLERANCE 1e-4
+#define MIN_SAMPLE_NS 20e6
 
 int main(int argc, char **argv) {
     int selftest = arg_flag(argc, argv, "--selftest");
@@ -162,11 +163,19 @@ int main(int argc, char **argv) {
             double err = rel_error(n, C, R);
             int ok = err < TOLERANCE;
             if (!ok) all_ok = 0;
+            /* A 128 x 128 multiply takes microseconds, so timing one call measures the clock and the
+             * scheduler. Repeat the call until one timed sample lasts at least 20 ms, then divide. */
+            uint64_t t_probe = now_ns();
+            run_variant(&variants[v], n, A, B, C);
+            double probe_ns = (double)(now_ns() - t_probe);
+            int calls = probe_ns >= MIN_SAMPLE_NS ? 1 : (int)(MIN_SAMPLE_NS / (probe_ns > 1 ? probe_ns : 1)) + 1;
+            if (calls > 100000) calls = 100000;
             double rates[64];
             for (int r = 0; r < reps && r < 64; r++) {
                 uint64_t t0 = now_ns();
-                run_variant(&variants[v], n, A, B, C);
-                rates[r] = 2.0 * (double)n * n * n / ((double)(now_ns() - t0) / 1e9) / 1e9;
+                for (int c = 0; c < calls; c++) run_variant(&variants[v], n, A, B, C);
+                double per_call_s = (double)(now_ns() - t0) / 1e9 / (double)calls;
+                rates[r] = 2.0 * (double)n * n * n / per_call_s / 1e9;
             }
             int m = reps < 64 ? reps : 64;
             /* The warm-up result was checked above. Check the last timed result too, so a variant
@@ -179,7 +188,7 @@ int main(int argc, char **argv) {
             for (int r = 0; r < m; r++)
                 if (rates[r] > best) best = rates[r];
             double med = median(rates, m);
-            printf("%s\"%s\":{\"gflops_best\":%.3f,\"gflops_median\":%.3f,\"rel_err\":%.3e,\"ok\":%s}", printed ? "," : "", variants[v].name, best, med, err,
+            printf("%s\"%s\":{\"gflops_best\":%.3f,\"gflops_median\":%.3f,\"calls_per_sample\":%d,\"rel_err\":%.3e,\"ok\":%s}", printed ? "," : "", variants[v].name, best, med, calls, err,
                    ok ? "true" : "false");
             printed = 1;
         }

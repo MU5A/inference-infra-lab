@@ -249,6 +249,12 @@ MUTATIONS = [
         "if False:",
     ),
     (
+        "matmul: every sample times a single call, however short",
+        C / "matmul.c",
+        "int calls = probe_ns >= MIN_SAMPLE_NS ? 1 :",
+        "int calls = probe_ns >= 0 ? 1 :",
+    ),
+    (
         "usage not captured",
         S / "client.py",
         '                if isinstance(event.get("usage"), dict):\n                    result.usage = event["usage"]\n',

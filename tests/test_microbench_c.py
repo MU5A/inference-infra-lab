@@ -89,6 +89,23 @@ class TestMatmul:
                 assert v["ok"] is True and v["rel_err"] < out["tolerance"], name
                 assert v["gflops_best"] > 0
 
+    def test_tiny_multiplies_are_repeated_until_a_sample_is_long_enough_to_time(self, bins):
+        out = run(
+            bins / "matmul",
+            "--sizes",
+            "16,256",
+            "--blocks",
+            "16",
+            "--variants",
+            "ikj",
+            "--reps",
+            "2",
+        )
+        small, larger = (r["variants"]["ikj"] for r in out["results"])
+        assert small["calls_per_sample"] > 100  # microsecond-scale calls need many repeats
+        assert larger["calls_per_sample"] < small["calls_per_sample"]
+        assert small["gflops_best"] > 0 and small["ok"] is True
+
     def test_a_size_that_is_not_a_multiple_of_the_block_still_computes_correctly(self, bins):
         out = run(bins / "matmul", "--sizes", "50", "--blocks", "32", "--variants", "blocked")
         assert out["results"][0]["variants"]["blocked32"]["ok"] is True
