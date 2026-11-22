@@ -119,3 +119,75 @@ def test_a_sweep_that_is_too_sparse_loses_a_narrow_level():
     """Why real runs sample 4 points per octave: at 2, a narrow level has too few points."""
     assert len(plateaus(synthetic(LEVELS, per_octave=4))) == 4
     assert len(plateaus(synthetic(LEVELS, per_octave=2))) == 3
+
+
+class TestLatencySummary:
+    def sweeps(self, seeds, noise=0.04, levels=LEVELS):
+        return [
+            {
+                "points": [
+                    {"bytes": b, "ns_median": ns}
+                    for b, ns in synthetic(levels, noise=noise, seed=s)
+                ]
+            }
+            for s in seeds
+        ]
+
+    def test_repeatable_sweeps_give_four_stable_plateaus(self):
+        from inferlab.memory import latency_summary
+
+        summary = latency_summary(self.sweeps([1, 2, 3]))
+        assert summary["stable"] is True
+        assert summary["plateaus_per_run"] == [4, 4, 4]
+        assert len(summary["plateaus"]) == 4
+        assert all(e["stable"] for e in summary["plateau_stability"])
+
+    def test_runs_that_disagree_about_the_structure_are_unstable(self):
+        from inferlab.memory import latency_summary
+
+        collapsed = [(128 * KIB, 1.6), (2048 * MIB, 40.0)]  # one run sees only two levels
+        sweeps = self.sweeps([1, 2]) + self.sweeps([3], levels=collapsed)
+        summary = latency_summary(sweeps)
+        assert summary["same_structure"] is False
+        assert summary["stable"] is False
+
+    def test_a_plateau_whose_latency_does_not_repeat_is_unstable(self):
+        from inferlab.memory import latency_summary
+
+        slow = [(128 * KIB, 1.6), (16 * MIB, 5.5), (64 * MIB, 25.0), (2048 * MIB, 150.0)]
+        sweeps = self.sweeps([1, 2]) + self.sweeps([3], levels=slow)
+        summary = latency_summary(sweeps)
+        assert summary["same_structure"] is True
+        assert summary["plateau_stability"][-1]["stable"] is False
+        assert summary["stable"] is False
+
+    def test_the_merged_curve_has_one_point_per_size_with_a_run_count(self):
+        from inferlab.memory import latency_summary
+
+        summary = latency_summary(self.sweeps([1, 2, 3]))
+        assert all(m["runs"] == 3 for m in summary["merged"])
+
+    def test_no_data_is_not_stable(self):
+        from inferlab.memory import latency_summary
+
+        assert latency_summary([])["stable"] is False
+
+
+class TestColdVersusWarm:
+    def test_a_clearly_faster_second_pass_means_the_first_was_cold(self):
+        from inferlab.memory import cold_vs_warm
+
+        result = cold_vs_warm(cold_gbs=2.0, warm_gbs=40.0)
+        assert result["really_cold"] is True and result["ratio"] == 20.0
+
+    def test_two_similar_passes_mean_the_file_was_already_cached(self):
+        from inferlab.memory import cold_vs_warm
+
+        assert cold_vs_warm(cold_gbs=30.0, warm_gbs=35.0)["really_cold"] is False
+
+    def test_the_boundary_and_a_zero_cold_rate(self):
+        from inferlab.memory import cold_vs_warm
+
+        assert cold_vs_warm(2.0, 3.0)["really_cold"] is True
+        assert cold_vs_warm(2.0, 2.99)["really_cold"] is False
+        assert cold_vs_warm(0.0, 5.0)["really_cold"] is True

@@ -9,7 +9,7 @@ instead of being assumed from a datasheet.
 from __future__ import annotations
 
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 from .stats import coefficient_of_variation, percentile
 
@@ -100,3 +100,37 @@ def across_runs(values: Sequence[float], kind: str) -> dict:
         "stable": cv is None or cv <= limit,
         "cv_limit": limit,
     }
+
+
+def latency_summary(sweeps: Sequence[dict]) -> dict:
+    """Combine repeated pointer-chase sweeps into a curve, its plateaus, and a verdict on stability.
+
+    The verdict requires every run to find the same number of plateaus and each plateau's latency
+    to repeat within the limit. A set of sweeps that disagrees about the shape of the hierarchy is
+    not a measurement of it.
+    """
+    per_run = [plateaus([(p["bytes"], p["ns_median"]) for p in s["points"]]) for s in sweeps]
+    merged = merge_latency_runs([s["points"] for s in sweeps])
+    consensus = plateaus([(m["bytes"], m["ns"]) for m in merged])
+    same_structure = len({len(p) for p in per_run}) == 1
+    stability = []
+    if same_structure and per_run and per_run[0]:
+        for index in range(len(per_run[0])):
+            entry = across_runs([run[index].median_ns for run in per_run], "latency")
+            entry["end_bytes_per_run"] = [run[index].end_bytes for run in per_run]
+            stability.append(entry)
+    return {
+        "merged": merged,
+        "plateaus": [asdict(p) for p in consensus],
+        "plateaus_per_run": [len(p) for p in per_run],
+        "same_structure": same_structure,
+        "plateau_stability": stability,
+        "stable": bool(same_structure and stability and all(e["stable"] for e in stability)),
+    }
+
+
+def cold_vs_warm(cold_gbs: float, warm_gbs: float, min_ratio: float = 1.5) -> dict:
+    """Whether a first read really was cold. If the second pass is not clearly faster than the
+    first, the file was already in the page cache and the 'cold' number is not a cold number."""
+    ratio = warm_gbs / cold_gbs if cold_gbs > 0 else float("inf")
+    return {"ratio": ratio, "really_cold": ratio >= min_ratio, "min_ratio": min_ratio}

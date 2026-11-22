@@ -101,12 +101,19 @@ What the numbers show:
 
 ## Still to do for Day 1
 
-These need a quiet machine and were refused by the pre-flight check. They are not yet measured,
-and nothing below claims them.
+Three measurements were attempted on Day 2 and were disturbed by other activity on the machine (a
+video player using the GPU, other processes raising the load). Their files are in
+[`results/rejected/`](results/rejected/README.md) with the reason, and none of their numbers is
+claimed anywhere. They will be repeated, with conditions verified throughout the run:
 
 - The harness's own timing error, measured three times against a fake server with known timing.
-- A cold versus warm prompt cache comparison, to put a number on the cache effect described above.
+- A cold versus warm prompt cache comparison. The effect is large (time to first token fell from
+  tens or hundreds of milliseconds to about 10), but the exact numbers are not citable yet.
 - A cross-check of decode speed against `llama-bench`.
+
+What the attempts changed in the harness: the pre-flight now samples GPU utilization, and results
+are judged by their own run-to-run variation, so a disturbed run is marked unstable whatever caused
+it. See the log, section 10.
 
 ## Limits
 

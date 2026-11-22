@@ -123,7 +123,35 @@ exceeds 1 / interval", which is false when the first event is late). The arithme
 with exact scripted arrival times, and the HTTP tests keep only properties that hold at any speed.
 The suite went from 92 to 98 tests and the mutation check still catches all 17 breakages.
 
-## 9. Not done yet
+## 9. Not done yet (superseded by section 10)
+
+## 10. The three open measurements, attempted on Day 2
+
+All three were attempted with the pre-flight clean at the start. None produced a citable result.
+They are in `results/rejected/` with a note on why.
+
+- **Warm prompt cache.** Time to first token fell from 26.0, 92.9 and 490.8 ms (cold) to 7.7, 8.4 and
+  10.4 ms, with 195, 1,280 and 7,340 cached tokens seen. The direction and rough size are safe, but
+  decode varied by up to 6.9% (a sample at 127.9 against 150 elsewhere), so the run was disturbed and
+  the exact numbers are not citable.
+- **llama-bench.** The first run gave 3,211.7 prompt tokens/s and 159.7 decode tokens/s with small
+  deviations, but it ran because my script printed the pre-flight failure without acting on it (a
+  bug, now fixed), and its output file was overwritten by the second run, so there is no raw data to
+  commit. The second run decoded at 60.5 tokens/s, standard deviation 50.2, samples 148.9, 36.1, 48.4,
+  43.8 and 25.4, while VLC used the GPU. The pre-flight passed because it only looked at CPU load.
+- **Harness overhead.** Median 325 to 636 microseconds, p95 3 to 11 milliseconds, p99 11 to 18
+  milliseconds, max 88 milliseconds, load average 6.4 at the end. Two earlier runs, discarded for an
+  unclean pre-flight, had smaller tails, so the load average was not a reliable predictor.
+
+What changed in the harness as a result (tests and mutations for each): the pre-flight samples GPU
+utilization, results are judged by their own coefficient of variation (decode within 5%, time to
+first token within 10%), unstable runs are written and marked and the command exits with status 4,
+and every follow-up step is gated on the pre-flight instead of only printing it. I also learned
+that a load average that is clean at the start says nothing about the next two minutes, and that
+my own measurements raise it for whatever runs next.
+
+These three measurements will be repeated, with conditions checked throughout, before Day 1 is
+marked done.
 
 Three measurements need a quiet machine and were refused by the check. They are listed in
 [README.md](README.md) as not yet measured.
