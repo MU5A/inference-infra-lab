@@ -115,6 +115,26 @@ class TestLlamaBench:
         )
 
 
+class TestReference:
+    def test_a_probe_near_the_baseline_passes_and_a_faster_one_does_too(self):
+        assert cc.check_reference(150.0, 152.5) == []
+        assert cc.check_reference(190.0, 152.5) == []
+
+    def test_the_floor_is_inclusive(self):
+        assert cc.check_reference(120.0, 150.0) == []  # exactly 20% below
+        assert cc.check_reference(119.9, 150.0) != []
+
+    def test_the_real_third_attempt_is_refused_even_though_its_repeats_were_steady(self):
+        (problem,) = cc.check_reference(55.65, 152.55)
+        assert "56 tok/s" in problem and "below 122" in problem
+
+    def test_no_measurement_is_refused(self):
+        assert cc.check_reference(None, 150.0) == ["no reference decode speed was measured"]
+
+    def test_the_tolerance_is_the_one_the_log_records(self):
+        assert cc.REFERENCE_TOLERANCE == 0.20
+
+
 class TestOverhead:
     def runs(self, *medians_p99):
         return [

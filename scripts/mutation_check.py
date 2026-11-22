@@ -255,6 +255,24 @@ MUTATIONS = [
         "int calls = probe_ns >= 0 ? 1 :",
     ),
     (
+        "crosscheck: a machine running far below the baseline is accepted",
+        S / "crosscheck.py",
+        "if measured_tps < floor:",
+        "if False:",
+    ),
+    (
+        "crosscheck: the reference floor is exclusive instead of inclusive",
+        S / "crosscheck.py",
+        "if measured_tps < floor:",
+        "if measured_tps <= floor:",
+    ),
+    (
+        "crosscheck: a missing reference probe is accepted",
+        S / "crosscheck.py",
+        "if measured_tps is None:",
+        "if False:",
+    ),
+    (
         "crosscheck: the cache speed-up prediction is never checked",
         S / "crosscheck.py",
         'if row["speedup"] < min_speedup:',

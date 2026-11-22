@@ -23,6 +23,29 @@ CACHE_MIN_SPEEDUP = 5.0
 DECODE_TOLERANCE = 0.10
 PREFILL_TOLERANCE = 0.15
 MAX_BENCH_CV = 0.05
+# Added after the third attempt, not before it. That attempt ran about 3x slow from start to finish
+# with run-to-run variation under 0.5%, so the repeat limit could not see it. Anything more than 20%
+# below the clean baseline is refused; clean sessions differed from the baseline by under 8%.
+REFERENCE_TOLERANCE = 0.20
+
+
+def check_reference(
+    measured_tps: float | None, baseline_tps: float, tolerance: float = REFERENCE_TOLERANCE
+) -> list[str]:
+    """Problems with a short decode probe taken just before a GPU measurement; empty means go.
+
+    Steady repeats do not rule out a machine that is slow the whole time. One-sided: a faster
+    machine is not a disturbance.
+    """
+    if measured_tps is None:
+        return ["no reference decode speed was measured"]
+    floor = baseline_tps * (1 - tolerance)
+    if measured_tps < floor:
+        return [
+            f"reference decode {measured_tps:.0f} tok/s is below {floor:.0f}, "
+            f"the clean baseline less {tolerance:.0%}"
+        ]
+    return []
 
 
 def compare_cache(cold: dict, warm: dict) -> dict:
