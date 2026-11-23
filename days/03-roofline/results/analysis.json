@@ -1,0 +1,316 @@
+{
+  "roofs": {
+    "bandwidth": 90907756062.16304,
+    "fp32": 2775127471346.3853,
+    "fp16": 3084300762990.812
+  },
+  "knee_batch": 34.21118312898517,
+  "points": [
+    {
+      "series": "stream",
+      "key": "scale",
+      "bytes_per_s": 86723363796.31285,
+      "intensity": 0.125,
+      "attainable_flops": 11363469507.77038,
+      "achieved_flops": 10840420474.539106,
+      "fraction_of_roof": 0.9539710092174216,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "stream",
+      "key": "add",
+      "bytes_per_s": 85385326502.07196,
+      "intensity": 0.08333333333333333,
+      "attainable_flops": 7575646338.513586,
+      "achieved_flops": 7115443875.172663,
+      "fraction_of_roof": 0.9392523828625269,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "stream",
+      "key": "triad",
+      "bytes_per_s": 87222085482.19096,
+      "intensity": 0.16666666666666666,
+      "attainable_flops": 15151292677.027172,
+      "achieved_flops": 14537014247.031828,
+      "fraction_of_roof": 0.9594570283150341,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "stream",
+      "key": "sum",
+      "bytes_per_s": 90907756062.16304,
+      "intensity": 0.25,
+      "attainable_flops": 22726939015.54076,
+      "achieved_flops": 22726939015.54076,
+      "fraction_of_roof": 1.0,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp32",
+      "key": "fp32-512",
+      "bytes_per_s": 23626092903.26242,
+      "intensity": 85.33333333333333,
+      "attainable_flops": 2775127471346.3853,
+      "achieved_flops": 2016093261078.3933,
+      "fraction_of_roof": 0.726486722464054,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp32",
+      "key": "fp32-1024",
+      "bytes_per_s": 16260512527.420225,
+      "intensity": 170.66666666666666,
+      "attainable_flops": 2775127471346.3853,
+      "achieved_flops": 2775127471346.3853,
+      "fraction_of_roof": 1.0,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp32",
+      "key": "fp32-2048",
+      "bytes_per_s": 8007700032.7125845,
+      "intensity": 341.3333333333333,
+      "attainable_flops": 2775127471346.3853,
+      "achieved_flops": 2733294944499.2285,
+      "fraction_of_roof": 0.9849259079883415,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp32",
+      "key": "fp32-4096",
+      "bytes_per_s": 3793247144.752236,
+      "intensity": 682.6666666666666,
+      "attainable_flops": 2775127471346.3853,
+      "achieved_flops": 2589523384150.86,
+      "fraction_of_roof": 0.9331187164871106,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp16",
+      "key": "fp16-512",
+      "bytes_per_s": 13102615715.257223,
+      "intensity": 170.66666666666666,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 2236179748737.2324,
+      "fraction_of_roof": 0.725020003097504,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp16",
+      "key": "fp16-1024",
+      "bytes_per_s": 9000597408.384771,
+      "intensity": 341.3333333333333,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3072203915395.3354,
+      "fraction_of_roof": 0.9960779286700476,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp16",
+      "key": "fp16-2048",
+      "bytes_per_s": 4518018695.787322,
+      "intensity": 682.6666666666666,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3084300762990.812,
+      "fraction_of_roof": 1.0,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul fp16",
+      "key": "fp16-4096",
+      "bytes_per_s": 2234753255.524188,
+      "intensity": 1365.3333333333333,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3051183111542.358,
+      "fraction_of_roof": 0.9892625090763392,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul bf16",
+      "key": "bf16-512",
+      "bytes_per_s": 13099577312.48559,
+      "intensity": 170.66666666666666,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 2235661194664.2075,
+      "fraction_of_roof": 0.7248518761498187,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul bf16",
+      "key": "bf16-1024",
+      "bytes_per_s": 9028505729.824095,
+      "intensity": 341.3333333333333,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3081729955779.9575,
+      "fraction_of_roof": 0.999166486212466,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul bf16",
+      "key": "bf16-2048",
+      "bytes_per_s": 4521927438.912241,
+      "intensity": 682.6666666666666,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3086969131630.757,
+      "fraction_of_roof": 1.000865145407336,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "matmul bf16",
+      "key": "bf16-4096",
+      "bytes_per_s": 2237969222.1726694,
+      "intensity": 1365.3333333333333,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3055573978006.418,
+      "fraction_of_roof": 0.9906861271996905,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-1",
+      "bytes_per_s": 90105437996.92978,
+      "intensity": 0.9997559189650964,
+      "attainable_flops": 90885567202.98262,
+      "achieved_flops": 90083444968.37305,
+      "fraction_of_roof": 0.991174371692943,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-2",
+      "bytes_per_s": 83079765901.3479,
+      "intensity": 1.9990239141044412,
+      "attainable_flops": 181726778345.8369,
+      "achieved_flops": 166078438814.99316,
+      "fraction_of_roof": 0.9138908438630655,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-4",
+      "bytes_per_s": 80964147334.58044,
+      "intensity": 3.9960975609756098,
+      "attainable_flops": 363276262273.77545,
+      "achieved_flops": 323540631690.1868,
+      "fraction_of_roof": 0.8906186979163458,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-8",
+      "bytes_per_s": 80292674252.26042,
+      "intensity": 7.984405458089668,
+      "attainable_flops": 725844383685.4187,
+      "achieved_flops": 641089266544.3639,
+      "fraction_of_roof": 0.8832323855552656,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-16",
+      "bytes_per_s": 82157406912.7501,
+      "intensity": 15.937743190661479,
+      "attainable_flops": 1448864470158.0537,
+      "achieved_flops": 1309403652586.0874,
+      "fraction_of_roof": 0.903744746010127,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-32",
+      "bytes_per_s": 46532393148.819145,
+      "intensity": 31.751937984496124,
+      "attainable_flops": 2886497432795.5024,
+      "achieved_flops": 1477493661531.4978,
+      "fraction_of_roof": 0.5118638404956353,
+      "bound": "memory",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-64",
+      "bytes_per_s": 47805274690.113914,
+      "intensity": 63.01538461538462,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3012467771241.6396,
+      "fraction_of_roof": 0.9767101209417992,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-128",
+      "bytes_per_s": 24288395651.728992,
+      "intensity": 124.12121212121212,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3014705108772.18,
+      "fraction_of_roof": 0.9774355163239186,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-256",
+      "bytes_per_s": 12492470365.373962,
+      "intensity": 240.94117647058823,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3009950506857.162,
+      "fraction_of_roof": 0.9758939669484265,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-512",
+      "bytes_per_s": 6644531351.832197,
+      "intensity": 455.1111111111111,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3024000046344.9644,
+      "fraction_of_roof": 0.9804491451127565,
+      "bound": "compute",
+      "above_roof": false
+    },
+    {
+      "series": "decode batch",
+      "key": "batch-1024",
+      "bytes_per_s": 3674453078.1611886,
+      "intensity": 819.2,
+      "attainable_flops": 3084300762990.812,
+      "achieved_flops": 3010111961629.6455,
+      "fraction_of_roof": 0.975946314233886,
+      "bound": "compute",
+      "above_roof": false
+    }
+  ],
+  "verdicts": {
+    "bandwidth": [],
+    "matmul": [],
+    "skinny": []
+  },
+  "cpu_roofs": {
+    "peak_flops": 1653579000000.0,
+    "bandwidth": 85090000000.0
+  }
+}
