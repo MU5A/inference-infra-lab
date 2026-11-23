@@ -128,10 +128,12 @@ def summarize_config(runs: Sequence[Mapping], key: str, kind: str) -> dict:
     """
     first = runs[0][key]
     flops, moved = first["flops"], first["bytes"]
+    shape = {k: first[k] for k in ("n", "k", "batch", "dtype", "elements") if k in first}
     flop_rates = [r[key]["flops"] / r[key]["best_s"] for r in runs]
     byte_rates = [r[key]["bytes"] / r[key]["best_s"] for r in runs]
     stats = across_runs(byte_rates if kind == "bandwidth" else flop_rates, kind)
     return {
+        **shape,
         "flops_per_call": flops,
         "bytes_per_call": moved,
         "intensity": flops / moved,
