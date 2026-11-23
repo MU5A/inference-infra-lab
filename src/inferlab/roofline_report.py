@@ -280,9 +280,9 @@ def predictions_table(analysis: Mapping) -> str:
 # ---- chart -------------------------------------------------------------------------------------
 
 X_RANGE = (0.05, 4096.0)  # FLOP per byte
-Y_RANGE = (1e10, 1e16)  # FLOP per second
-WIDTH, HEIGHT = 940, 560
-LEFT, RIGHT, TOP, BOTTOM = 78, 250, 24, 58
+Y_RANGE = (1e9, 1e16)  # FLOP per second
+WIDTH, HEIGHT = 980, 580
+LEFT, RIGHT, TOP, BOTTOM = 100, 280, 24, 58
 PALETTE = ["#d1495b", "#edae49", "#66a182", "#00798c", "#8e6bbf", "#30638e", "#b0813f", "#6c757d"]
 SERIES_COLOUR = {
     "stream": "#2a9d8f",
@@ -344,7 +344,7 @@ def roofline_svg(roofs: Sequence[Mapping], points: Sequence[Mapping]) -> str:
             )
     x = _px(X_RANGE[1])
     parts.append(f'<text x="{x:.1f}" y="{HEIGHT - BOTTOM + 18}" text-anchor="end">4096</text>')
-    for exp in range(10, 17):
+    for exp in range(9, 17):
         y = _py(10.0**exp)
         parts.append(
             f'<line class="grid" x1="{LEFT}" y1="{y:.1f}" x2="{WIDTH - RIGHT}" y2="{y:.1f}"/>'
@@ -362,7 +362,7 @@ def roofline_svg(roofs: Sequence[Mapping], points: Sequence[Mapping]) -> str:
         "arithmetic intensity, FLOP per byte moved</text>"
     )
     parts.append(
-        f'<text transform="translate(18 {(TOP + HEIGHT - BOTTOM) / 2:.0f}) rotate(-90)" '
+        f'<text transform="translate(16 {(TOP + HEIGHT - BOTTOM) / 2:.0f}) rotate(-90)" '
         'text-anchor="middle">attainable performance</text>'
     )
 

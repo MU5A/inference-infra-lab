@@ -321,6 +321,28 @@ class TestChart:
         assert float(marker.get("cx")) == pytest.approx(rr._px(1.0), abs=0.06)
         assert float(marker.get("cy")) == pytest.approx(rr._py(1e12), abs=0.06)
 
+    def test_the_lowest_measured_point_is_inside_the_plot_not_below_its_axis(self):
+        # Day 3's `add` kernel measured 7 GFLOPS at 1/12 FLOP per byte; a 10 GFLOPS floor put it
+        # under the axis, where nobody could see it.
+        p = {"series": "stream", "key": "add", "intensity": 1 / 12, "achieved_flops": 7e9}
+        root = ET.fromstring(rr.roofline_svg([], [p]))
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        marker = next(
+            c for c in root.findall(".//s:circle", ns) if c.find("s:title", ns) is not None
+        )
+        assert rr.LEFT <= float(marker.get("cx")) <= rr.WIDTH - rr.RIGHT
+        assert rr.TOP <= float(marker.get("cy")) <= rr.HEIGHT - rr.BOTTOM
+
+    def test_the_longest_legend_label_fits_inside_the_chart(self):
+        name = "This chip's GPU, fp16, measured"  # the longest label scripts/day03_report.py builds
+        roofs = [{"name": name, "peak_flops": 1e12, "bandwidth": 1e11}]
+        root = ET.fromstring(rr.roofline_svg(roofs, self.points()))
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        for label in root.findall(".//s:text", ns):
+            if label.get("text-anchor") is None and label.get("x") is not None:
+                # 6.6 pixels a character is a generous estimate for 12 px sans-serif text
+                assert float(label.get("x")) + 6.6 * len(label.text or "") <= rr.WIDTH, label.text
+
     def test_names_are_escaped(self):
         svg = rr.roofline_svg([{"name": "A & B <C>", "peak_flops": 1e12, "bandwidth": 1e11}], [])
         ET.fromstring(svg)  # raises if the name broke the markup
