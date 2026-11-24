@@ -1,0 +1,32 @@
+{
+  "day3_mlx_triad_bytes_per_s": 87222085482.19096,
+  "day3_mlx_fp32_matmul_flops": 2775127471346.3853,
+  "verdicts": [
+    {
+      "phase": "stream",
+      "prediction": "Best hand-written triad at least 70% of Day 3's MLX triad; threadgroup sizes 64 to 1024 within 10% of each variant's best",
+      "held": false,
+      "failures": [
+        "scalar threadgroup 64: 90% of the variant's best, more than 10% below it",
+        "scalar threadgroup 128: 88% of the variant's best, more than 10% below it",
+        "scalar threadgroup 256: 88% of the variant's best, more than 10% below it",
+        "scalar threadgroup 1024: 89% of the variant's best, more than 10% below it"
+      ]
+    },
+    {
+      "phase": "occupancy",
+      "prediction": "32 KiB of threadgroup memory costs at least 20% of the 1 KiB bandwidth; no step up in memory more than 10% faster",
+      "held": false,
+      "failures": [
+        "32768 bytes of threadgroup memory cost 6% of the bandwidth at 1024 bytes, less than the predicted 20%",
+        "going from 8192 to 16384 bytes made it 14% faster, more than the 10% allowed"
+      ]
+    },
+    {
+      "phase": "fma",
+      "prediction": "Best fp32 FMA between 2.5 and 4.5 TFLOPS and at least 0.95 times Day 3's fp32 matrix multiply; fp16 between 0.8 and 1.25 times fp32",
+      "held": true,
+      "failures": []
+    }
+  ]
+}

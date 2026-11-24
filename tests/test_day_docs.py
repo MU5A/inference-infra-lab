@@ -110,3 +110,11 @@ def test_day_four_readme_contains_the_generated_tables_verbatim():
         "days/04-metal-programming/README.md differs from results/tables.md. "
         "Regenerate with: python scripts/day04_report.py"
     )
+
+
+@pytest.mark.skipif(not (DAY4 / "cuda_mapping.md").exists(), reason="no Day 4 CUDA mapping")
+def test_day_four_readme_contains_the_cuda_mapping_verbatim():
+    mapping = (DAY4 / "cuda_mapping.md").read_text().strip()
+    assert mapping in (DAY4 / "README.md").read_text(), (
+        "days/04-metal-programming/README.md differs from cuda_mapping.md"
+    )
