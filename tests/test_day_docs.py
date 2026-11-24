@@ -96,3 +96,17 @@ def test_every_day_three_point_is_inside_the_chart_so_none_is_hidden():
     for p in points:
         assert rr.X_RANGE[0] <= p["intensity"] <= rr.X_RANGE[1], p["key"]
         assert rr.Y_RANGE[0] <= p["achieved_flops"] <= rr.Y_RANGE[1], p["key"]
+
+
+DAY4 = ROOT / "days" / "04-metal-programming"
+
+
+@pytest.mark.skipif(
+    not (DAY4 / "results" / "tables.md").exists(), reason="no Day 4 tables committed"
+)
+def test_day_four_readme_contains_the_generated_tables_verbatim():
+    generated = (DAY4 / "results" / "tables.md").read_text().strip()
+    assert generated in (DAY4 / "README.md").read_text(), (
+        "days/04-metal-programming/README.md differs from results/tables.md. "
+        "Regenerate with: python scripts/day04_report.py"
+    )
