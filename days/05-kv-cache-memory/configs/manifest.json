@@ -1,0 +1,58 @@
+{
+  "fetched": "2026-11-24",
+  "how": "curl, one file per new folder, no authentication; the repositories are public and not gated",
+  "files": [
+    {
+      "file": "Qwen2.5-0.5B-Instruct.config.json",
+      "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+      "commit": "7ae557604adf67be50417f59c2c2f167def9a775",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct/resolve/7ae557604adf67be50417f59c2c2f167def9a775/config.json",
+      "license": "apache-2.0",
+      "bytes": 659,
+      "sha256": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+      "covers": "grouped-query attention, 14 query heads and 2 KV heads; the model family of the local GGUF"
+    },
+    {
+      "file": "Qwen2.5-7B-Instruct.config.json",
+      "repo": "Qwen/Qwen2.5-7B-Instruct",
+      "commit": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/resolve/a09a35458c702b33eeacc393d103063234e8bc28/config.json",
+      "license": "apache-2.0",
+      "bytes": 663,
+      "sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+      "covers": "grouped-query attention at 7B, 28 query heads and 4 KV heads"
+    },
+    {
+      "file": "Mixtral-8x7B-v0.1.config.json",
+      "repo": "mistralai/Mixtral-8x7B-v0.1",
+      "commit": "fc7ac94680e38d7348cfa806e51218e6273104b0",
+      "url": "https://huggingface.co/mistralai/Mixtral-8x7B-v0.1/resolve/fc7ac94680e38d7348cfa806e51218e6273104b0/config.json",
+      "license": "apache-2.0",
+      "bytes": 720,
+      "sha256": "9d56d04b36d0fd12ff54ae4c5bac769cc176e254e64ff71144614b6318b40793",
+      "covers": "grouped-query attention with a mixture of experts, 8 experts and 2 per token"
+    },
+    {
+      "file": "OLMoE-1B-7B-0924.config.json",
+      "repo": "allenai/OLMoE-1B-7B-0924",
+      "commit": "6d84c48581ece794365f2b8e9cfb043c68ade9c5",
+      "url": "https://huggingface.co/allenai/OLMoE-1B-7B-0924/resolve/6d84c48581ece794365f2b8e9cfb043c68ade9c5/config.json",
+      "license": "apache-2.0",
+      "bytes": 759,
+      "sha256": "3643aa880d2f1c9b418156269ae791c73e5612d6b6b6fde0724d927cf89b6335",
+      "covers": "mixture of experts with full multi-head attention, 64 experts and 8 per token"
+    },
+    {
+      "file": "DeepSeek-V2-Lite.config.json",
+      "repo": "deepseek-ai/DeepSeek-V2-Lite",
+      "commit": "604d5664dddd88a0433dbae533b7fe9472482de0",
+      "url": "https://huggingface.co/deepseek-ai/DeepSeek-V2-Lite/resolve/604d5664dddd88a0433dbae533b7fe9472482de0/config.json",
+      "license": "other",
+      "bytes": 1522,
+      "sha256": "f346286b0f1c8b044252fd54cb4fa78b9fab6472a6e8bebb9edfe03d414ea03d",
+      "covers": "multi-head latent attention (`kv_lora_rank`) with a mixture of experts, 64 routed and 2 shared",
+      "license_name": "deepseek",
+      "license_link": "https://github.com/deepseek-ai/DeepSeek-V2/blob/main/LICENSE-MODEL"
+    }
+  ]
+}
