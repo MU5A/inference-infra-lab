@@ -1,0 +1,684 @@
+{
+  "phase": "occupancy",
+  "mlx_version": "0.32.4",
+  "device": "Device(gpu, 0)",
+  "rest_s": 120.0,
+  "references": {
+    "occupancy": {
+      "before_tps": 153.697,
+      "after_tps": 160.753,
+      "drift": []
+    }
+  },
+  "drift": [],
+  "summary": {
+    "scratch-1024": {
+      "elements": 67108864,
+      "flops_per_call": 134217728,
+      "bytes_per_call": 805306368,
+      "intensity": 0.16666666666666666,
+      "flops_per_s": {
+        "median": 14682132034.780237,
+        "min": 14287031142.893839,
+        "max": 14838927401.31103,
+        "cv": 0.015901621666433212,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "bytes_per_s": {
+        "median": 88092792208.68143,
+        "min": 85722186857.36302,
+        "max": 89033564407.86618,
+        "cv": 0.01590162166643329,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "stable": true,
+      "validated": true,
+      "threadgroup": 256,
+      "dispatched_as_asked": true,
+      "simd_widths": [
+        32
+      ]
+    },
+    "scratch-4096": {
+      "elements": 67108864,
+      "flops_per_call": 134217728,
+      "bytes_per_call": 805306368,
+      "intensity": 0.16666666666666666,
+      "flops_per_s": {
+        "median": 14292546164.505354,
+        "min": 14283724113.408436,
+        "max": 14530118111.733307,
+        "cv": 0.007942816400559627,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "bytes_per_s": {
+        "median": 85755276987.03212,
+        "min": 85702344680.45062,
+        "max": 87180708670.39984,
+        "cv": 0.007942816400559617,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "stable": true,
+      "validated": true,
+      "threadgroup": 256,
+      "dispatched_as_asked": true,
+      "simd_widths": [
+        32
+      ]
+    },
+    "scratch-8192": {
+      "elements": 67108864,
+      "flops_per_call": 134217728,
+      "bytes_per_call": 805306368,
+      "intensity": 0.16666666666666666,
+      "flops_per_s": {
+        "median": 13602769031.404905,
+        "min": 13568013456.455639,
+        "max": 13685201442.797705,
+        "cv": 0.003608568084404448,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "bytes_per_s": {
+        "median": 81616614188.42943,
+        "min": 81408080738.73383,
+        "max": 82111208656.78622,
+        "cv": 0.0036085680844044647,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "stable": true,
+      "validated": true,
+      "threadgroup": 256,
+      "dispatched_as_asked": true,
+      "simd_widths": [
+        32
+      ]
+    },
+    "scratch-16384": {
+      "elements": 67108864,
+      "flops_per_call": 134217728,
+      "bytes_per_call": 805306368,
+      "intensity": 0.16666666666666666,
+      "flops_per_s": {
+        "median": 15764140207.025763,
+        "min": 14569299513.447382,
+        "max": 15789020709.150742,
+        "cv": 0.03702371853910018,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "bytes_per_s": {
+        "median": 94584841242.15457,
+        "min": 87415797080.6843,
+        "max": 94734124254.90445,
+        "cv": 0.03702371853910016,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "stable": true,
+      "validated": true,
+      "threadgroup": 256,
+      "dispatched_as_asked": true,
+      "simd_widths": [
+        32
+      ]
+    },
+    "scratch-24576": {
+      "elements": 67108864,
+      "flops_per_call": 134217728,
+      "bytes_per_call": 805306368,
+      "intensity": 0.16666666666666666,
+      "flops_per_s": {
+        "median": 15610327995.27817,
+        "min": 12133992245.693684,
+        "max": 15644717921.849188,
+        "cv": 0.11387157341141146,
+        "runs": 3,
+        "stable": false,
+        "cv_limit": 0.1
+      },
+      "bytes_per_s": {
+        "median": 93661967971.66902,
+        "min": 72803953474.16211,
+        "max": 93868307531.09512,
+        "cv": 0.11387157341141141,
+        "runs": 3,
+        "stable": false,
+        "cv_limit": 0.1
+      },
+      "stable": false,
+      "validated": true,
+      "threadgroup": 256,
+      "dispatched_as_asked": true,
+      "simd_widths": [
+        32
+      ]
+    },
+    "scratch-32768": {
+      "elements": 67108864,
+      "flops_per_call": 134217728,
+      "bytes_per_call": 805306368,
+      "intensity": 0.16666666666666666,
+      "flops_per_s": {
+        "median": 13619396009.030842,
+        "min": 13458826598.01918,
+        "max": 13669243191.395,
+        "cv": 0.006609908020706861,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "bytes_per_s": {
+        "median": 81716376054.18504,
+        "min": 80752959588.11508,
+        "max": 82015459148.37001,
+        "cv": 0.006609908020706878,
+        "runs": 3,
+        "stable": true,
+        "cv_limit": 0.1
+      },
+      "stable": true,
+      "validated": true,
+      "threadgroup": 256,
+      "dispatched_as_asked": true,
+      "simd_widths": [
+        32
+      ]
+    }
+  },
+  "neighbours": {
+    "samples": 179,
+    "peak_other_cpu_percent": 262.2,
+    "peak_load1": 7.7138671875,
+    "contended": true,
+    "busiest_other_processes": [
+      {
+        "name": "duetexpertd",
+        "peak_cpu_percent": 163.3
+      },
+      {
+        "name": "Claude Helper (Renderer)",
+        "peak_cpu_percent": 140.8
+      },
+      {
+        "name": "bird",
+        "peak_cpu_percent": 116.1
+      },
+      {
+        "name": "suggestd",
+        "peak_cpu_percent": 94.2
+      }
+    ]
+  },
+  "stable": false,
+  "validated": true,
+  "dispatched_as_asked": true,
+  "runs": [
+    {
+      "phase": "occupancy",
+      "smoke": false,
+      "mlx_version": "0.32.4",
+      "device": "Device(gpu, 0)",
+      "configs": {
+        "scratch-1024": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009141569336255392,
+          "median_s": 0.009350138929827759,
+          "samples_s": [
+            0.0593651250237599,
+            0.009825652659249803,
+            0.009291006989466647,
+            0.009347097172091404,
+            0.009353180687564114,
+            0.00948789583829542,
+            0.009306930510016779,
+            0.009141569336255392
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 1024,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-4096": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009390750007393459,
+          "median_s": 0.009649906229848662,
+          "samples_s": [
+            0.009747930647184452,
+            0.00963564581858615,
+            0.009390750007393459,
+            0.009791944486399492,
+            0.009476611157879233,
+            0.009506618021987379,
+            0.009664166641111175,
+            0.009718944473812977
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 4096,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-8192": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009892216604202985,
+          "median_s": 0.00997083738911897,
+          "samples_s": [
+            0.00996676660142839,
+            0.010005391808226705,
+            0.010098466603085398,
+            0.009974908176809549,
+            0.009908108413219452,
+            0.009980316599830985,
+            0.009938808204606176,
+            0.009892216604202985
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 8192,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-16384": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.00850069997832179,
+          "median_s": 0.008549316716380418,
+          "samples_s": [
+            0.00851894160732627,
+            0.008559783408418297,
+            0.008529708394780755,
+            0.008554975036531687,
+            0.008578133396804332,
+            0.00850069997832179,
+            0.008576975017786027,
+            0.008543658396229148
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 16384,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-24576": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.008579108212143183,
+          "median_s": 0.008598504099063577,
+          "samples_s": [
+            0.008592058392241596,
+            0.008596824994310737,
+            0.008600183203816414,
+            0.008595758397132159,
+            0.008579108212143183,
+            0.008607858372852207,
+            0.008607558440417051,
+            0.008603116776794196
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 24576,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-32768": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009818958234973252,
+          "median_s": 0.009844473999692127,
+          "samples_s": [
+            0.009868260531220585,
+            0.009818958234973252,
+            0.009837156278081238,
+            0.009863645769655704,
+            0.00985733326524496,
+            0.009837948018684983,
+            0.009850999980699271,
+            0.009824312524870038
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 32768,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        }
+      }
+    },
+    {
+      "phase": "occupancy",
+      "smoke": false,
+      "mlx_version": "0.32.4",
+      "device": "Device(gpu, 0)",
+      "configs": {
+        "scratch-1024": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009394374986489614,
+          "median_s": 0.009608322909722725,
+          "samples_s": [
+            0.0390570069818447,
+            0.009668513822058836,
+            0.009505132019209364,
+            0.009548131997386614,
+            0.00939631248669078,
+            0.009394374986489614,
+            0.009709625000444552,
+            0.010187486147818467
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 1024,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-4096": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009396550012752414,
+          "median_s": 0.009942504204809665,
+          "samples_s": [
+            0.01074021658860147,
+            0.010380575014278293,
+            0.010840424988418817,
+            0.009829299990087748,
+            0.010055708419531583,
+            0.009578008390963077,
+            0.009580091573297977,
+            0.009396550012752414
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 4096,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-8192": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009866941627115012,
+          "median_s": 0.009911129088141023,
+          "samples_s": [
+            0.009866941627115012,
+            0.00989077496342361,
+            0.009897000016644597,
+            0.009946666797623039,
+            0.009925258159637452,
+            0.00988332498818636,
+            0.009963566809892655,
+            0.009931050008162856
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 8192,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-16384": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009212366584688426,
+          "median_s": 0.00971784582361579,
+          "samples_s": [
+            0.009469883190467954,
+            0.009482816606760026,
+            0.0096517916303128,
+            0.009971825033426284,
+            0.009978308388963342,
+            0.009212366584688426,
+            0.009783900016918779,
+            0.009933716803789138
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 16384,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-24576": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.011061299964785576,
+          "median_s": 0.01107815410941839,
+          "samples_s": [
+            0.011070283222943544,
+            0.01110920002683997,
+            0.011101233400404453,
+            0.011069966806098818,
+            0.01108602499589324,
+            0.011067825043573976,
+            0.011086666816845536,
+            0.011061299964785576
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 24576,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-32768": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009972468775231391,
+          "median_s": 0.01124556761351414,
+          "samples_s": [
+            0.010058312502223998,
+            0.012629500008188188,
+            0.012738531222566962,
+            0.010088416747748852,
+            0.012365822738502175,
+            0.009972468775231391,
+            0.012743947969283909,
+            0.010125312488526106
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 32768,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        }
+      }
+    },
+    {
+      "phase": "occupancy",
+      "smoke": false,
+      "mlx_version": "0.32.4",
+      "device": "Device(gpu, 0)",
+      "configs": {
+        "scratch-1024": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.00904497504234314,
+          "median_s": 0.00922311251051724,
+          "samples_s": [
+            0.0395041418261826,
+            0.009229833399876953,
+            0.009566166810691357,
+            0.009269241616129876,
+            0.00904497504234314,
+            0.009102466609328985,
+            0.00918767498806119,
+            0.009216391621157527
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 1024,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-4096": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.00923720832603673,
+          "median_s": 0.009531437496965129,
+          "samples_s": [
+            0.012683000027512511,
+            0.009996305530269941,
+            0.009588687486636141,
+            0.009599215157019595,
+            0.009474187507294118,
+            0.00944790985280027,
+            0.009349479145991305,
+            0.00923720832603673
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 4096,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-8192": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009807508392259478,
+          "median_s": 0.009855100000277162,
+          "samples_s": [
+            0.009867533203214407,
+            0.009864258393645287,
+            0.00989624997600913,
+            0.009845941606909037,
+            0.0098127081990242,
+            0.009807508392259478,
+            0.009867991600185633,
+            0.009824516577646136
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 8192,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-16384": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.008514116611331701,
+          "median_s": 0.008558808313682675,
+          "samples_s": [
+            0.008637325000017881,
+            0.008668716624379158,
+            0.008556716609746218,
+            0.00859078336507082,
+            0.008560900017619133,
+            0.008523591607809067,
+            0.00854039159603417,
+            0.008514116611331701
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 16384,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-24576": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.008598008193075657,
+          "median_s": 0.00862297909334302,
+          "samples_s": [
+            0.008606425020843744,
+            0.008631525002419949,
+            0.00866534998640418,
+            0.00863550822250545,
+            0.008622075011953712,
+            0.008623883174732328,
+            0.008598008193075657,
+            0.00860172496177256
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 24576,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        },
+        "scratch-32768": {
+          "flops": 134217728,
+          "bytes": 805306368,
+          "best_s": 0.009854895761236548,
+          "median_s": 0.009902724006678909,
+          "samples_s": [
+            0.009917146002408117,
+            0.009892260481137782,
+            0.009854895761236548,
+            0.009908979292958975,
+            0.009910603985190392,
+            0.009912499983329326,
+            0.009896468720398843,
+            0.009870406240224838
+          ],
+          "validated": true,
+          "elements": 67108864,
+          "scratch_bytes": 32768,
+          "threadgroup": 256,
+          "dispatched_threadgroup": 256,
+          "simd_width": 32
+        }
+      }
+    }
+  ],
+  "environment": {
+    "machine": {
+      "chip": "Apple M3",
+      "arch": "arm64",
+      "memory_gb": 16.0,
+      "cpu_cores": 8,
+      "os": "macOS-26.2-arm64-arm-64bit"
+    },
+    "conditions": {
+      "load_average_1_5_15": [
+        4.4765625,
+        4.47119140625,
+        5.07763671875
+      ],
+      "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+      "power": "Now drawing from 'AC Power'",
+      "gpu_utilization": {
+        "peak": 82,
+        "mean": 16.4,
+        "samples": 5
+      },
+      "memory_free_percent": 48,
+      "swap_used_mb": 4870.31
+    },
+    "software": {
+      "python": "3.12.8",
+      "llama_cpp_commit": "cbb1c1c50bba81929387dea473873d1df87a6212"
+    },
+    "model": {
+      "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+      "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    }
+  }
+}

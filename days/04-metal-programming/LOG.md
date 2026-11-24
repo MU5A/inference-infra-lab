@@ -42,3 +42,35 @@ judging time, not retyped.
 applies to all three phases from the start, because Day 3's only unstable phase was its sustained
 compute sweep and it held once rests were added. The 10% limit and the 20% decode-probe limit are
 unchanged from Day 3.
+
+## 5. Attempt 1, all three phases, 09:42 to 10:07
+
+`python scripts/day04_run.py --rest 120 --wait-quiet 900`, exit 4.
+
+- stream: held. Stable, validated, every configuration ran at the threadgroup size asked. Decode
+  probe 155.6 before, 155.8 after.
+- occupancy: did not hold. 24 KiB varied 11.4% (runs 93.9, 72.8 and 93.7 GB/s, the second slow)
+  against the 10% limit; the other five sizes were within 3.7%. Probe 153.7 before, 160.8 after,
+  no drift. The file is kept as `results/rejected/occupancy_attempt1_unstable.json` and none of its
+  numbers is cited.
+- fma: held. Every configuration within 0.2%. Probe 161.9 before, 155.1 after.
+- The neighbour sampler flagged all three phases contended (peaks 260% to 355% of a core for all
+  other processes; `node`, `terraform`, `bird`, `duetexpertd`, `ANECompilerService` among the
+  busiest). As on Day 3 the sampler window includes the 120 s rests, so the flag cannot say whether
+  a burst overlapped the timed work. The run-to-run variation decides stability.
+
+Decision: re-run the occupancy phase once with the same protocol, unchanged. If it does not hold,
+the day stops with STUCK.md. I have now seen attempt 1's occupancy numbers, so attempt 2 is not
+blind; the predictions were committed in c11afda before any run.
+
+## 6. The session lost its network, and a correction, 2026-11-24 about 12:00
+
+The scheduled session ended at 10:49 with `API Error: Can't reach the API server (ENOTFOUND)`,
+after `STUCK.md` was written at 10:39. `STUCK.md` says the `stream` and `fma` result files are
+committed. They were not: git showed `results/` untracked at 12:00, because the session ended
+before that commit. Checked against the files at that point: `stream` stable (variation at most
+7.2%), validated, no drift; `fma` stable (at most 0.2%), validated, no drift; `occupancy` attempt
+1 rejected at 11.4%, as recorded in section 5. They are committed now, with `cuda_mapping.md` and
+this log, locally only. Nothing is pushed. The Mac was on AC at 09:37 and on battery by 10:39,
+which is what stopped the second occupancy attempt. This log does not record a full run of
+`scripts/mutation_check.py` for the Day 4 checks, so that run is still to do.
