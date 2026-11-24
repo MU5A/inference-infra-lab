@@ -506,6 +506,108 @@ MUTATIONS = [
         "LEFT, RIGHT, TOP, BOTTOM = 100, 280, 24, 58",
         "LEFT, RIGHT, TOP, BOTTOM = 100, 150, 24, 58",
     ),
+    (
+        "metal: triad traffic counts only two arrays",
+        S / "metal_sweep.py",
+        "return 12 * elements",
+        "return 8 * elements",
+    ),
+    (
+        "metal: an FMA counted as one operation",
+        S / "metal_sweep.py",
+        "return 2.0 * threads * chains * iterations",
+        "return 1.0 * threads * chains * iterations",
+    ),
+    (
+        "metal: dispatch check ignores what ran",
+        S / "metal_sweep.py",
+        "seen == {asked},",
+        "True,",
+    ),
+    (
+        "metal: stream floor against MLX ignored",
+        S / "metal_sweep.py",
+        "    if best < floor:",
+        "    if best < 0:",
+    ),
+    (
+        "metal: threadgroup 32 judged for flatness",
+        S / "metal_sweep.py",
+        "if tg < STREAM_FLAT_FROM or key not in rates:",
+        "if key not in rates:",
+    ),
+    (
+        "metal: flatness tolerance doubled",
+        S / "metal_sweep.py",
+        "if rates[key] < (1 - STREAM_FLAT_TOLERANCE) * top:",
+        "if rates[key] < (1 - 2 * STREAM_FLAT_TOLERANCE) * top:",
+    ),
+    (
+        "metal: occupancy drop measured from the wrong end",
+        S / "metal_sweep.py",
+        "drop = 1 - rates[-1] / rates[0]",
+        "drop = 1 - rates[0] / rates[-1]",
+    ),
+    (
+        "metal: occupancy rise check removed",
+        S / "metal_sweep.py",
+        "if high > (1 + OCCUPANCY_MAX_RISE) * low:",
+        "if False:",
+    ),
+    (
+        "metal: best FMA is the worst threadgroup",
+        S / "metal_sweep.py",
+        'return max(_median(summary, fma_key(dtype, tg), "flops_per_s") for tg in THREADGROUP_SIZES)',
+        'return min(_median(summary, fma_key(dtype, tg), "flops_per_s") for tg in THREADGROUP_SIZES)',
+    ),
+    (
+        "metal: FMA against matmul check removed",
+        S / "metal_sweep.py",
+        "if fp32 < FP32_FMA_MIN_FRACTION_OF_MATMUL * mlx_fp32_matmul_flops:",
+        "if False:",
+    ),
+    (
+        "metal: fp16 ratio inverted",
+        S / "metal_sweep.py",
+        "ratio = fp16 / fp32",
+        "ratio = fp32 / fp16",
+    ),
+    (
+        "metal: fp32 FMA range check removed",
+        S / "metal_sweep.py",
+        "if not low <= fp32 / 1e12 <= high:",
+        "if False:",
+    ),
+    (
+        "metal: a failed prediction reads as held",
+        S / "metal_sweep.py",
+        '"held": not failures[phase],',
+        '"held": True,',
+    ),
+    (
+        "metal report: dispatch ignored for citability",
+        S / "metal_report.py",
+        'and entry["validated"] and entry["dispatched_as_asked"]',
+        'and entry["validated"]',
+    ),
+    (
+        "metal report: share uses the wrong reference",
+        S / "metal_report.py",
+        'share = entry["bytes_per_s"]["median"] / mlx_triad if citable(entry) else None',
+        'share = entry["bytes_per_s"]["median"] / 80e9 if citable(entry) else None',
+    ),
+    (
+        "metal report: occupancy relative to the largest size",
+        S / "metal_report.py",
+        "base = s.get(ms.occupancy_key(ms.SCRATCH_BYTES[0]))",
+        "base = s.get(ms.occupancy_key(ms.SCRATCH_BYTES[-1]))",
+    ),
+    (
+        "metal report: a phase with a non-citable configuration is judged",
+        S / "metal_report.py",
+        "        if not all(citable(e) for e in summary.values()):",
+        "        if False:",
+    ),
 ]
 
 
