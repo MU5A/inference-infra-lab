@@ -35,3 +35,10 @@ judging time, not retyped.
   SIMD-group width of 32. Unlike Day 3's dry run, no rate was printed or seen before the gated runs.
   Template integers (`SCRATCH`, `ITERS`) and a threadgroup array declared in the kernel body both
   work in MLX 0.32.4's `metal_kernel`; I had not been sure they would.
+
+## 4. Protocol for the gated runs, fixed before the first one
+
+`python scripts/day04_run.py --rest 120 --wait-quiet 900`. The 120 s rest before each process run
+applies to all three phases from the start, because Day 3's only unstable phase was its sustained
+compute sweep and it held once rests were added. The 10% limit and the 20% decode-probe limit are
+unchanged from Day 3.
