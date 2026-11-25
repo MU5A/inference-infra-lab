@@ -1,0 +1,3562 @@
+{
+ "schema": 1,
+ "what": "memory llama-server reports for Qwen2.5-0.5B Q4_K_M by context and cache type",
+ "command_template": "third_party/llama.cpp/build/bin/llama-server -m models/qwen2.5-0.5b-instruct-q4_k_m.gguf --host 127.0.0.1 --port 8095 -c 0 --parallel 1 -ngl 99 -ctk TYPE -ctv TYPE -fa on --log-jsonl -lv 4 --no-webui",
+ "repeats": 3,
+ "environment": {
+  "machine": {
+   "chip": "Apple M3",
+   "arch": "arm64",
+   "memory_gb": 16.0,
+   "cpu_cores": 8,
+   "os": "macOS-26.2-arm64-arm-64bit"
+  },
+  "conditions": {
+   "load_average_1_5_15": [
+    3.4921875,
+    12.54541015625,
+    11.61865234375
+   ],
+   "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+   "power": "Now drawing from 'AC Power'",
+   "gpu_utilization": {
+    "peak": 9,
+    "mean": 1.8,
+    "samples": 5
+   },
+   "memory_free_percent": 48,
+   "swap_used_mb": 1703.0
+  },
+  "software": {
+   "python": "3.12.8",
+   "llama_cpp_commit": "cbb1c1c50bba81929387dea473873d1df87a6212"
+  },
+  "model": {
+   "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+   "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+  }
+ },
+ "machine_before": {
+  "time": "2026-11-25T11:46:52+01:00",
+  "power": "Now drawing from 'AC Power'",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "load_average": [
+   3.4921875,
+   12.54541015625,
+   11.61865234375
+  ],
+  "memory_free_percent": 48,
+  "swap_used_mb": 1703.0,
+  "disk_free_bytes": 9460047872
+ },
+ "machine_after": {
+  "time": "2026-11-25T11:48:27+01:00",
+  "power": "Now drawing from 'AC Power'",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "load_average": [
+   2.0458984375,
+   9.61669921875,
+   10.580078125
+  ],
+  "memory_free_percent": 47,
+  "swap_used_mb": 1687.0,
+  "disk_free_bytes": 9456078848
+ },
+ "launches": [
+  {
+   "context": 512,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 1.29,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 6.0,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 3.0,
+      "v_type": "f16",
+      "v_mib": 3.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 6,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11707,
+       "self": 415,
+       "model": 373,
+       "context": 6,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 1000,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.5,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 12.0,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 6.0,
+      "v_type": "f16",
+      "v_mib": 6.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 12,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11701,
+       "self": 422,
+       "model": 373,
+       "context": 12,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 4096,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 48.0,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 24.0,
+      "v_type": "f16",
+      "v_mib": 24.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 48,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11662,
+       "self": 461,
+       "model": 373,
+       "context": 48,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 32768,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 384.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 192.0,
+      "v_type": "f16",
+      "v_mib": 192.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 384,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11298,
+       "self": 825,
+       "model": 373,
+       "context": 384,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 512,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 3.19,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 1.59,
+      "v_type": "q8_0",
+      "v_mib": 1.59
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 3,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11709,
+       "self": 413,
+       "model": 373,
+       "context": 3,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 1000,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 6.38,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 3.19,
+      "v_type": "q8_0",
+      "v_mib": 3.19
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 7,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11706,
+       "self": 417,
+       "model": 373,
+       "context": 7,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 4096,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 25.5,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 12.75,
+      "v_type": "q8_0",
+      "v_mib": 12.75
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 26,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11683,
+       "self": 439,
+       "model": 373,
+       "context": 26,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 32768,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 204.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 102.0,
+      "v_type": "q8_0",
+      "v_mib": 102.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 204,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11477,
+       "self": 645,
+       "model": 373,
+       "context": 204,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 512,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 1.69,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 0.84,
+      "v_type": "q4_0",
+      "v_mib": 0.84
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 2,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11711,
+       "self": 412,
+       "model": 373,
+       "context": 2,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 1000,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 3.38,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 1.69,
+      "v_type": "q4_0",
+      "v_mib": 1.69
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 4,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11709,
+       "self": 414,
+       "model": 373,
+       "context": 4,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 4096,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 13.5,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 6.75,
+      "v_type": "q4_0",
+      "v_mib": 6.75
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 14,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11695,
+       "self": 427,
+       "model": 373,
+       "context": 14,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 32768,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 108.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 54.0,
+      "v_type": "q4_0",
+      "v_mib": 54.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 108,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11573,
+       "self": 549,
+       "model": 373,
+       "context": 108,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 0
+  },
+  {
+   "context": 512,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 6.0,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 3.0,
+      "v_type": "f16",
+      "v_mib": 3.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 6,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11707,
+       "self": 415,
+       "model": 373,
+       "context": 6,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 1000,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 12.0,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 6.0,
+      "v_type": "f16",
+      "v_mib": 6.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 12,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11701,
+       "self": 422,
+       "model": 373,
+       "context": 12,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 4096,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 48.0,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 24.0,
+      "v_type": "f16",
+      "v_mib": 24.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 48,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11662,
+       "self": 461,
+       "model": 373,
+       "context": 48,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 32768,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 384.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 192.0,
+      "v_type": "f16",
+      "v_mib": 192.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 384,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11298,
+       "self": 825,
+       "model": 373,
+       "context": 384,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 512,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 3.19,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 1.59,
+      "v_type": "q8_0",
+      "v_mib": 1.59
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 3,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11709,
+       "self": 413,
+       "model": 373,
+       "context": 3,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 1000,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 6.38,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 3.19,
+      "v_type": "q8_0",
+      "v_mib": 3.19
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 7,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11706,
+       "self": 417,
+       "model": 373,
+       "context": 7,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 4096,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 25.5,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 12.75,
+      "v_type": "q8_0",
+      "v_mib": 12.75
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 26,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11683,
+       "self": 439,
+       "model": 373,
+       "context": 26,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 32768,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1703.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 204.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 102.0,
+      "v_type": "q8_0",
+      "v_mib": 102.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 204,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11477,
+       "self": 645,
+       "model": 373,
+       "context": 204,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 512,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 1.69,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 0.84,
+      "v_type": "q4_0",
+      "v_mib": 0.84
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 2,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11711,
+       "self": 412,
+       "model": 373,
+       "context": 2,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 1000,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 3.38,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 1.69,
+      "v_type": "q4_0",
+      "v_mib": 1.69
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 4,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11709,
+       "self": 414,
+       "model": 373,
+       "context": 4,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 4096,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 13.5,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 6.75,
+      "v_type": "q4_0",
+      "v_mib": 6.75
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 14,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11695,
+       "self": 427,
+       "model": 373,
+       "context": 14,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 32768,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 108.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 54.0,
+      "v_type": "q4_0",
+      "v_mib": 54.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 108,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11573,
+       "self": 549,
+       "model": 373,
+       "context": 108,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 1
+  },
+  {
+   "context": 512,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 6.0,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 3.0,
+      "v_type": "f16",
+      "v_mib": 3.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 6,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11707,
+       "self": 415,
+       "model": 373,
+       "context": 6,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 1000,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 12.0,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 6.0,
+      "v_type": "f16",
+      "v_mib": 6.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 12,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11701,
+       "self": 422,
+       "model": 373,
+       "context": 12,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 4096,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 48.0,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 24.0,
+      "v_type": "f16",
+      "v_mib": 24.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 48,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11662,
+       "self": 461,
+       "model": 373,
+       "context": 48,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 32768,
+   "cache_type": "f16",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 384.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "f16",
+      "k_mib": 192.0,
+      "v_type": "f16",
+      "v_mib": 192.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 384,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11298,
+       "self": 825,
+       "model": 373,
+       "context": 384,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 512,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 3.19,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 1.59,
+      "v_type": "q8_0",
+      "v_mib": 1.59
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 3,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11709,
+       "self": 413,
+       "model": 373,
+       "context": 3,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 1000,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 6.38,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 3.19,
+      "v_type": "q8_0",
+      "v_mib": 3.19
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 7,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11706,
+       "self": 417,
+       "model": 373,
+       "context": 7,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 4096,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 25.5,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 12.75,
+      "v_type": "q8_0",
+      "v_mib": 12.75
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 26,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11683,
+       "self": 439,
+       "model": 373,
+       "context": 26,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 32768,
+   "cache_type": "q8_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 204.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q8_0",
+      "k_mib": 102.0,
+      "v_type": "q8_0",
+      "v_mib": 102.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 204,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11477,
+       "self": 645,
+       "model": 373,
+       "context": 204,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 512,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1695.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 1.69,
+      "cells": 512,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 0.84,
+      "v_type": "q4_0",
+      "v_mib": 0.84
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 512,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.01
+     },
+     {
+      "buffer": "CPU",
+      "mib": 7.52
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 2,
+     "compute_mib": 43,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11711,
+       "self": 412,
+       "model": 373,
+       "context": 2,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 96,
+       "model": 89,
+       "context": 0,
+       "compute": 7
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 1000,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1687.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 3.38,
+      "cells": 1024,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 1.69,
+      "v_type": "q4_0",
+      "v_mib": 1.69
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 1024,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 36.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 8.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 4,
+     "compute_mib": 44,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11709,
+       "self": 414,
+       "model": 373,
+       "context": 4,
+       "compute": 36,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 97,
+       "model": 89,
+       "context": 0,
+       "compute": 8
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 4096,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1687.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 13.5,
+      "cells": 4096,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 6.75,
+      "v_type": "q4_0",
+      "v_mib": 6.75
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 4096,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 39.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 11.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 14,
+     "compute_mib": 50,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11695,
+       "self": 427,
+       "model": 373,
+       "context": 14,
+       "compute": 39,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 100,
+       "model": 89,
+       "context": 0,
+       "compute": 11
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  },
+  {
+   "context": 32768,
+   "cache_type": "q4_0",
+   "ok": true,
+   "error": null,
+   "ready_s": 0.51,
+   "exit_code": 0,
+   "swap_used_mb_before": 1687.0,
+   "parsed": {
+    "kv": [
+     {
+      "size_mib": 108.0,
+      "cells": 32768,
+      "layers": 24,
+      "seqs_used": 1,
+      "seqs_total": 1,
+      "k_type": "q4_0",
+      "k_mib": 54.0,
+      "v_type": "q4_0",
+      "v_mib": 54.0
+     }
+    ],
+    "model_params_millions": 630.17,
+    "file_size_mib": 462.96,
+    "bits_per_weight": 6.16,
+    "n_ctx": 32768,
+    "flash_attention_enabled": true,
+    "model_buffers": [
+     {
+      "buffer": "CPU_Mapped",
+      "mib": 89.26
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 137.94
+     },
+     {
+      "buffer": "MTL0_Mapped",
+      "mib": 235.76
+     }
+    ],
+    "compute_buffers": [
+     {
+      "buffer": "MTL0",
+      "mib": 67.51
+     },
+     {
+      "buffer": "CPU",
+      "mib": 39.02
+     }
+    ],
+    "output_buffers": [
+     {
+      "buffer": "CPU",
+      "mib": 0.58
+     }
+    ],
+    "breakdown_events": 2,
+    "breakdown": {
+     "model_mib": 462,
+     "context_mib": 108,
+     "compute_mib": 106,
+     "rows": [
+      {
+       "kind": "device",
+       "name": "MTL0",
+       "description": "Apple M3",
+       "total": 12124,
+       "free": 11573,
+       "self": 549,
+       "model": 373,
+       "context": 108,
+       "compute": 67,
+       "unaccounted": 0
+      },
+      {
+       "kind": "host",
+       "name": "Host",
+       "self": 128,
+       "model": 89,
+       "context": 0,
+       "compute": 39
+      }
+     ]
+    }
+   },
+   "stderr_bytes": 0,
+   "repeat": 2
+  }
+ ],
+ "unusable": [],
+ "summary": {
+  "ctx512-f16": {
+   "context": 512,
+   "cache_type": "f16",
+   "cells": [
+    512,
+    512,
+    512
+   ],
+   "kv_mib": [
+    6.0,
+    6.0,
+    6.0
+   ],
+   "context_mib": [
+    6,
+    6,
+    6
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx1000-f16": {
+   "context": 1000,
+   "cache_type": "f16",
+   "cells": [
+    1024,
+    1024,
+    1024
+   ],
+   "kv_mib": [
+    12.0,
+    12.0,
+    12.0
+   ],
+   "context_mib": [
+    12,
+    12,
+    12
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx4096-f16": {
+   "context": 4096,
+   "cache_type": "f16",
+   "cells": [
+    4096,
+    4096,
+    4096
+   ],
+   "kv_mib": [
+    48.0,
+    48.0,
+    48.0
+   ],
+   "context_mib": [
+    48,
+    48,
+    48
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx32768-f16": {
+   "context": 32768,
+   "cache_type": "f16",
+   "cells": [
+    32768,
+    32768,
+    32768
+   ],
+   "kv_mib": [
+    384.0,
+    384.0,
+    384.0
+   ],
+   "context_mib": [
+    384,
+    384,
+    384
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx512-q8_0": {
+   "context": 512,
+   "cache_type": "q8_0",
+   "cells": [
+    512,
+    512,
+    512
+   ],
+   "kv_mib": [
+    3.19,
+    3.19,
+    3.19
+   ],
+   "context_mib": [
+    3,
+    3,
+    3
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx1000-q8_0": {
+   "context": 1000,
+   "cache_type": "q8_0",
+   "cells": [
+    1024,
+    1024,
+    1024
+   ],
+   "kv_mib": [
+    6.38,
+    6.38,
+    6.38
+   ],
+   "context_mib": [
+    7,
+    7,
+    7
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx4096-q8_0": {
+   "context": 4096,
+   "cache_type": "q8_0",
+   "cells": [
+    4096,
+    4096,
+    4096
+   ],
+   "kv_mib": [
+    25.5,
+    25.5,
+    25.5
+   ],
+   "context_mib": [
+    26,
+    26,
+    26
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx32768-q8_0": {
+   "context": 32768,
+   "cache_type": "q8_0",
+   "cells": [
+    32768,
+    32768,
+    32768
+   ],
+   "kv_mib": [
+    204.0,
+    204.0,
+    204.0
+   ],
+   "context_mib": [
+    204,
+    204,
+    204
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx512-q4_0": {
+   "context": 512,
+   "cache_type": "q4_0",
+   "cells": [
+    512,
+    512,
+    512
+   ],
+   "kv_mib": [
+    1.69,
+    1.69,
+    1.69
+   ],
+   "context_mib": [
+    2,
+    2,
+    2
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx1000-q4_0": {
+   "context": 1000,
+   "cache_type": "q4_0",
+   "cells": [
+    1024,
+    1024,
+    1024
+   ],
+   "kv_mib": [
+    3.38,
+    3.38,
+    3.38
+   ],
+   "context_mib": [
+    4,
+    4,
+    4
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx4096-q4_0": {
+   "context": 4096,
+   "cache_type": "q4_0",
+   "cells": [
+    4096,
+    4096,
+    4096
+   ],
+   "kv_mib": [
+    13.5,
+    13.5,
+    13.5
+   ],
+   "context_mib": [
+    14,
+    14,
+    14
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  },
+  "ctx32768-q4_0": {
+   "context": 32768,
+   "cache_type": "q4_0",
+   "cells": [
+    32768,
+    32768,
+    32768
+   ],
+   "kv_mib": [
+    108.0,
+    108.0,
+    108.0
+   ],
+   "context_mib": [
+    108,
+    108,
+    108
+   ],
+   "model_mib": [
+    462,
+    462,
+    462
+   ]
+  }
+ }
+}

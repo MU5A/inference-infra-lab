@@ -386,3 +386,39 @@ def test_a_summary_that_has_been_edited_into_nonsense_is_refused(write):
     for case in bad_cases:
         with pytest.raises(GGUFError):
             gguf.from_summary(case)
+
+
+def test_the_expected_layout_is_the_one_known_by_hand_for_a_small_model():
+    shapes = gguf.expected_tensors(tiny_model(tied=True))
+    assert len(shapes) == 2 + 2 * 12 and "output.weight" not in shapes
+    assert shapes["token_embd.weight"] == (32, 50)
+    assert shapes["output_norm.weight"] == (32,)
+    assert shapes["blk.1.attn_q.weight"] == (32, 32) and shapes["blk.1.attn_q.bias"] == (32,)
+    assert shapes["blk.0.attn_k.weight"] == (32, 16) and shapes["blk.0.attn_k.bias"] == (16,)
+    assert shapes["blk.0.attn_v.weight"] == (32, 16)
+    assert shapes["blk.0.attn_output.weight"] == (32, 32)
+    assert shapes["blk.0.ffn_gate.weight"] == (32, 64) and shapes["blk.0.ffn_up.weight"] == (32, 64)
+    assert shapes["blk.1.ffn_down.weight"] == (64, 32)
+    assert gguf.expected_tensors(tiny_model(tied=False))["output.weight"] == (32, 50)
+
+
+def test_the_expected_layout_for_qwen2_5_0_5b_is_the_one_known_by_hand():
+    import pathlib
+
+    path = (
+        pathlib.Path(__file__).resolve().parents[1]
+        / "days"
+        / "05-kv-cache-memory"
+        / "configs"
+        / "Qwen2.5-0.5B-Instruct.config.json"
+    )
+    if not path.exists():
+        pytest.skip("no Day 5 configs committed")
+    shapes = gguf.expected_tensors(kvmem.load_config_file(path))
+    assert len(shapes) == 24 * 12 + 2
+    assert shapes["token_embd.weight"] == (896, 151936)
+    assert shapes["blk.23.attn_q.weight"] == (896, 896)
+    assert shapes["blk.0.attn_k.weight"] == (896, 128) and shapes["blk.0.attn_v.bias"] == (128,)
+    assert shapes["blk.0.attn_output.weight"] == (896, 896)
+    assert shapes["blk.5.ffn_gate.weight"] == (896, 4864)
+    assert shapes["blk.5.ffn_down.weight"] == (4864, 896)

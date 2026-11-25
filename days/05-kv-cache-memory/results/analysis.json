@@ -1,0 +1,454 @@
+{
+ "verdicts": [
+  {
+   "number": "1",
+   "prediction": "Parameter count equals the GGUF's tensor elements exactly and llama.cpp's printed one",
+   "held": false,
+   "failures": [
+    "calculator 494032768 parameters, the file's tensors hold 630167424 (-136134656)"
+   ]
+  },
+  {
+   "number": "2",
+   "prediction": "The calculator's tensors are exactly the GGUF's tensors, names and shapes",
+   "held": false,
+   "failures": [
+    "in the file but not expected: output.weight (896, 151936)"
+   ]
+  },
+  {
+   "number": "3",
+   "prediction": "Block-table tensor sizes add to the file's tensor-data region within 0.01%",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "4",
+   "prediction": "KV size within 0.5% of llama.cpp at 512, 4096 and 32768 for f16, q8_0, q4_0",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "5",
+   "prediction": "1000 tokens of context are reported as 1024 cells, 2% or more above the 1000 figure",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "6",
+   "prediction": "The reported KV size is identical across the three launches of each configuration",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "7",
+   "prediction": "Breakdown context column within 2 MiB of KV; model columns within 2% of tensor data",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "8",
+   "prediction": "Total parameters of all five models within the rounding of the published figure",
+   "held": false,
+   "failures": [
+    "Qwen2.5-7B-Instruct: calculator 7.6156 B total, published 7.61 B (+0.0056)"
+   ]
+  },
+  {
+   "number": "9",
+   "prediction": "Activated parameters of the three mixture-of-experts models within published rounding",
+   "held": false,
+   "failures": [
+    "DeepSeek-V2-Lite: calculator 2.6612 B active, published 2.4 B (+0.2612)"
+   ]
+  },
+  {
+   "number": "10",
+   "prediction": "DeepSeek-V2-Lite's compressed cache is 8 to 10 times smaller than the expanded one",
+   "held": true,
+   "failures": []
+  }
+ ],
+ "parameters": {
+  "calculator_tied": 494032768,
+  "calculator_output_matrix_counted": 630167424,
+  "file_elements": 630167424,
+  "llama_printed_millions": 630.17,
+  "vocab_times_hidden": 136134656
+ },
+ "file": {
+  "tensors": 291,
+  "data_bytes": 485452288,
+  "block_table_bytes": 485452288,
+  "effective_bits_per_weight": 6.162835710149308,
+  "by_type": {
+   "Q8_0": {
+    "tensors": 13,
+    "elements": 137510912,
+    "bytes": 146105344
+   },
+   "Q5_0": {
+    "tensors": 133,
+    "elements": 387989504,
+    "bytes": 266742784
+   },
+   "F32": {
+    "tensors": 121,
+    "elements": 71552,
+    "bytes": 286208
+   },
+   "Q6_K": {
+    "tensors": 12,
+    "elements": 52297728,
+    "bytes": 42900480
+   },
+   "Q4_K": {
+    "tensors": 12,
+    "elements": 52297728,
+    "bytes": 29417472
+   }
+  },
+  "weight_matrices": 170,
+  "matrices_with_row_length_multiple_of_256": 24,
+  "k_quant_matrices": 24,
+  "k_quant_exactly_on_multiples_of_256": true
+ },
+ "weights_estimate": {
+  "assumed_bits_per_weight": 4.5,
+  "parameters": 494032768,
+  "estimate_bytes": 277893432,
+  "file_data_bytes": 485452288,
+  "file_over_estimate": 1.7469009055241003,
+  "embedding_matrices_bytes": 238235648,
+  "embedding_matrices_share": 0.49074987159191225
+ },
+ "kv": [
+  {
+   "key": "ctx512-f16",
+   "context": 512,
+   "cache_type": "f16",
+   "launches": 3,
+   "cells": 512,
+   "reported_mib": 6.0,
+   "calculator_at_cells_mib": 6.0,
+   "calculator_at_asked_mib": 6.0,
+   "difference_percent": 0.0,
+   "k_mib": 3.0,
+   "v_mib": 3.0,
+   "model_mib": 462,
+   "context_mib": 6,
+   "compute_mib": 43
+  },
+  {
+   "key": "ctx1000-f16",
+   "context": 1000,
+   "cache_type": "f16",
+   "launches": 3,
+   "cells": 1024,
+   "reported_mib": 12.0,
+   "calculator_at_cells_mib": 12.0,
+   "calculator_at_asked_mib": 11.71875,
+   "difference_percent": 0.0,
+   "k_mib": 6.0,
+   "v_mib": 6.0,
+   "model_mib": 462,
+   "context_mib": 12,
+   "compute_mib": 44
+  },
+  {
+   "key": "ctx4096-f16",
+   "context": 4096,
+   "cache_type": "f16",
+   "launches": 3,
+   "cells": 4096,
+   "reported_mib": 48.0,
+   "calculator_at_cells_mib": 48.0,
+   "calculator_at_asked_mib": 48.0,
+   "difference_percent": 0.0,
+   "k_mib": 24.0,
+   "v_mib": 24.0,
+   "model_mib": 462,
+   "context_mib": 48,
+   "compute_mib": 50
+  },
+  {
+   "key": "ctx32768-f16",
+   "context": 32768,
+   "cache_type": "f16",
+   "launches": 3,
+   "cells": 32768,
+   "reported_mib": 384.0,
+   "calculator_at_cells_mib": 384.0,
+   "calculator_at_asked_mib": 384.0,
+   "difference_percent": 0.0,
+   "k_mib": 192.0,
+   "v_mib": 192.0,
+   "model_mib": 462,
+   "context_mib": 384,
+   "compute_mib": 106
+  },
+  {
+   "key": "ctx512-q8_0",
+   "context": 512,
+   "cache_type": "q8_0",
+   "launches": 3,
+   "cells": 512,
+   "reported_mib": 3.19,
+   "calculator_at_cells_mib": 3.1875,
+   "calculator_at_asked_mib": 3.1875,
+   "difference_percent": 0.07843137254901794,
+   "k_mib": 1.59,
+   "v_mib": 1.59,
+   "model_mib": 462,
+   "context_mib": 3,
+   "compute_mib": 43
+  },
+  {
+   "key": "ctx1000-q8_0",
+   "context": 1000,
+   "cache_type": "q8_0",
+   "launches": 3,
+   "cells": 1024,
+   "reported_mib": 6.38,
+   "calculator_at_cells_mib": 6.375,
+   "calculator_at_asked_mib": 6.2255859375,
+   "difference_percent": 0.07843137254901794,
+   "k_mib": 3.19,
+   "v_mib": 3.19,
+   "model_mib": 462,
+   "context_mib": 7,
+   "compute_mib": 44
+  },
+  {
+   "key": "ctx4096-q8_0",
+   "context": 4096,
+   "cache_type": "q8_0",
+   "launches": 3,
+   "cells": 4096,
+   "reported_mib": 25.5,
+   "calculator_at_cells_mib": 25.5,
+   "calculator_at_asked_mib": 25.5,
+   "difference_percent": 0.0,
+   "k_mib": 12.75,
+   "v_mib": 12.75,
+   "model_mib": 462,
+   "context_mib": 26,
+   "compute_mib": 50
+  },
+  {
+   "key": "ctx32768-q8_0",
+   "context": 32768,
+   "cache_type": "q8_0",
+   "launches": 3,
+   "cells": 32768,
+   "reported_mib": 204.0,
+   "calculator_at_cells_mib": 204.0,
+   "calculator_at_asked_mib": 204.0,
+   "difference_percent": 0.0,
+   "k_mib": 102.0,
+   "v_mib": 102.0,
+   "model_mib": 462,
+   "context_mib": 204,
+   "compute_mib": 106
+  },
+  {
+   "key": "ctx512-q4_0",
+   "context": 512,
+   "cache_type": "q4_0",
+   "launches": 3,
+   "cells": 512,
+   "reported_mib": 1.69,
+   "calculator_at_cells_mib": 1.6875,
+   "calculator_at_asked_mib": 1.6875,
+   "difference_percent": 0.148148148148145,
+   "k_mib": 0.84,
+   "v_mib": 0.84,
+   "model_mib": 462,
+   "context_mib": 2,
+   "compute_mib": 43
+  },
+  {
+   "key": "ctx1000-q4_0",
+   "context": 1000,
+   "cache_type": "q4_0",
+   "launches": 3,
+   "cells": 1024,
+   "reported_mib": 3.38,
+   "calculator_at_cells_mib": 3.375,
+   "calculator_at_asked_mib": 3.2958984375,
+   "difference_percent": 0.148148148148145,
+   "k_mib": 1.69,
+   "v_mib": 1.69,
+   "model_mib": 462,
+   "context_mib": 4,
+   "compute_mib": 44
+  },
+  {
+   "key": "ctx4096-q4_0",
+   "context": 4096,
+   "cache_type": "q4_0",
+   "launches": 3,
+   "cells": 4096,
+   "reported_mib": 13.5,
+   "calculator_at_cells_mib": 13.5,
+   "calculator_at_asked_mib": 13.5,
+   "difference_percent": 0.0,
+   "k_mib": 6.75,
+   "v_mib": 6.75,
+   "model_mib": 462,
+   "context_mib": 14,
+   "compute_mib": 50
+  },
+  {
+   "key": "ctx32768-q4_0",
+   "context": 32768,
+   "cache_type": "q4_0",
+   "launches": 3,
+   "cells": 32768,
+   "reported_mib": 108.0,
+   "calculator_at_cells_mib": 108.0,
+   "calculator_at_asked_mib": 108.0,
+   "difference_percent": 0.0,
+   "k_mib": 54.0,
+   "v_mib": 54.0,
+   "model_mib": 462,
+   "context_mib": 108,
+   "compute_mib": 106
+  }
+ ],
+ "published": [
+  {
+   "name": "Qwen2.5-0.5B-Instruct",
+   "total_b": 0.494032768,
+   "total_published": 0.49,
+   "total_decimals": 2,
+   "total_held": true,
+   "non_embedding_b": 0.357898112,
+   "non_embedding_published": 0.36,
+   "non_embedding_decimals": 2,
+   "active_b": 0.494032768,
+   "active_published": null,
+   "active_decimals": null,
+   "active_held": null
+  },
+  {
+   "name": "Qwen2.5-7B-Instruct",
+   "total_b": 7.615616512,
+   "total_published": 7.61,
+   "total_decimals": 2,
+   "total_held": false,
+   "non_embedding_b": 6.52562176,
+   "non_embedding_published": 6.53,
+   "non_embedding_decimals": 2,
+   "active_b": 7.615616512,
+   "active_published": null,
+   "active_decimals": null,
+   "active_held": null
+  },
+  {
+   "name": "Mixtral-8x7B-v0.1",
+   "total_b": 46.702792704,
+   "total_published": 46.7,
+   "total_decimals": 1,
+   "total_held": true,
+   "non_embedding_b": 46.440648704,
+   "non_embedding_published": null,
+   "non_embedding_decimals": null,
+   "active_b": 12.879925248,
+   "active_published": 12.9,
+   "active_decimals": 1,
+   "active_held": true
+  },
+  {
+   "name": "OLMoE-1B-7B-0924",
+   "total_b": 6.919161856,
+   "total_published": 6.9,
+   "total_decimals": 1,
+   "total_held": true,
+   "non_embedding_b": 6.713116672,
+   "non_embedding_published": null,
+   "non_embedding_decimals": null,
+   "active_b": 1.28201728,
+   "active_published": 1.3,
+   "active_decimals": 1,
+   "active_held": true
+  },
+  {
+   "name": "DeepSeek-V2-Lite",
+   "total_b": 15.706484224,
+   "total_published": 15.7,
+   "total_decimals": 1,
+   "total_held": true,
+   "non_embedding_b": 15.287053824,
+   "non_embedding_published": null,
+   "non_embedding_decimals": null,
+   "active_b": 2.661150208,
+   "active_published": 2.4,
+   "active_decimals": 1,
+   "active_held": false
+  }
+ ],
+ "scenarios": [
+  {
+   "name": "Qwen2.5-0.5B-Instruct",
+   "weights_gib": 0.9202077388763428,
+   "kv_per_token_bytes": 12288,
+   "kv_gib": {
+    "4096": 0.046875,
+    "32768": 0.375,
+    "131072": 1.5
+   }
+  },
+  {
+   "name": "Qwen2.5-7B-Instruct",
+   "weights_gib": 14.18519115447998,
+   "kv_per_token_bytes": 57344,
+   "kv_gib": {
+    "4096": 0.21875,
+    "32768": 1.75,
+    "131072": 7.0
+   }
+  },
+  {
+   "name": "Mixtral-8x7B-v0.1",
+   "weights_gib": 86.99073028564453,
+   "kv_per_token_bytes": 131072,
+   "kv_gib": {
+    "4096": 0.5,
+    "32768": 4.0,
+    "131072": 16.0
+   }
+  },
+  {
+   "name": "OLMoE-1B-7B-0924",
+   "weights_gib": 12.887943267822266,
+   "kv_per_token_bytes": 131072,
+   "kv_gib": {
+    "4096": 0.5,
+    "32768": 4.0,
+    "131072": 16.0
+   }
+  },
+  {
+   "name": "DeepSeek-V2-Lite (compressed cache)",
+   "weights_gib": 29.255606651306152,
+   "kv_per_token_bytes": 31104,
+   "kv_gib": {
+    "4096": 0.11865234375,
+    "32768": 0.94921875,
+    "131072": 3.796875
+   }
+  },
+  {
+   "name": "DeepSeek-V2-Lite (expanded cache)",
+   "weights_gib": 29.255606651306152,
+   "kv_per_token_bytes": 276480,
+   "kv_gib": {
+    "4096": 1.0546875,
+    "32768": 8.4375,
+    "131072": 33.75
+   }
+  }
+ ],
+ "unusable_launches": []
+}

@@ -18,6 +18,8 @@ from .kvmem import GIB, MIB, Model
 
 SCENARIO_CONTEXTS = (4096, 32768, 131072)
 SCENARIO_BITS = 16.0
+Q4_K_BITS = 4.5  # Q4_K's own rate: 144 bytes per 256 weights
+EMBEDDING_TENSORS = ("token_embd.weight", "output.weight")
 QWEN = "Qwen2.5-0.5B-Instruct"
 DEEPSEEK = "DeepSeek-V2-Lite"
 
@@ -76,6 +78,8 @@ def analyze(
     weights = [t for t in g.tensors if len(t.dims) == 2]
     k_quant = {"Q2_K", "Q3_K", "Q4_K", "Q5_K", "Q6_K", "Q8_K"}
     divisible = [t for t in weights if t.dims[0] % 256 == 0]
+    estimate_bytes = kvmem.weight_bytes(kvmem.param_counts(qwen).total, Q4_K_BITS)
+    embedding_bytes = sum(t.nbytes for t in g.tensors if t.name in EMBEDDING_TENSORS)
     return {
         "verdicts": kvcheck.verdicts(failures),
         "parameters": {
@@ -97,6 +101,15 @@ def analyze(
             "k_quant_exactly_on_multiples_of_256": all(
                 (t.type_name in k_quant) == (t.dims[0] % 256 == 0) for t in weights
             ),
+        },
+        "weights_estimate": {
+            "assumed_bits_per_weight": Q4_K_BITS,
+            "parameters": kvmem.param_counts(qwen).total,
+            "estimate_bytes": estimate_bytes,
+            "file_data_bytes": g.data_bytes,
+            "file_over_estimate": g.data_bytes / estimate_bytes,
+            "embedding_matrices_bytes": embedding_bytes,
+            "embedding_matrices_share": embedding_bytes / g.data_bytes,
         },
         "kv": kv_rows(qwen, launches, summary),
         "published": published_rows(models, pub),
@@ -206,6 +219,7 @@ def render(a: Mapping) -> str:
             "### Weights: the calculator against the model file",
             parameters_table(a),
             quant_table(a),
+            weights_estimate_table(a),
             "### KV cache: the calculator against what llama.cpp reports",
             kv_table(a),
             "### Memory breakdown llama.cpp prints at shutdown",
@@ -229,7 +243,10 @@ def parameters_table(a: Mapping) -> str:
             "Calculator, output matrix counted separately (added after prediction 1 failed)",
             f"{p['calculator_output_matrix_counted']:,}",
         ),
-        ("Elements in the GGUF file's 291 tensors", f"{p['file_elements']:,}"),
+        (
+            f"Elements in the GGUF file's {a['file']['tensors']} tensors",
+            f"{p['file_elements']:,}",
+        ),
         ("llama.cpp's printed `model params`", f"{printed} M" if printed is not None else "n/a"),
         ("Vocabulary x hidden size (one embedding matrix)", f"{p['vocab_times_hidden']:,}"),
     ]
@@ -259,6 +276,35 @@ def quant_table(a: Mapping) -> str:
         )
     )
     return md(["Type", "Tensors", "Elements", "Bytes", "Bits per weight"], rows)
+
+
+def weights_estimate_table(a: Mapping) -> str:
+    w = a["weights_estimate"]
+    mib = 1024**2
+    rows = [
+        (
+            f"Config's {w['parameters']:,} parameters at {w['assumed_bits_per_weight']} bits "
+            "(Q4_K's own rate)",
+            f"{w['estimate_bytes']:,}",
+            f"{w['estimate_bytes'] / mib:.1f}",
+        ),
+        (
+            "Tensor data in the file",
+            f"{w['file_data_bytes']:,}",
+            f"{w['file_data_bytes'] / mib:.1f}",
+        ),
+        (
+            "Of which the two embedding matrices (`token_embd.weight`, `output.weight`)",
+            f"{w['embedding_matrices_bytes']:,}",
+            f"{w['embedding_matrices_bytes'] / mib:.1f}",
+        ),
+    ]
+    table = md(["Weights", "Bytes", "MiB"], rows)
+    return (
+        table
+        + f"\n\nThe file holds {w['file_over_estimate']:.2f} times the naive estimate, and the "
+        + f"two embedding matrices are {w['embedding_matrices_share']:.0%} of it."
+    )
 
 
 def kv_table(a: Mapping) -> str:

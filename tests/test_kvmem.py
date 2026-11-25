@@ -345,3 +345,9 @@ def test_the_separate_output_option_changes_nothing_for_a_model_that_already_has
     plain = capsys.readouterr().out
     kvmem.main([str(path), "--output-matrix-separate"])
     assert capsys.readouterr().out == plain
+
+
+def test_weight_bytes_round_up_to_a_whole_byte():
+    assert kvmem.weight_bytes(10, 4.5) == 6  # 45 bits need 6 bytes
+    assert kvmem.weight_bytes(8, 4) == 4
+    assert kvmem.weight_bytes(0, 4) == 0
