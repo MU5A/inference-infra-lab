@@ -319,3 +319,29 @@ def test_the_command_line_refuses_bad_files_with_a_message_and_status_2(tmp_path
 def test_the_command_line_refuses_a_missing_file(tmp_path, capsys):
     assert kvmem.main([str(tmp_path / "nope.json")]) == 2
     assert "refused" in capsys.readouterr().err
+
+
+def test_counting_the_output_matrix_separately_adds_exactly_one_embedding_matrix(tmp_path, capsys):
+    cfg = good_qwen(tie_word_embeddings=True)
+    path = tmp_path / "tied.config.json"
+    path.write_text(json.dumps(cfg))
+    kvmem.main([str(path), "--bits-per-weight", "8"])
+    tied_out = capsys.readouterr().out
+    kvmem.main([str(path), "--bits-per-weight", "8", "--output-matrix-separate"])
+    separate_out = capsys.readouterr().out
+    m = kvmem.load_model(cfg)
+    tied_total = kvmem.param_counts(m).total
+    assert f"{tied_total / 1e9:.3f} B total" in tied_out
+    assert f"{(tied_total + m.vocab * m.hidden) / 1e9:.3f} B total" in separate_out
+    assert "counted separately" in separate_out and "counted separately" not in tied_out
+
+
+def test_the_separate_output_option_changes_nothing_for_a_model_that_already_has_one(
+    tmp_path, capsys
+):
+    path = tmp_path / "untied.config.json"
+    path.write_text(json.dumps(good_qwen(tie_word_embeddings=False)))
+    kvmem.main([str(path)])
+    plain = capsys.readouterr().out
+    kvmem.main([str(path), "--output-matrix-separate"])
+    assert capsys.readouterr().out == plain

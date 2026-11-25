@@ -270,3 +270,30 @@ def test_a_configuration_with_fewer_than_three_usable_launches_fails_the_check()
     failures = kvcheck.check_kv(m, summary)
     assert failures and all("usable launches" in f for f in failures)
     assert len(failures) == len(kvcheck.CONTEXTS) * len(kvcheck.CACHE_TYPES)
+
+
+def test_each_kv_prediction_is_judged_by_its_own_function():
+    m = qwen_small()
+    wrong_size = good_summary(m)
+    key = kvcheck.config_key(4096, "f16")
+    wrong_size[key]["kv_mib"] = [x * 1.1 for x in wrong_size[key]["kv_mib"]]
+    assert kvcheck.check_kv_sizes(m, wrong_size) and not kvcheck.check_kv_padding(m, wrong_size)
+    assert not kvcheck.check_kv_repeat(wrong_size)
+
+    unpadded = good_summary(m)
+    odd = kvcheck.config_key(1000, "q8_0")
+    unpadded[odd]["cells"] = [1000] * 3
+    assert kvcheck.check_kv_padding(m, unpadded) and not kvcheck.check_kv_sizes(m, unpadded)
+
+    unstable = good_summary(m)
+    unstable[key]["cells"] = [4096, 4096, 4352]
+    assert kvcheck.check_kv_repeat(unstable)
+    assert not kvcheck.check_kv_sizes(m, good_summary(m))
+
+
+def test_a_missing_configuration_is_reported_once_not_by_every_prediction():
+    m = qwen_small()
+    summary = good_summary(m)
+    del summary[kvcheck.config_key(1000, "f16")]
+    assert kvcheck.check_kv_padding(m, summary) == ["ctx1000-f16: no result"]
+    assert kvcheck.check_kv_repeat(summary) == []

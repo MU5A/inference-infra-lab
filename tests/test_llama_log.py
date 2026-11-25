@@ -119,3 +119,15 @@ def test_a_cache_type_line_with_other_spacing_still_parses():
     )
     kv = llama_log.parse([log(line)])["kv"][0]
     assert (kv["size_mib"], kv["cells"], kv["k_type"], kv["v_mib"]) == (1536.0, 32768, "f16", 768.0)
+
+
+def test_flash_attention_is_recognised_however_it_was_switched_on_and_not_when_it_is_not():
+    on = log("llama_context: flash_attn            = enabled")
+    auto = log("llama_context: flash_attn            = auto")
+    resolved = log("resolve_fused_ops: Flash Attention enabled")
+    off = log("llama_context: flash_attn            = disabled")
+    assert llama_log.parse([on])["flash_attention_enabled"] is True
+    assert llama_log.parse([auto])["flash_attention_enabled"] is False
+    assert llama_log.parse([auto, resolved])["flash_attention_enabled"] is True
+    assert llama_log.parse([off])["flash_attention_enabled"] is False
+    assert llama_log.parse([on, off])["flash_attention_enabled"] is True

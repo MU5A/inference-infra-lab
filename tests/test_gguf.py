@@ -321,3 +321,68 @@ def test_only_the_qwen2_layout_is_known():
     )
     with pytest.raises(ValueError):
         gguf.expected_tensors(other)
+
+
+# ------------------------------------------------------------------ summaries
+
+
+def test_a_summary_is_plain_json_and_round_trips_to_an_equivalent_header(write):
+    import json
+
+    raw = build(
+        TENSORS,
+        [
+            kv_u32("general.alignment", 32),
+            s("general.name") + struct.pack("<I", 8) + s("tiny"),
+            s("general.description") + struct.pack("<I", 8) + s("x" * 500),
+            kv_string_array("tokenizer.tokens", ["a", "b"]),
+        ],
+    )
+    g = gguf.read_header(write(raw))
+    summary = gguf.to_summary(g)
+    assert json.loads(json.dumps(summary)) == summary
+    assert summary["metadata"]["general.name"] == "tiny"
+    assert summary["metadata"]["general.description"] == {"string_chars": 500}
+    again = gguf.from_summary(summary)
+    assert again.tensors == g.tensors
+    assert (again.data_offset, again.file_size, again.alignment) == (
+        g.data_offset,
+        g.file_size,
+        g.alignment,
+    )
+    assert again.parameters == g.parameters and again.padded_bytes() == g.padded_bytes()
+    assert again.data_bytes == g.data_bytes
+
+
+def good_summary(write):
+    return gguf.to_summary(gguf.read_header(write(build(TENSORS))))
+
+
+def test_a_summary_that_has_been_edited_into_nonsense_is_refused(write):
+    base = good_summary(write)
+    bad_cases = []
+    for field in ("version", "alignment", "data_offset", "file_size", "tensors", "metadata"):
+        missing = dict(base)
+        del missing[field]
+        bad_cases.append(missing)
+    first = base["tensors"][0]
+    bad_cases += [
+        base | {"tensors": [first | {"type_id": 99}]},
+        base | {"tensors": [first | {"dims": []}]},
+        base | {"tensors": [first | {"dims": [0]}]},
+        base | {"tensors": [first | {"dims": [1, 2, 3, 4, 5]}]},
+        base | {"tensors": [first | {"dims": [100]}]},  # not whole Q4_K blocks
+        base | {"tensors": [first, first]},
+        base | {"tensors": [first | {"offset": 3}]},
+        base | {"tensors": [first | {"offset": 10**12}]},
+        base | {"tensors": [first | {"name": 5}]},
+        base | {"tensors": "nope"},
+        base | {"alignment": 48},
+        base | {"file_size": 10},
+        base | {"data_offset": -1},
+        base | {"data_offset": True},
+        "not a dict",
+    ]
+    for case in bad_cases:
+        with pytest.raises(GGUFError):
+            gguf.from_summary(case)

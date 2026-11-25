@@ -91,52 +91,76 @@ def _median(summary: Mapping, key: str, field: str) -> float:
     return statistics.median(summary[key][field])
 
 
-def check_kv(m: Model, summary: Mapping[str, Mapping]) -> list[str]:
-    """Predictions 4, 5 and 6."""
-    failures = []
+def _configurations(contexts: Sequence[int]):
     for cache_type in CACHE_TYPES:
-        for context in CONTEXTS:
-            key = config_key(context, cache_type)
-            if key not in summary:
-                failures.append(f"{key}: no result")
-                continue
-            if len(summary[key]["kv_mib"]) < LAUNCHES_REQUIRED:
-                failures.append(
-                    f"{key}: {len(summary[key]['kv_mib'])} usable launches, "
-                    f"{LAUNCHES_REQUIRED} required"
-                )
-                continue
-            cells = _median(summary, key, "cells")
-            reported = _median(summary, key, "kv_mib")
-            if context % PAD_MULTIPLE == 0:
-                want = kvmem.kv_cache_bytes(m, context, cache_type=cache_type) / MIB
-                if cells != context or not _close(reported, want, KV_TOLERANCE):
-                    failures.append(
-                        f"{key}: llama.cpp reported {reported} MiB over {cells:.0f} cells, "
-                        f"calculator {want:.2f} MiB for {context}"
-                    )
-            else:
-                padded = -(-context // PAD_MULTIPLE) * PAD_MULTIPLE
-                at_padded = kvmem.kv_cache_bytes(m, padded, cache_type=cache_type) / MIB
-                at_asked = kvmem.kv_cache_bytes(m, context, cache_type=cache_type) / MIB
-                if cells != padded:
-                    failures.append(f"{key}: expected {padded} cells, reported {cells:.0f}")
-                if not _close(reported, at_padded, KV_TOLERANCE):
-                    failures.append(
-                        f"{key}: reported {reported} MiB, calculator {at_padded:.2f} MiB "
-                        f"at {padded} cells"
-                    )
-                if reported < (1 + PADDING_MIN_OVER) * at_asked:
-                    failures.append(
-                        f"{key}: reported {reported} MiB is not {PADDING_MIN_OVER:.0%} above the "
-                        f"calculator's {at_asked:.2f} MiB for {context} tokens"
-                    )
-            for field in ("cells", "kv_mib"):
-                if len(set(summary[key][field])) != 1:
-                    failures.append(
-                        f"{key}: {field} differs between launches: {summary[key][field]}"
-                    )
+        for context in contexts:
+            yield context, cache_type, config_key(context, cache_type)
+
+
+def check_kv_sizes(m: Model, summary: Mapping[str, Mapping]) -> list[str]:
+    """Prediction 4: contexts that are multiples of 256."""
+    failures = []
+    for context, cache_type, key in _configurations([c for c in CONTEXTS if c % PAD_MULTIPLE == 0]):
+        if key not in summary:
+            failures.append(f"{key}: no result")
+            continue
+        cells = _median(summary, key, "cells")
+        reported = _median(summary, key, "kv_mib")
+        want = kvmem.kv_cache_bytes(m, context, cache_type=cache_type) / MIB
+        if cells != context or not _close(reported, want, KV_TOLERANCE):
+            failures.append(
+                f"{key}: llama.cpp reported {reported} MiB over {cells:.0f} cells, "
+                f"calculator {want:.2f} MiB for {context}"
+            )
     return failures
+
+
+def check_kv_padding(m: Model, summary: Mapping[str, Mapping]) -> list[str]:
+    """Prediction 5: a context that is not a multiple of 256."""
+    failures = []
+    for context, cache_type, key in _configurations([c for c in CONTEXTS if c % PAD_MULTIPLE != 0]):
+        if key not in summary:
+            failures.append(f"{key}: no result")
+            continue
+        cells = _median(summary, key, "cells")
+        reported = _median(summary, key, "kv_mib")
+        padded = -(-context // PAD_MULTIPLE) * PAD_MULTIPLE
+        at_padded = kvmem.kv_cache_bytes(m, padded, cache_type=cache_type) / MIB
+        at_asked = kvmem.kv_cache_bytes(m, context, cache_type=cache_type) / MIB
+        if cells != padded:
+            failures.append(f"{key}: expected {padded} cells, reported {cells:.0f}")
+        if not _close(reported, at_padded, KV_TOLERANCE):
+            failures.append(
+                f"{key}: reported {reported} MiB, calculator {at_padded:.2f} MiB at {padded} cells"
+            )
+        if reported < (1 + PADDING_MIN_OVER) * at_asked:
+            failures.append(
+                f"{key}: reported {reported} MiB is not {PADDING_MIN_OVER:.0%} above the "
+                f"calculator's {at_asked:.2f} MiB for {context} tokens"
+            )
+    return failures
+
+
+def check_kv_repeat(summary: Mapping[str, Mapping]) -> list[str]:
+    """Prediction 6: three usable launches of every configuration, all reporting the same."""
+    failures = []
+    for _, _, key in _configurations(CONTEXTS):
+        if key not in summary:
+            continue  # a missing configuration is reported by predictions 4 and 5
+        row = summary[key]
+        if len(row["kv_mib"]) < LAUNCHES_REQUIRED:
+            failures.append(
+                f"{key}: {len(row['kv_mib'])} usable launches, {LAUNCHES_REQUIRED} required"
+            )
+        for field in ("cells", "kv_mib"):
+            if len(set(row[field])) > 1:
+                failures.append(f"{key}: {field} differs between launches: {row[field]}")
+    return failures
+
+
+def check_kv(m: Model, summary: Mapping[str, Mapping]) -> list[str]:
+    """Predictions 4, 5 and 6 together."""
+    return check_kv_sizes(m, summary) + check_kv_padding(m, summary) + check_kv_repeat(summary)
 
 
 def check_breakdown(summary: Mapping[str, Mapping], region_bytes: int) -> list[str]:

@@ -199,6 +199,29 @@ def _value(r: _Reader, type_id: int, depth: int = 0):
     raise GGUFError(f"unknown metadata value type {type_id}")
 
 
+def _check_tensors(infos: list[TensorInfo], alignment: int, data_offset: int, size: int) -> None:
+    """Refuse tensors that do not add up. Shared by the file reader and the summary reader."""
+    names = [t.name for t in infos]
+    if len(set(names)) != len(names):
+        raise GGUFError("two tensors share a name")
+    for t in infos:
+        _, block_elements, _ = TYPES[t.type_id]
+        if t.dims[0] % block_elements:
+            raise GGUFError(f"tensor {t.name!r}: row length is not a whole number of blocks")
+        if t.offset % alignment:
+            raise GGUFError(f"tensor {t.name!r} is not aligned")
+        if data_offset + t.offset + t.nbytes > size:
+            raise GGUFError(f"tensor {t.name!r} runs past the end of the file")
+
+
+def _alignment_ok(alignment) -> bool:
+    return (
+        isinstance(alignment, int)
+        and not isinstance(alignment, bool)
+        and (alignment >= 1 and not alignment & (alignment - 1))
+    )
+
+
 def read_header(path: str | Path) -> GGUF:
     path = Path(path)
     size = path.stat().st_size
@@ -235,20 +258,10 @@ def read_header(path: str | Path) -> GGUF:
                 raise GGUFError(f"tensor {name!r} has unknown ggml type {type_id}")
             infos.append(TensorInfo(name, dims, type_id, offset))
         alignment = metadata.get("general.alignment", DEFAULT_ALIGNMENT)
-        if not isinstance(alignment, int) or alignment < 1 or alignment & (alignment - 1):
+        if not _alignment_ok(alignment):
             raise GGUFError(f"bad alignment {alignment!r}")
         data_offset = _align(handle.tell(), alignment)
-    names = [t.name for t in infos]
-    if len(set(names)) != len(names):
-        raise GGUFError("two tensors share a name")
-    for t in infos:
-        _, block_elements, _ = TYPES[t.type_id]
-        if t.dims[0] % block_elements:
-            raise GGUFError(f"tensor {t.name!r}: row length is not a whole number of blocks")
-        if t.offset % alignment:
-            raise GGUFError(f"tensor {t.name!r} is not aligned")
-        if data_offset + t.offset + t.nbytes > size:
-            raise GGUFError(f"tensor {t.name!r} runs past the end of the file")
+    _check_tensors(infos, alignment, data_offset, size)
     return GGUF(
         version=version,
         metadata=metadata,
@@ -256,6 +269,78 @@ def read_header(path: str | Path) -> GGUF:
         alignment=alignment,
         data_offset=data_offset,
         file_size=size,
+        by_name={t.name: t for t in infos},
+    )
+
+
+# ------------------------------------------------------------------ summaries
+
+SUMMARY_KEEPS_STRINGS_UP_TO = 200
+
+
+def to_summary(g: GGUF) -> dict:
+    """Plain-JSON description of a header: enough to re-run every check without the file. Long
+    strings (a chat template, say) are replaced by their length."""
+    metadata = {}
+    for key, value in g.metadata.items():
+        if isinstance(value, str) and len(value) > SUMMARY_KEEPS_STRINGS_UP_TO:
+            value = {"string_chars": len(value)}
+        metadata[key] = value
+    return {
+        "version": g.version,
+        "alignment": g.alignment,
+        "data_offset": g.data_offset,
+        "file_size": g.file_size,
+        "metadata": metadata,
+        "tensors": [
+            {"name": t.name, "dims": list(t.dims), "type_id": t.type_id, "offset": t.offset}
+            for t in g.tensors
+        ],
+    }
+
+
+def _plain_int(value) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
+def from_summary(summary: dict) -> GGUF:
+    """Rebuild a header from `to_summary` output, refusing a summary that has been edited into
+    something a real file could not be."""
+    if not isinstance(summary, dict):
+        raise GGUFError("a summary is a JSON object")
+    try:
+        version, alignment = summary["version"], summary["alignment"]
+        data_offset, file_size = summary["data_offset"], summary["file_size"]
+        metadata, raw_tensors = summary["metadata"], summary["tensors"]
+    except KeyError as exc:
+        raise GGUFError(f"the summary has no {exc.args[0]!r}") from exc
+    if not all(_plain_int(v) and v >= 0 for v in (version, data_offset, file_size)):
+        raise GGUFError("version, data_offset and file_size must be non-negative integers")
+    if not _alignment_ok(alignment):
+        raise GGUFError(f"bad alignment {alignment!r}")
+    if not isinstance(metadata, dict) or not isinstance(raw_tensors, list):
+        raise GGUFError("metadata must be an object and tensors a list")
+    infos = []
+    for raw in raw_tensors:
+        try:
+            name, dims, type_id, offset = raw["name"], raw["dims"], raw["type_id"], raw["offset"]
+        except (KeyError, TypeError) as exc:
+            raise GGUFError("a tensor record is incomplete") from exc
+        if not isinstance(name, str) or not isinstance(dims, list) or type_id not in TYPES:
+            raise GGUFError(f"tensor {name!r} has an unusable name, shape or type")
+        if not 1 <= len(dims) <= MAX_DIMS or not all(_plain_int(d) and d >= 1 for d in dims):
+            raise GGUFError(f"tensor {name!r} has unusable dimensions {dims!r}")
+        if not _plain_int(offset) or offset < 0:
+            raise GGUFError(f"tensor {name!r} has an unusable offset")
+        infos.append(TensorInfo(name, tuple(dims), type_id, offset))
+    _check_tensors(infos, alignment, data_offset, file_size)
+    return GGUF(
+        version=version,
+        metadata=metadata,
+        tensors=infos,
+        alignment=alignment,
+        data_offset=data_offset,
+        file_size=file_size,
         by_name={t.name: t for t in infos},
     )
 

@@ -59,6 +59,7 @@ are about numbers I had not seen.
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import json
 import math
 import sys
@@ -464,9 +465,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--bits-per-weight", type=float, default=16.0)
     parser.add_argument("--mla", default="compressed", choices=MLA_MODES)
     parser.add_argument("--budget-gib", type=float, help="also print the context that fits")
+    parser.add_argument(
+        "--output-matrix-separate",
+        action="store_true",
+        help="count the output matrix as its own weights even if the config ties it to the "
+        "embedding (the Qwen2.5-0.5B GGUF checked on Day 5 stores one; others were not checked)",
+    )
     args = parser.parse_args(argv)
     try:
-        print(describe(load_config_file(args.config), args))
+        model = load_config_file(args.config)
+        if args.output_matrix_separate and model.tied:
+            model = dataclasses.replace(
+                model,
+                tied=False,
+                notes=(
+                    *model.notes,
+                    "output matrix counted separately although the config ties it",
+                ),
+            )
+        print(describe(model, args))
     except (UnsupportedConfig, ValueError) as exc:
         print(f"refused: {exc}", file=sys.stderr)
         return 2

@@ -31,7 +31,8 @@ MODEL_BUFFER = re.compile(r"load_tensors:\s+(\S+) model buffer size =\s*" + _NUM
 COMPUTE_BUFFER = re.compile(r"sched_reserve:\s+(\S+) compute buffer size =\s*" + _NUMBER + r" MiB")
 OUTPUT_BUFFER = re.compile(r"llama_context:\s+(\S+)\s+output buffer size =\s*" + _NUMBER + r" MiB")
 CONTEXT_LINE = re.compile(r"llama_context: n_ctx\s*=\s*(\d+)")
-FLASH_ON = re.compile(r"Flash Attention enabled")
+FLASH_ON = re.compile(r"Flash Attention enabled")  # printed when `-fa auto` resolves to on
+FLASH_LINE = re.compile(r"llama_context: flash_attn\s*=\s*(\w+)")  # `-fa on` prints "enabled"
 _TO_MILLIONS = {"K": 1e-3, "M": 1.0, "B": 1e3, "T": 1e6}
 
 
@@ -88,6 +89,8 @@ def parse(lines: Iterable[str]) -> dict:
             output_buffers.append({"buffer": m[1], "mib": float(m[2])})
         elif m := CONTEXT_LINE.search(msg):
             n_ctx = int(m[1])
+        elif m := FLASH_LINE.search(msg):
+            flash = flash or m[1] in ("enabled", "on")
         elif FLASH_ON.search(msg):
             flash = True
     return {
