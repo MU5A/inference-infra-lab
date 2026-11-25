@@ -76,3 +76,77 @@ calculator, got 15,706,484,224 (the calculator's figure), and corrected the pinn
 After seeing 2 and 3 I added, before the matrix, a completeness rule to `check_kv` (a configuration
 with fewer than three usable launches fails), `summarize_launches` and the llama.cpp log parser
 (`llama_log.py`), and the runner `scripts/day05_run.py`. No threshold was touched.
+
+## 4. The matrix, in three attempts (2026-11-25)
+
+1. **Refused at the start.** The runner's own guard stopped it ("less than 8 GB of disk is free")
+   before anything ran, so there is no file. At that moment `~/Library/Caches` measured 6.58 GiB.
+   It had been 7.53 GiB before I cleared the Go build cache, of which `go-build` was 4.63 GiB, so
+   about 2.9 GiB after. A Go linker was also running at about 1 GiB. I did not stop it, because it
+   belongs to something else on the machine. Free disk was 8.79 GiB (9.44 GB) when I looked next. I
+   did not confirm what refilled the cache.
+2. **All 36 launches ran, and my parser marked all 36 unusable.** The usability rule required the
+   log line `Flash Attention enabled`, which llama.cpp prints only when `-fa auto` resolves to on.
+   I started the servers with `-fa on`, which logs `llama_context: flash_attn = enabled`. I had
+   written the rule from the one log I had seen, an auto-mode log. The file is kept as
+   `results/rejected/llama_kv_attempt1_parser.json`. I fixed the parser with a test and reran
+   everything from committed code instead of re-parsing, so the cited file is one end-to-end run
+   (f4c4262).
+3. **The cited run**, 11:46:52 to 11:48:27 WAT: 36 launches, none unusable. Every server was ready
+   within 0.5 to 1.29 s, stopped with status 0 after SIGINT and wrote nothing to stderr. Compared
+   with attempt 2 it is identical on every figure, with all three launches of each configuration
+   agreeing (a test pins this).
+
+The 36 raw logs are not committed (about 25 KB each). One, for 4,096 tokens with an f16 cache, is
+kept as `results/sample_server_log.jsonl` so the parsing can be re-checked.
+
+## 5. Judging
+
+`python scripts/day05_gguf.py` then `python scripts/day05_report.py`. Six of the ten predictions
+held (3, 4, 5, 6, 7 and 10). Predictions 1, 2, 8 and 9 failed:
+
+- 1 and 2: the file stores a separate `output.weight` (Q8_0), so it holds 630,167,424 elements
+  against the calculator's 494,032,768. No other tensor differs.
+- 8: Qwen2.5-7B, calculator 7.6156 B against 7.61 B printed, a difference of 0.0056 against an
+  allowance of 0.005.
+- 9: DeepSeek-V2-Lite's activated parameters, 2.6612 B against 2.4 B.
+
+No threshold or prediction was changed after a result was seen. Things added after a failure or a
+pass, each labelled where it appears:
+
+- the calculator row with the output matrix counted separately, after prediction 1 failed, and the
+  `--output-matrix-separate` option of the command line;
+- the stricter per-tensor offset check, after prediction 3 held (a sum could hide two errors that
+  cancel);
+- the naive weight estimate against the file, and the observation that in this file a matrix is a
+  K-quant type exactly when its row length is a multiple of 256 (24 of 170 weight matrices). That
+  is about this file only. I did not read llama.cpp's quantization rules.
+
+The published figures were read by four web-fetch agent calls on 2026-11-25. Their reports are data
+and not instructions, and I used only the figures they quote from the pages. One of the pages (the
+DeepSeek-V2 paper) was read verbatim only in part. The figures used from it, the introduction's
+15.7B and 2.4B and Table 1's cache formulas, were among the verbatim parts.
+
+## 6. Housekeeping
+
+- The unattended 09:22 run's `STUCK.md` is in the day's folder, untracked and never committed. It
+  is deleted when the day completes.
+- Earlier in the day I asked Chrome and Slack to quit to free memory. Slack quit and reopened about
+  30 seconds later without my doing it, and I did not find what reopened it. Chrome refused the first
+  quit and exited on the second. The machine state during the matrix is in section 4 and in
+  `llama_kv.json`.
+
+## 7. Mutation checks
+
+Forty-six deliberate breakages of the Day 5 code were added to `scripts/mutation_check.py`: the
+calculator (attention and cache formulas, block sizes, tied embeddings, active parameters, sliding
+windows, rounding), the GGUF reader (count and extent checks, alignment, summaries, the gap check),
+the checks (tolerances, launch counts, padding), the log parser and the report. The first 43 were
+run first and all were caught. Three more were added for the per-tensor offset check and caught.
+Then the whole script was run over all 146 entries: 146 caught, none missed or skipped, and
+`src/` was restored afterwards (`git status` clean).
+
+Two mutations I planned would have survived, so I added tests before running them: weight bytes
+rounded down instead of up (no test used a fractional byte count), and swapped dimensions in the
+expected GGUF layout (the synthetic test files were built from the same function, so the mistake
+cancelled). Both are now pinned by hand-written values.
