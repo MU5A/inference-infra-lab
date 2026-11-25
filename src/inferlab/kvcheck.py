@@ -32,6 +32,7 @@ from .kvmem import MIB, Model
 CONTEXTS = (512, 1000, 4096, 32768)
 CACHE_TYPES = ("f16", "q8_0", "q4_0")
 PAD_MULTIPLE = 256
+LAUNCHES_REQUIRED = 3
 
 # Fixed before any measurement.
 PARAMS_TOLERANCE_MILLIONS = 0.005  # llama.cpp prints two decimals of millions
@@ -98,6 +99,12 @@ def check_kv(m: Model, summary: Mapping[str, Mapping]) -> list[str]:
             key = config_key(context, cache_type)
             if key not in summary:
                 failures.append(f"{key}: no result")
+                continue
+            if len(summary[key]["kv_mib"]) < LAUNCHES_REQUIRED:
+                failures.append(
+                    f"{key}: {len(summary[key]['kv_mib'])} usable launches, "
+                    f"{LAUNCHES_REQUIRED} required"
+                )
                 continue
             cells = _median(summary, key, "cells")
             reported = _median(summary, key, "kv_mib")
@@ -186,6 +193,48 @@ def check_mla(m: Model) -> list[str]:
     if not low <= ratio <= high:
         return [f"expanded cache is {ratio:.2f} times the compressed one, outside {low} to {high}"]
     return []
+
+
+def launch_problems(launch: Mapping) -> list[str]:
+    """Why a launch cannot be used. Empty means it can. An unusable launch is kept and reported."""
+    problems = []
+    if not launch.get("ok"):
+        problems.append(launch.get("error") or "the server did not start or stop cleanly")
+        return problems
+    parsed = launch["parsed"]
+    if len(parsed["kv"]) != 1:
+        problems.append(f"{len(parsed['kv'])} KV cache lines, expected exactly 1")
+    if parsed["breakdown"] is None:
+        problems.append("no memory breakdown at shutdown")
+    if not parsed["flash_attention_enabled"]:
+        problems.append("flash attention was not reported as enabled")
+    return problems
+
+
+def summarize_launches(launches: Sequence[Mapping]) -> dict[str, dict]:
+    """Group usable launches by configuration into the shape the checks take."""
+    out: dict[str, dict] = {}
+    for launch in launches:
+        if launch_problems(launch):
+            continue
+        kv = launch["parsed"]["kv"][0]
+        breakdown = launch["parsed"]["breakdown"]
+        row = out.setdefault(
+            config_key(launch["context"], launch["cache_type"]),
+            {
+                "context": launch["context"],
+                "cache_type": launch["cache_type"],
+                "cells": [],
+                "kv_mib": [],
+                "context_mib": [],
+                "model_mib": [],
+            },
+        )
+        row["cells"].append(kv["cells"])
+        row["kv_mib"].append(kv["size_mib"])
+        row["context_mib"].append(breakdown["context_mib"])
+        row["model_mib"].append(breakdown["model_mib"])
+    return out
 
 
 PREDICTIONS = (

@@ -220,3 +220,53 @@ def test_a_failure_makes_its_prediction_not_held_and_keeps_the_reason():
     rows = kvcheck.verdicts(failures)
     assert [r["number"] for r in rows if not r["held"]] == ["4"]
     assert rows[3]["failures"] == ["off by 3%"]
+
+
+# ------------------------------------------------------------ launch summaries
+
+
+def launch(context=512, cache_type="f16", *, ok=True, kv_lines=1, breakdown=True, flash=True):
+    kv = {"size_mib": 6.0, "cells": 512, "layers": 4}
+    return {
+        "context": context,
+        "cache_type": cache_type,
+        "ok": ok,
+        "error": None if ok else "exited with status 1",
+        "parsed": {
+            "kv": [kv] * kv_lines,
+            "breakdown": {"context_mib": 6, "model_mib": 100} if breakdown else None,
+            "flash_attention_enabled": flash,
+        },
+    }
+
+
+def test_a_good_launch_has_no_problems_and_is_summarized_by_configuration():
+    launches = [launch(), launch(), launch(), launch(4096, "q8_0")]
+    assert all(kvcheck.launch_problems(x) == [] for x in launches)
+    summary = kvcheck.summarize_launches(launches)
+    assert set(summary) == {"ctx512-f16", "ctx4096-q8_0"}
+    assert summary["ctx512-f16"]["kv_mib"] == [6.0, 6.0, 6.0]
+    assert summary["ctx512-f16"]["context_mib"] == [6, 6, 6]
+
+
+@pytest.mark.parametrize(
+    "bad, fragment",
+    [
+        (launch(ok=False), "exited"),
+        (launch(kv_lines=0), "0 KV cache lines"),
+        (launch(kv_lines=2), "2 KV cache lines"),
+        (launch(breakdown=False), "no memory breakdown"),
+        (launch(flash=False), "flash attention"),
+    ],
+)
+def test_an_unusable_launch_is_explained_and_left_out_of_the_summary(bad, fragment):
+    assert any(fragment in p for p in kvcheck.launch_problems(bad))
+    assert kvcheck.summarize_launches([bad]) == {}
+
+
+def test_a_configuration_with_fewer_than_three_usable_launches_fails_the_check():
+    m = qwen_small()
+    summary = good_summary(m, launches=2)
+    failures = kvcheck.check_kv(m, summary)
+    assert failures and all("usable launches" in f for f in failures)
+    assert len(failures) == len(kvcheck.CONTEXTS) * len(kvcheck.CACHE_TYPES)

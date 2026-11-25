@@ -1,0 +1,64 @@
+{
+  "fetched": "2026-11-25",
+  "how": "Read from the pages named below through a web-fetch agent after the calculator and its predictions were committed (4a95943). Figures are as printed, in billions, with the number of decimals printed. The tolerance used by the checks is half a unit of the last printed digit. Where a source prints a coarser figure as well, it is kept under coarser_figures and is not used for the checks.",
+  "models": {
+    "Qwen2.5-0.5B-Instruct": {
+      "total_b": 0.49,
+      "total_decimals": 2,
+      "non_embedding_b": 0.36,
+      "non_embedding_decimals": 2,
+      "source": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct",
+      "where": "model card, architecture list, 'Number of Parameters' and 'Non-Embedding'",
+      "coarser_figures": {"sidebar_model_size": "0.5B"}
+    },
+    "Qwen2.5-7B-Instruct": {
+      "total_b": 7.61,
+      "total_decimals": 2,
+      "non_embedding_b": 6.53,
+      "non_embedding_decimals": 2,
+      "source": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct",
+      "where": "model card, architecture list, 'Number of Parameters' and 'Non-Embedding'",
+      "coarser_figures": {"sidebar_model_size": "8B"}
+    },
+    "Mixtral-8x7B-v0.1": {
+      "total_b": 46.7,
+      "total_decimals": 1,
+      "active_b": 12.9,
+      "active_decimals": 1,
+      "source": "https://mistral.ai/news/mixtral-of-experts",
+      "where": "announcement text: total parameters and parameters used per token, two of eight experts per layer",
+      "coarser_figures": {}
+    },
+    "OLMoE-1B-7B-0924": {
+      "total_b": 6.9,
+      "total_decimals": 1,
+      "active_b": 1.3,
+      "active_decimals": 1,
+      "source": "https://arxiv.org/abs/2409.02060",
+      "where": "paper (HTML v2) introduction, section 2 and Table 1: 6.9B total, 1.3B active, 8 of 64 experts",
+      "coarser_figures": {
+        "model_card_and_abstract": "1B active, 7B total (https://huggingface.co/allenai/OLMoE-1B-7B-0924)"
+      }
+    },
+    "DeepSeek-V2-Lite": {
+      "total_b": 15.7,
+      "total_decimals": 1,
+      "active_b": 2.4,
+      "active_decimals": 1,
+      "source": "https://huggingface.co/deepseek-ai/DeepSeek-V2-Lite",
+      "where": "model card section 5 and the DeepSeek-V2 paper introduction (https://arxiv.org/abs/2405.04434): 15.7B total, 2.4B activated",
+      "coarser_figures": {"model_card_table": "16B total, 2.4B activated"}
+    }
+  },
+  "kv_cache_formulas": {
+    "source": "https://arxiv.org/abs/2405.04434, Table 1, 'Comparison of the KV cache per token among different attention mechanisms'",
+    "elements_per_token": {
+      "MHA": "2 n_h d_h l",
+      "GQA": "2 n_g d_h l",
+      "MQA": "2 d_h l",
+      "MLA": "(d_c + d_h^R) l"
+    },
+    "meaning": "n_h attention heads, n_g GQA groups, d_h per-head dimension, l layers, d_c the KV compression dimension, d_h^R the per-head dimension of the decoupled rotary key",
+    "claim_not_used": "The paper's 93.3% KV cache reduction is against DeepSeek 67B, a different model, and is not compared with anything here."
+  }
+}
