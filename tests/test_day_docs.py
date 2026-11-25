@@ -118,3 +118,15 @@ def test_day_four_readme_contains_the_cuda_mapping_verbatim():
     assert mapping in (DAY4 / "README.md").read_text(), (
         "days/04-metal-programming/README.md differs from cuda_mapping.md"
     )
+
+
+DAY5 = ROOT / "days" / "05-kv-cache-memory"
+
+
+@pytest.mark.skipif(not (DAY5 / "results" / "tables.md").exists(), reason="no Day 5 tables")
+def test_day_five_readme_contains_the_generated_tables_verbatim():
+    generated = (DAY5 / "results" / "tables.md").read_text().strip()
+    assert generated in (DAY5 / "README.md").read_text(), (
+        "days/05-kv-cache-memory/README.md differs from results/tables.md. "
+        "Regenerate with: python scripts/day05_report.py"
+    )
