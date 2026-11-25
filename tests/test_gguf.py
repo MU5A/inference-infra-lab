@@ -422,3 +422,24 @@ def test_the_expected_layout_for_qwen2_5_0_5b_is_the_one_known_by_hand():
     assert shapes["blk.0.attn_output.weight"] == (896, 896)
     assert shapes["blk.5.ffn_gate.weight"] == (896, 4864)
     assert shapes["blk.5.ffn_down.weight"] == (4864, 896)
+
+
+def test_the_gap_check_confirms_each_type_s_size_from_the_offsets(write):
+    g = gguf.read_header(write(build(TENSORS)))
+    check = g.gap_check()
+    assert check["gaps"] == 2 and check["equal"] == 2
+    assert check["by_type"] == {"Q4_K": {"gaps": 1, "equal": 1}, "F32": {"gaps": 1, "equal": 1}}
+    assert check["last_tensor_ends_at_end_of_file"] is False  # the file ends in padding
+
+
+def test_the_gap_check_notices_a_gap_that_the_block_table_does_not_explain(write):
+    raw = build([("a", (4,), F32), ("b", (4,), F32)])
+    raw = raw.replace(tensor_record("b", (4,), F32, 32), tensor_record("b", (4,), F32, 64))
+    g = gguf.read_header(write(raw + bytes(64)))
+    check = g.gap_check()
+    assert (check["gaps"], check["equal"]) == (1, 0)
+
+
+def test_the_gap_check_says_when_the_last_tensor_ends_exactly_at_the_end_of_the_file(write):
+    g = gguf.read_header(write(build([("a", (8,), F32)])))  # 32 bytes, no padding needed
+    assert g.gap_check()["last_tensor_ends_at_end_of_file"] is True

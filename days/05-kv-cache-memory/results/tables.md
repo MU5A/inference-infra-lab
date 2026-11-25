@@ -17,6 +17,8 @@
 | F32 | 121 | 71,552 | 286,208 | 32.00 |
 | All | 291 | 630,167,424 | 485,452,288 | 6.16 |
 
+Offset check (added after prediction 3 held): 290 of the 290 gaps between consecutive tensor offsets equal the block table's size for the earlier tensor, padded to the alignment, and the last tensor ends at the end of the file.
+
 | Weights | Bytes | MiB |
 |---|---|---|
 | Config's 494,032,768 parameters at 4.5 bits (Q4_K's own rate) | 277,893,432 | 265.0 |

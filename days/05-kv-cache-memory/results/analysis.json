@@ -108,6 +108,33 @@
     "bytes": 29417472
    }
   },
+  "offset_gaps": {
+   "by_type": {
+    "Q8_0": {
+     "gaps": 13,
+     "equal": 13
+    },
+    "Q5_0": {
+     "gaps": 133,
+     "equal": 133
+    },
+    "F32": {
+     "gaps": 120,
+     "equal": 120
+    },
+    "Q6_K": {
+     "gaps": 12,
+     "equal": 12
+    },
+    "Q4_K": {
+     "gaps": 12,
+     "equal": 12
+    }
+   },
+   "gaps": 290,
+   "equal": 290,
+   "last_tensor_ends_at_end_of_file": true
+  },
   "weight_matrices": 170,
   "matrices_with_row_length_multiple_of_256": 24,
   "k_quant_matrices": 24,

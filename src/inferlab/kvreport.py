@@ -95,6 +95,7 @@ def analyze(
             "block_table_bytes": g.padded_bytes(),
             "effective_bits_per_weight": g.data_bytes * 8 / g.parameters,
             "by_type": by_type,
+            "offset_gaps": g.gap_check(),
             "weight_matrices": len(weights),
             "matrices_with_row_length_multiple_of_256": len(divisible),
             "k_quant_matrices": sum(1 for t in weights if t.type_name in k_quant),
@@ -275,7 +276,15 @@ def quant_table(a: Mapping) -> str:
             f"{f['effective_bits_per_weight']:.2f}",
         )
     )
-    return md(["Type", "Tensors", "Elements", "Bytes", "Bits per weight"], rows)
+    table = md(["Type", "Tensors", "Elements", "Bytes", "Bits per weight"], rows)
+    gaps = f["offset_gaps"]
+    ends = "ends" if gaps["last_tensor_ends_at_end_of_file"] else "does not end"
+    note = (
+        f"Offset check (added after prediction 3 held): {gaps['equal']} of the {gaps['gaps']} gaps "
+        "between consecutive tensor offsets equal the block table's size for the earlier tensor, "
+        f"padded to the alignment, and the last tensor {ends} at the end of the file."
+    )
+    return table + "\n\n" + note
 
 
 def weights_estimate_table(a: Mapping) -> str:

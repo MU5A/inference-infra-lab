@@ -866,6 +866,24 @@ MUTATIONS = [
         "    divisible = [t for t in weights if t.dims[0] % 256 == 0]",
         "    divisible = [t for t in weights if t.dims[0] % 128 == 0]",
     ),
+    (
+        "gguf: the gap check compares with the unpadded size",
+        S / "gguf.py",
+        'row["equal"] += (b.offset - a.offset) == _align(a.nbytes, self.alignment)',
+        'row["equal"] += (b.offset - a.offset) == a.nbytes',
+    ),
+    (
+        "gguf: the gap check never counts a gap as equal",
+        S / "gguf.py",
+        'row["equal"] += (b.offset - a.offset) == _align(a.nbytes, self.alignment)',
+        'row["equal"] += 0',
+    ),
+    (
+        "gguf: the gap check says the last tensor always ends at the end of the file",
+        S / "gguf.py",
+        "self.data_offset + last.offset + last.nbytes == self.file_size",
+        "True",
+    ),
 ]
 
 

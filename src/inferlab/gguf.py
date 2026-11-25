@@ -118,6 +118,26 @@ class GGUF:
         """Every tensor's size from the block table, each rounded up to the alignment."""
         return sum(_align(t.nbytes, self.alignment) for t in self.tensors)
 
+    def gap_check(self) -> dict:
+        """Compare each gap between consecutive tensor offsets with the block table's size for the
+        earlier tensor, padded to the alignment. This checks the table type by type, which the
+        total alone cannot: two wrong sizes could cancel in a sum."""
+        ordered = sorted(self.tensors, key=lambda t: t.offset)
+        by_type: dict[str, dict[str, int]] = {}
+        for a, b in zip(ordered, ordered[1:], strict=False):
+            row = by_type.setdefault(a.type_name, {"gaps": 0, "equal": 0})
+            row["gaps"] += 1
+            row["equal"] += (b.offset - a.offset) == _align(a.nbytes, self.alignment)
+        last = ordered[-1]
+        return {
+            "by_type": by_type,
+            "gaps": sum(r["gaps"] for r in by_type.values()),
+            "equal": sum(r["equal"] for r in by_type.values()),
+            "last_tensor_ends_at_end_of_file": (
+                self.data_offset + last.offset + last.nbytes == self.file_size
+            ),
+        }
+
     def bytes_by_type(self) -> dict[str, int]:
         out: dict[str, int] = {}
         for t in self.tensors:
