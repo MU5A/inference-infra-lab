@@ -30,7 +30,7 @@ Every claim is listed in [EVIDENCE.md](EVIDENCE.md) with the file that supports 
 | 2 | 1. Systems foundations | Memory hierarchy and Linux internals | M | done |
 | 3 | 2. GPU architecture and modern silicon | Roofline model | M, L | done |
 | 4 | 2. GPU architecture and modern silicon | GPU programming concepts on Metal | M, L | done |
-| 5 | 3. Transformer and MoE inference anatomy | KV cache and memory calculator | M, S | planned |
+| 5 | 3. Transformer and MoE inference anatomy | KV cache and memory calculator | M, S | done |
 | 6 | 3. Transformer and MoE inference anatomy | Prefill, decode and arithmetic intensity | M, S | planned |
 | 7 | 4. Serving engines and constrained decoding | Serving engines on this machine | M | planned |
 | 8 | 4. Serving engines and constrained decoding | Continuous batching and paged KV memory, from scratch | S | planned |
