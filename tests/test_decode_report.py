@@ -122,6 +122,6 @@ def test_the_tables_name_every_model_and_prediction():
     text = decode_report.render(decode_report.analyze(*inputs()))
     for key in dm.MODELS:
         assert key in text
-    for number in range(1, 10):
+    for number in range(1, 11):
         assert f"\n| {number} | " in text
     assert "Bandwidth: 1.00 GB/s" in text

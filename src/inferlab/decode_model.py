@@ -36,6 +36,10 @@ Router simulation (label S; not blind, I estimated both by hand):
  8. 64 experts, 8 chosen per token, uniform routing: the busiest expert carries at least 2.5 times
     the mean load at batch 8 and at most 1.15 times at batch 4,096.
  9. With Zipf(1) popularity the busiest expert carries at least twice the mean even at batch 4,096.
+
+Added after the four file headers had been read, before any timing:
+10. The 1.5B Q4_K_M and the 0.5B FP16 files read nearly the same bytes per token (980 and 988 MB),
+    so if bytes decide decode speed their rates are within 25% of each other.
 """
 
 from __future__ import annotations
@@ -59,6 +63,7 @@ DECODE_Q4_OVER_FP16_MIN = 1.8
 PREFILL_1P5B_RANGE = (0.25, 0.40)
 DEPTH_TOLERANCE = 0.07
 TTFT_SLOPE_TOLERANCE = 0.25
+SAME_BYTES_TOLERANCE = 0.25
 
 SMALL_Q4 = "qwen2.5-0.5b-q4_k_m"
 SMALL_Q8 = "qwen2.5-0.5b-q8_0"
@@ -227,6 +232,14 @@ def check_prefill_size(results: Mapping) -> list[str]:
     return [f"1.5B prefills at {ratio:.2f} of the 0.5B rate, outside {low} to {high}"]
 
 
+def check_same_bytes(results: Mapping) -> list[str]:
+    """Prediction 10."""
+    ratio = _med(results, LARGE_Q4, "tg@0") / _med(results, SMALL_F16, "tg@0")
+    if abs(ratio - 1) <= SAME_BYTES_TOLERANCE:
+        return []
+    return [f"1.5B Q4_K_M decodes {ratio:.2f} times as fast as 0.5B FP16"]
+
+
 def check_depth(measured: Mapping[str, float], predicted: Mapping[str, float]) -> list[str]:
     """Prediction 6: decode(4096)/decode(0), measured against predicted."""
     return [
@@ -258,6 +271,7 @@ PREDICTIONS = (
     ("7", "Time to first token is linear in prompt length (slopes within 25%)"),
     ("8", "Uniform routing: busiest expert 2.5x the mean at batch 8, at most 1.15x at 4,096"),
     ("9", "Zipf(1) popularity: busiest expert at least 2x the mean even at batch 4,096"),
+    ("10", "Same bytes per token, same speed: 1.5B Q4_K_M within 25% of 0.5B FP16"),
 )  # fmt: skip
 
 

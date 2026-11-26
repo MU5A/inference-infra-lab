@@ -180,5 +180,12 @@ def test_ttft_must_be_linear_between_the_two_steps():
 
 def test_a_prediction_nobody_judged_is_not_held():
     rows = dm.verdicts({"1": []})
-    assert rows[0]["held"] and [r["number"] for r in rows] == [str(i) for i in range(1, 10)]
+    assert rows[0]["held"] and [r["number"] for r in rows] == [str(i) for i in range(1, 11)]
     assert all(r["failures"] == ["not judged"] and not r["held"] for r in rows[1:])
+
+
+def test_files_that_read_the_same_bytes_are_expected_to_decode_at_the_same_speed():
+    assert dm.check_same_bytes(results(PP, TG | {dm.LARGE_Q4: 60, dm.SMALL_F16: 60})) == []
+    assert dm.check_same_bytes(results(PP, TG | {dm.LARGE_Q4: 74, dm.SMALL_F16: 60})) == []
+    assert dm.check_same_bytes(results(PP, TG | {dm.LARGE_Q4: 76, dm.SMALL_F16: 60}))
+    assert dm.check_same_bytes(results(PP, TG | {dm.LARGE_Q4: 44, dm.SMALL_F16: 60}))

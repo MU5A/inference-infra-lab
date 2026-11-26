@@ -95,6 +95,7 @@ def judge(rows: Mapping[str, dict], ttft: Mapping[str, list[dict]], router: list
         "4": [(m, "pp@0") for m in quants] + [(dm.SMALL_Q4, "tg@0"), (dm.SMALL_F16, "tg@0")],
         "5": [(dm.SMALL_Q4, "pp@0"), (dm.LARGE_Q4, "pp@0")],
         "6": [(m, k) for m in models for k in ("tg@0", f"tg@{depth}")],
+        "10": [(dm.LARGE_Q4, "tg@0"), (dm.SMALL_F16, "tg@0")],
     }
     checks = {
         "1": lambda: dm.check_bound(eff),
@@ -106,6 +107,7 @@ def judge(rows: Mapping[str, dict], ttft: Mapping[str, list[dict]], router: list
             {m: rows[m]["depth_ratio_measured"] for m in models},
             {m: rows[m]["depth_ratio_predicted"] for m in models},
         ),
+        "10": lambda: dm.check_same_bytes(results),
     }
     failures = {n: _unstable(rows, needs[n]) or checks[n]() for n in checks}
     shaky = [
@@ -301,7 +303,7 @@ def render(a: Mapping) -> str:
             ttft_table(a),
             "### Router load imbalance (simulation, popularity assumed, no model run)",
             router_table(a),
-            "### The nine predictions",
+            "### The ten predictions",
             verdict_table(a),
         ]
     )
