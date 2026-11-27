@@ -1,0 +1,590 @@
+{
+ "bandwidth_bytes_per_s": 87222085482.19096,
+ "depth": 4096,
+ "n_prompt": 512,
+ "n_gen": 128,
+ "models": {
+  "qwen2.5-0.5b-q4_k_m": {
+   "file_bytes": 491400032,
+   "weight_bytes_read": 391859712,
+   "kv_bytes_per_token": 12288,
+   "parameters": 630167424,
+   "bytes_per_token_start": 392646144.0,
+   "bytes_per_token_deep": 442977792.0,
+   "bound_start": 222.13916223303332,
+   "bound_deep": 196.89945423311642,
+   "rates": {
+    "pp@0": {
+     "median": 3170.07,
+     "min": 3129.08,
+     "max": 3228.29,
+     "cv": 0.012817317745911825,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@0": {
+     "median": 159.781,
+     "min": 138.692,
+     "max": 166.154,
+     "cv": 0.07577444475002384,
+     "runs": 3,
+     "stable": true
+    },
+    "pp@4096": {
+     "median": 2077,
+     "min": 1948.62,
+     "max": 2130.91,
+     "cv": 0.03725876993838882,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@4096": {
+     "median": 145.323,
+     "min": 103.768,
+     "max": 149.09,
+     "cv": 0.1547143585812561,
+     "runs": 3,
+     "stable": false
+    }
+   },
+   "efficiency": 0.7192833465014288,
+   "depth_ratio_measured": 0.9095136468040631,
+   "depth_ratio_predicted": 0.8863788458271064
+  },
+  "qwen2.5-0.5b-q8_0": {
+   "file_bytes": 675710816,
+   "weight_bytes_read": 525120000,
+   "kv_bytes_per_token": 12288,
+   "parameters": 630167424,
+   "bytes_per_token_start": 525906432.0,
+   "bytes_per_token_deep": 576238080.0,
+   "bound_start": 165.850957841472,
+   "bound_deep": 151.36466767727492,
+   "rates": {
+    "pp@0": {
+     "median": 3397.94,
+     "min": 3384.36,
+     "max": 3451.23,
+     "cv": 0.008460277564103892,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@0": {
+     "median": 143.813,
+     "min": 140.837,
+     "max": 144.389,
+     "cv": 0.010883832049519733,
+     "runs": 3,
+     "stable": true
+    },
+    "pp@4096": {
+     "median": 2196.93,
+     "min": 2146.75,
+     "max": 2220.67,
+     "cv": 0.014082646826775692,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@4096": {
+     "median": 129.172,
+     "min": 122.901,
+     "max": 131.401,
+     "cv": 0.028151971647283603,
+     "runs": 3,
+     "stable": true
+    }
+   },
+   "efficiency": 0.867121913986551,
+   "depth_ratio_measured": 0.8981941827233978,
+   "depth_ratio_predicted": 0.9126547693619971
+  },
+  "qwen2.5-0.5b-fp16": {
+   "file_bytes": 1266425696,
+   "weight_bytes_read": 988208640,
+   "kv_bytes_per_token": 12288,
+   "parameters": 630167424,
+   "bytes_per_token_start": 988995072.0,
+   "bytes_per_token_deep": 1039326720.0,
+   "bound_start": 88.1926391259015,
+   "bound_deep": 83.9217195168339,
+   "rates": {
+    "pp@0": {
+     "median": 3590.23,
+     "min": 3550.74,
+     "max": 3591.62,
+     "cv": 0.005297478486128302,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@0": {
+     "median": 85.0418,
+     "min": 84.9143,
+     "max": 85.9274,
+     "cv": 0.005282225221470832,
+     "runs": 3,
+     "stable": true
+    },
+    "pp@4096": {
+     "median": 2265.36,
+     "min": 2204.61,
+     "max": 2276.67,
+     "cv": 0.014070252873554248,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@4096": {
+     "median": 81.4208,
+     "min": 81.3624,
+     "max": 81.4969,
+     "cv": 0.0006762849944595186,
+     "runs": 3,
+     "stable": true
+    }
+   },
+   "efficiency": 0.9642732187501108,
+   "depth_ratio_measured": 0.9574209388794688,
+   "depth_ratio_predicted": 0.9515728336128989
+  },
+  "qwen2.5-1.5b-q4_k_m": {
+   "file_bytes": 1117320736,
+   "weight_bytes_read": 980097536,
+   "kv_bytes_per_token": 28672,
+   "parameters": 1777088000,
+   "bytes_per_token_start": 981932544.0,
+   "bytes_per_token_deep": 1099373056.0,
+   "bound_start": 88.82696272279877,
+   "bound_deep": 79.33802361824571,
+   "rates": {
+    "pp@0": {
+     "median": 985.094,
+     "min": 984.96,
+     "max": 985.649,
+     "cv": 0.0003027433862192331,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@0": {
+     "median": 79.9774,
+     "min": 78.8231,
+     "max": 80.4499,
+     "cv": 0.008568064756011838,
+     "runs": 3,
+     "stable": true
+    },
+    "pp@4096": {
+     "median": 744.151,
+     "min": 724.257,
+     "max": 772.88,
+     "cv": 0.026715694337745472,
+     "runs": 3,
+     "stable": true
+    },
+    "tg@4096": {
+     "median": 72.5496,
+     "min": 72.2132,
+     "max": 72.5763,
+     "cv": 0.002280772205339024,
+     "runs": 3,
+     "stable": true
+    }
+   },
+   "efficiency": 0.9003730122979046,
+   "depth_ratio_measured": 0.9071262631693453,
+   "depth_ratio_predicted": 0.8931750133778066
+  }
+ },
+ "ttft": {
+  "qwen2.5-0.5b-q4_k_m": {
+   "points": [
+    {
+     "prompt": "short",
+     "tokens": 40,
+     "ttft_s": 0.0253245,
+     "cv": 0.003365611099089509,
+     "stable": true
+    },
+    {
+     "prompt": "medium",
+     "tokens": 257,
+     "ttft_s": 0.093835625,
+     "cv": 0.001422224430654945,
+     "stable": true
+    },
+    {
+     "prompt": "long",
+     "tokens": 1469,
+     "ttft_s": 0.50042025,
+     "cv": 0.011977160224731038,
+     "stable": true
+    }
+   ],
+   "ms_per_token": [
+    0.315719470046083,
+    0.33546586221122116
+   ]
+  },
+  "qwen2.5-0.5b-q8_0": {
+   "points": [
+    {
+     "prompt": "short",
+     "tokens": 40,
+     "ttft_s": 0.023829333,
+     "cv": 0.007409254188731779,
+     "stable": true
+    },
+    {
+     "prompt": "medium",
+     "tokens": 257,
+     "ttft_s": 0.085467542,
+     "cv": 0.0006139232467393138,
+     "stable": true
+    },
+    {
+     "prompt": "long",
+     "tokens": 1469,
+     "ttft_s": 0.455207333,
+     "cv": 0.0009979642573821144,
+     "stable": true
+    }
+   ],
+   "ms_per_token": [
+    0.28404704608294923,
+    0.3050658341584158
+   ]
+  },
+  "qwen2.5-0.5b-fp16": {
+   "points": [
+    {
+     "prompt": "short",
+     "tokens": 40,
+     "ttft_s": 0.024630209,
+     "cv": 0.0036440968545337423,
+     "stable": true
+    },
+    {
+     "prompt": "medium",
+     "tokens": 257,
+     "ttft_s": 0.083563791,
+     "cv": 0.0006439854236181886,
+     "stable": true
+    },
+    {
+     "prompt": "long",
+     "tokens": 1469,
+     "ttft_s": 0.434598542,
+     "cv": 0.00252129018352245,
+     "stable": true
+    }
+   ],
+   "ms_per_token": [
+    0.2715833271889401,
+    0.2896326328382838
+   ]
+  },
+  "qwen2.5-1.5b-q4_k_m": {
+   "points": [
+    {
+     "prompt": "short",
+     "tokens": 40,
+     "ttft_s": 0.073118375,
+     "cv": 0.0017902462431188856,
+     "stable": true
+    },
+    {
+     "prompt": "medium",
+     "tokens": 257,
+     "ttft_s": 0.297292917,
+     "cv": 0.0005962799196129415,
+     "stable": true
+    },
+    {
+     "prompt": "long",
+     "tokens": 1469,
+     "ttft_s": 1.546640958,
+     "cv": 0.0021422197589378396,
+     "stable": true
+    }
+   ],
+   "ms_per_token": [
+    1.0330624055299538,
+    1.0308152153465346
+   ]
+  }
+ },
+ "router": [
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 8,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 3.665,
+   "min_imbalance": 2.0,
+   "max_imbalance": 7.0
+  },
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 64,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 1.859375,
+   "min_imbalance": 1.5,
+   "max_imbalance": 2.5
+  },
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 512,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 1.2825,
+   "min_imbalance": 1.15625,
+   "max_imbalance": 1.4375
+  },
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 4096,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 40,
+   "seed": 7,
+   "mean_imbalance": 1.098779296875,
+   "min_imbalance": 1.06640625,
+   "max_imbalance": 1.154296875
+  },
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 8,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 7.245,
+   "min_imbalance": 5.0,
+   "max_imbalance": 8.0
+  },
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 64,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 7.106875,
+   "min_imbalance": 6.125,
+   "max_imbalance": 8.0
+  },
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 512,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 7.10640625,
+   "min_imbalance": 6.8125,
+   "max_imbalance": 7.390625
+  },
+  {
+   "shape": "OLMoE shape (64 experts, 8 per token)",
+   "experts": 64,
+   "top_k": 8,
+   "batch": 4096,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 40,
+   "seed": 7,
+   "mean_imbalance": 7.105224609375,
+   "min_imbalance": 6.998046875,
+   "max_imbalance": 7.171875
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 8,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 1.97,
+   "min_imbalance": 1.5,
+   "max_imbalance": 3.0
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 64,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 1.3371875,
+   "min_imbalance": 1.0625,
+   "max_imbalance": 1.8125
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 512,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 1.1147265625,
+   "min_imbalance": 1.0390625,
+   "max_imbalance": 1.2421875
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 4096,
+   "distribution": "uniform",
+   "s": null,
+   "trials": 40,
+   "seed": 7,
+   "mean_imbalance": 1.0420654296875,
+   "min_imbalance": 1.0126953125,
+   "max_imbalance": 1.0771484375
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 8,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 2.685,
+   "min_imbalance": 2.0,
+   "max_imbalance": 4.0
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 64,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 2.53625,
+   "min_imbalance": 1.9375,
+   "max_imbalance": 3.125
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 512,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 200,
+   "seed": 7,
+   "mean_imbalance": 2.52921875,
+   "min_imbalance": 2.2890625,
+   "max_imbalance": 2.7578125
+  },
+  {
+   "shape": "Mixtral shape (8 experts, 2 per token)",
+   "experts": 8,
+   "top_k": 2,
+   "batch": 4096,
+   "distribution": "zipf",
+   "s": 1.0,
+   "trials": 40,
+   "seed": 7,
+   "mean_imbalance": 2.5257568359375,
+   "min_imbalance": 2.4775390625,
+   "max_imbalance": 2.5791015625
+  }
+ ],
+ "verdicts": [
+  {
+   "number": "1",
+   "prediction": "Measured decode is below the bound for every model",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "2",
+   "prediction": "Every model reaches 0.55 to 0.95 of its bound",
+   "held": false,
+   "failures": [
+    "qwen2.5-0.5b-fp16: 0.96 of the bound, outside 0.55 to 0.95"
+   ]
+  },
+  {
+   "number": "3",
+   "prediction": "The 1.5B Q4_K_M reaches a higher fraction of its bound than the 0.5B Q4_K_M",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "4",
+   "prediction": "Prefill within 1.3x across quantizations while Q4_K_M decodes 1.8x faster than FP16",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "5",
+   "prediction": "1.5B prefill is 0.25 to 0.40 of 0.5B prefill",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "6",
+   "prediction": "Decode at context 4,096 slows by the extra KV bytes, within 0.07, every model",
+   "held": false,
+   "failures": [
+    "not judged: qwen2.5-0.5b-q4_k_m tg@4096 did not repeat within 10%"
+   ]
+  },
+  {
+   "number": "7",
+   "prediction": "Time to first token is linear in prompt length (slopes within 25%)",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "8",
+   "prediction": "Uniform routing: busiest expert 2.5x the mean at batch 8, at most 1.15x at 4,096",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "9",
+   "prediction": "Zipf(1) popularity: busiest expert at least 2x the mean even at batch 4,096",
+   "held": true,
+   "failures": []
+  },
+  {
+   "number": "10",
+   "prediction": "Same bytes per token, same speed: 1.5B Q4_K_M within 25% of 0.5B FP16",
+   "held": true,
+   "failures": []
+  }
+ ]
+}

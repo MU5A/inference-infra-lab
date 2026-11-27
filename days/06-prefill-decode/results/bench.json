@@ -1,0 +1,1409 @@
+{
+ "depth": 4096,
+ "n_prompt": 512,
+ "n_gen": 128,
+ "bench_repetitions": 3,
+ "machine_before": {
+  "time": "2026-11-27T09:38:58+01:00",
+  "power": "Now drawing from 'AC Power'",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "load_average": [
+   2.224609375,
+   2.4599609375,
+   2.31591796875
+  ],
+  "memory_free_percent": 69,
+  "swap_used_mb": 0.0
+ },
+ "models": {
+  "qwen2.5-0.5b-q4_k_m": {
+   "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+   "runs": [
+    {
+     "pp@0": 3170.07,
+     "tg@0": 159.781,
+     "pp@4096": 2077,
+     "tg@4096": 145.323
+    },
+    {
+     "pp@0": 3228.29,
+     "tg@0": 166.154,
+     "pp@4096": 2130.91,
+     "tg@4096": 149.09
+    },
+    {
+     "pp@0": 3129.08,
+     "tg@0": 138.692,
+     "pp@4096": 1948.62,
+     "tg@4096": 103.768
+    }
+   ],
+   "raw": [
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3174.12,
+       3169.89,
+       3170.07
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       157.175,
+       159.781,
+       161.056
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2079.97,
+       2077,
+       2064.47
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       113.612,
+       145.448,
+       145.323
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3229.18,
+       3228.29,
+       3223.91
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       165.722,
+       166.154,
+       166.667
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2127.32,
+       2130.91,
+       2132.86
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       149.018,
+       149.325,
+       149.09
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3129.08,
+       3111.91,
+       3170.17
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       162.961,
+       138.692,
+       71.2001
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       1939.48,
+       1948.62,
+       1962.18
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       144.388,
+       103.768,
+       89.1901
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 485452288,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ]
+   ],
+   "gates": [
+    {
+     "probe": {
+      "before_tps": 153.9595,
+      "after_tps": 162.751,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 4,
+      "peak_other_cpu_percent": 164.5,
+      "peak_load1": 2.39697265625,
+      "contended": true,
+      "busiest_other_processes": [
+       {
+        "name": "deleted",
+        "peak_cpu_percent": 96.7
+       },
+       {
+        "name": "triald_system",
+        "peak_cpu_percent": 24.9
+       },
+       {
+        "name": "triald",
+        "peak_cpu_percent": 22.6
+       },
+       {
+        "name": "MTLCompilerService",
+        "peak_cpu_percent": 20.9
+       }
+      ]
+     },
+     "round": 0,
+     "time": "2026-11-27T09:39:39+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 165.4245,
+      "after_tps": 165.80849999999998,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 4,
+      "peak_other_cpu_percent": 2.2,
+      "peak_load1": 2.11669921875,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "photoanalysisd",
+        "peak_cpu_percent": 0.8
+       },
+       {
+        "name": "itunescloudd",
+        "peak_cpu_percent": 0.6
+       },
+       {
+        "name": "PerfPowerServices",
+        "peak_cpu_percent": 0.6
+       },
+       {
+        "name": "Google Chrome Helper (Aperitif)",
+        "peak_cpu_percent": 0.4
+       }
+      ]
+     },
+     "round": 1,
+     "time": "2026-11-27T09:45:22+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 164.12099999999998,
+      "after_tps": 144.72899999999998,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 5,
+      "peak_other_cpu_percent": 32.5,
+      "peak_load1": 1.6015625,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "dasd",
+        "peak_cpu_percent": 8.5
+       },
+       {
+        "name": "PerfPowerServices",
+        "peak_cpu_percent": 7.0
+       },
+       {
+        "name": "contactsd",
+        "peak_cpu_percent": 6.1
+       },
+       {
+        "name": "airportd",
+        "peak_cpu_percent": 3.7
+       }
+      ]
+     },
+     "round": 2,
+     "time": "2026-11-27T09:48:25+01:00"
+    }
+   ]
+  },
+  "qwen2.5-0.5b-q8_0": {
+   "file": "qwen2.5-0.5b-instruct-q8_0.gguf",
+   "runs": [
+    {
+     "pp@0": 3397.94,
+     "tg@0": 140.837,
+     "pp@4096": 2196.93,
+     "tg@4096": 129.172
+    },
+    {
+     "pp@0": 3451.23,
+     "tg@0": 144.389,
+     "pp@4096": 2220.67,
+     "tg@4096": 131.401
+    },
+    {
+     "pp@0": 3384.36,
+     "tg@0": 143.813,
+     "pp@4096": 2146.75,
+     "tg@4096": 122.901
+    }
+   ],
+   "raw": [
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3397.94,
+       3407.45,
+       3397.42
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       140.958,
+       140.524,
+       140.837
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2195.03,
+       2196.93,
+       2199.33
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       129.172,
+       128.98,
+       129.211
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3449.82,
+       3451.52,
+       3451.23
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       143.194,
+       144.389,
+       144.514
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2219.13,
+       2220.67,
+       2228.73
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       131.401,
+       131.415,
+       131.037
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3376.44,
+       3384.36,
+       3396.24
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       143.813,
+       143.867,
+       118.276
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2146.75,
+       2141.21,
+       2150.78
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       130.182,
+       122.901,
+       87.5642
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 669763072,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ]
+   ],
+   "gates": [
+    {
+     "probe": {
+      "before_tps": 161.80149999999998,
+      "after_tps": 162.7455,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 4,
+      "peak_other_cpu_percent": 24.7,
+      "peak_load1": 2.01708984375,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "WallpaperAerialsExtension",
+        "peak_cpu_percent": 10.0
+       },
+       {
+        "name": "WindowServer",
+        "peak_cpu_percent": 7.3
+       },
+       {
+        "name": "VTDecoderXPCService",
+        "peak_cpu_percent": 2.5
+       },
+       {
+        "name": "Google Chrome Helper (Aperitif Renderer)",
+        "peak_cpu_percent": 2.2
+       }
+      ]
+     },
+     "round": 0,
+     "time": "2026-11-27T09:40:21+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 165.5075,
+      "after_tps": 166.026,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 4,
+      "peak_other_cpu_percent": 8.0,
+      "peak_load1": 1.7666015625,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "analyticsd",
+        "peak_cpu_percent": 3.2
+       },
+       {
+        "name": "dasd",
+        "peak_cpu_percent": 2.2
+       },
+       {
+        "name": "cloudd",
+        "peak_cpu_percent": 2.1
+       },
+       {
+        "name": "WindowServer",
+        "peak_cpu_percent": 1.6
+       }
+      ]
+     },
+     "round": 1,
+     "time": "2026-11-27T09:46:03+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 165.504,
+      "after_tps": 148.562,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 5,
+      "peak_other_cpu_percent": 8.4,
+      "peak_load1": 1.55029296875,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "PerfPowerServices",
+        "peak_cpu_percent": 6.4
+       },
+       {
+        "name": "node",
+        "peak_cpu_percent": 2.4
+       },
+       {
+        "name": "launchd",
+        "peak_cpu_percent": 2.2
+       },
+       {
+        "name": "nvim",
+        "peak_cpu_percent": 0.8
+       }
+      ]
+     },
+     "round": 2,
+     "time": "2026-11-27T09:49:08+01:00"
+    }
+   ]
+  },
+  "qwen2.5-0.5b-fp16": {
+   "file": "qwen2.5-0.5b-instruct-fp16.gguf",
+   "runs": [
+    {
+     "pp@0": 3591.62,
+     "tg@0": 85.0418,
+     "pp@4096": 2276.67,
+     "tg@4096": 81.4208
+    },
+    {
+     "pp@0": 3550.74,
+     "tg@0": 84.9143,
+     "pp@4096": 2265.36,
+     "tg@4096": 81.4969
+    },
+    {
+     "pp@0": 3590.23,
+     "tg@0": 85.9274,
+     "pp@4096": 2204.61,
+     "tg@4096": 81.3624
+    }
+   ],
+   "raw": [
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3591.62,
+       3591.7,
+       3586.45
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       84.2538,
+       85.0418,
+       85.472
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2273.18,
+       2279.18,
+       2276.67
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       81.0914,
+       81.4968,
+       81.4208
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3550.74,
+       3557.92,
+       3548.8
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       84.1942,
+       84.9143,
+       84.9549
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2255.93,
+       2265.36,
+       2272
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       81.3452,
+       81.563,
+       81.4969
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       3589.92,
+       3594.23,
+       3590.23
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       85.9274,
+       86.073,
+       84.605
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       2216.02,
+       2194.83,
+       2204.61
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       81.4356,
+       81.3624,
+       80.9438
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1260477952,
+      "model_n_params": 630167424,
+      "build_commit": "cbb1c1c"
+     }
+    ]
+   ],
+   "gates": [
+    {
+     "probe": {
+      "before_tps": 165.492,
+      "after_tps": 166.4095,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 6,
+      "peak_other_cpu_percent": 17.6,
+      "peak_load1": 4.98486328125,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "cfprefsd",
+        "peak_cpu_percent": 9.6
+       },
+       {
+        "name": "mdworker_shared",
+        "peak_cpu_percent": 6.2
+       },
+       {
+        "name": "secd",
+        "peak_cpu_percent": 4.9
+       },
+       {
+        "name": "trustd",
+        "peak_cpu_percent": 4.9
+       }
+      ]
+     },
+     "round": 0,
+     "time": "2026-11-27T09:43:48+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 165.79950000000002,
+      "after_tps": 165.99849999999998,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 6,
+      "peak_other_cpu_percent": 26.400000000000002,
+      "peak_load1": 2.1748046875,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "WindowServer",
+        "peak_cpu_percent": 13.8
+       },
+       {
+        "name": "corebrightnessd",
+        "peak_cpu_percent": 5.4
+       },
+       {
+        "name": "WidgetsExtension",
+        "peak_cpu_percent": 4.8
+       },
+       {
+        "name": "runningboardd",
+        "peak_cpu_percent": 4.6
+       }
+      ]
+     },
+     "round": 1,
+     "time": "2026-11-27T09:46:49+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 166.054,
+      "after_tps": 150.8865,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 6,
+      "peak_other_cpu_percent": 2.6999999999999997,
+      "peak_load1": 1.7626953125,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "Google Chrome Helper (Aperitif Renderer)",
+        "peak_cpu_percent": 1.0
+       },
+       {
+        "name": "Slack Helper",
+        "peak_cpu_percent": 0.7
+       },
+       {
+        "name": "Slack Helper (Renderer)",
+        "peak_cpu_percent": 0.7
+       },
+       {
+        "name": "mds",
+        "peak_cpu_percent": 0.4
+       }
+      ]
+     },
+     "round": 2,
+     "time": "2026-11-27T09:49:54+01:00"
+    }
+   ]
+  },
+  "qwen2.5-1.5b-q4_k_m": {
+   "file": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+   "runs": [
+    {
+     "pp@0": 985.649,
+     "tg@0": 80.4499,
+     "pp@4096": 772.88,
+     "tg@4096": 72.5763
+    },
+    {
+     "pp@0": 985.094,
+     "tg@0": 79.9774,
+     "pp@4096": 724.257,
+     "tg@4096": 72.5496
+    },
+    {
+     "pp@0": 984.96,
+     "tg@0": 78.8231,
+     "pp@4096": 744.151,
+     "tg@4096": 72.2132
+    }
+   ],
+   "raw": [
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       986.21,
+       985.649,
+       985.349
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       80.0181,
+       80.4843,
+       80.4499
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       771.782,
+       772.969,
+       772.88
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       71.2054,
+       72.6444,
+       72.5763
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       984.966,
+       985.38,
+       985.094
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       80.2526,
+       79.9774,
+       79.8855
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       735.753,
+       724.257,
+       720.395
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       72.1981,
+       72.69,
+       72.5496
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     }
+    ],
+    [
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 0,
+      "samples_ts": [
+       985.167,
+       984.96,
+       984.706
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 0,
+      "samples_ts": [
+       79.9923,
+       78.8231,
+       71.46
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 512,
+      "n_gen": 0,
+      "n_depth": 4096,
+      "samples_ts": [
+       754.347,
+       744.151,
+       736.423
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     },
+     {
+      "n_prompt": 0,
+      "n_gen": 128,
+      "n_depth": 4096,
+      "samples_ts": [
+       72.7902,
+       72.2132,
+       61.7832
+      ],
+      "type_k": "f16",
+      "type_v": "f16",
+      "flash_attn": -1,
+      "n_gpu_layers": 99,
+      "model_size": 1111370240,
+      "model_n_params": 1777088000,
+      "build_commit": "cbb1c1c"
+     }
+    ]
+   ],
+   "gates": [
+    {
+     "probe": {
+      "before_tps": 166.37150000000003,
+      "after_tps": 166.5495,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 10,
+      "peak_other_cpu_percent": 29.9,
+      "peak_load1": 2.83740234375,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "launchd",
+        "peak_cpu_percent": 29.4
+       },
+       {
+        "name": "mdworker_shared",
+        "peak_cpu_percent": 7.4
+       },
+       {
+        "name": "MTLCompilerService",
+        "peak_cpu_percent": 4.4
+       },
+       {
+        "name": "Slack Helper (Renderer)",
+        "peak_cpu_percent": 1.6
+       }
+      ]
+     },
+     "round": 0,
+     "time": "2026-11-27T09:44:42+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 162.4125,
+      "after_tps": 166.2945,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 10,
+      "peak_other_cpu_percent": 39.9,
+      "peak_load1": 1.94873046875,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "WindowServer",
+        "peak_cpu_percent": 14.9
+       },
+       {
+        "name": "WiFiAgent",
+        "peak_cpu_percent": 10.4
+       },
+       {
+        "name": "airportd",
+        "peak_cpu_percent": 9.5
+       },
+       {
+        "name": "PerfPowerServices",
+        "peak_cpu_percent": 7.5
+       }
+      ]
+     },
+     "round": 1,
+     "time": "2026-11-27T09:47:42+01:00"
+    },
+    {
+     "probe": {
+      "before_tps": 166.0565,
+      "after_tps": 152.7295,
+      "drift": []
+     },
+     "neighbours": {
+      "samples": 10,
+      "peak_other_cpu_percent": 59.199999999999996,
+      "peak_load1": 1.5185546875,
+      "contended": false,
+      "busiest_other_processes": [
+       {
+        "name": "parsec-fbf",
+        "peak_cpu_percent": 25.9
+       },
+       {
+        "name": "biomesyncd",
+        "peak_cpu_percent": 21.4
+       },
+       {
+        "name": "dasd",
+        "peak_cpu_percent": 4.2
+       },
+       {
+        "name": "lsd",
+        "peak_cpu_percent": 3.3
+       }
+      ]
+     },
+     "round": 2,
+     "time": "2026-11-27T09:50:48+01:00"
+    }
+   ]
+  }
+ },
+ "machine_after": {
+  "time": "2026-11-27T09:50:48+01:00",
+  "power": "Now drawing from 'AC Power'",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "load_average": [
+   1.18115234375,
+   1.8349609375,
+   2.12841796875
+  ],
+  "memory_free_percent": 71,
+  "swap_used_mb": 0.0
+ },
+ "environment": {
+  "machine": {
+   "chip": "Apple M3",
+   "arch": "arm64",
+   "memory_gb": 16.0,
+   "cpu_cores": 8,
+   "os": "macOS-26.2-arm64-arm-64bit"
+  },
+  "conditions": {
+   "load_average_1_5_15": [
+    1.18115234375,
+    1.8349609375,
+    2.12841796875
+   ],
+   "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+   "power": "Now drawing from 'AC Power'",
+   "gpu_utilization": {
+    "peak": 91,
+    "mean": 18.2,
+    "samples": 5
+   },
+   "memory_free_percent": 71,
+   "swap_used_mb": 0.0
+  },
+  "software": {
+   "python": "3.12.8",
+   "llama_cpp_commit": "cbb1c1c50bba81929387dea473873d1df87a6212"
+  },
+  "model": {
+   "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+   "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+  }
+ }
+}

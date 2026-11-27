@@ -1,0 +1,666 @@
+{
+ "machine_before": {
+  "time": "2026-11-27T09:50:55+01:00",
+  "power": "Now drawing from 'AC Power'",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "load_average": [
+   1.146484375,
+   1.806640625,
+   2.11474609375
+  ],
+  "memory_free_percent": 71,
+  "swap_used_mb": 0.0
+ },
+ "max_tokens": 8,
+ "models": {
+  "qwen2.5-0.5b-q4_k_m": {
+   "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+   "prompts": {
+    "short": {
+     "stable": true,
+     "cv_ttft": 0.003365611099089509,
+     "cv_decode": 0.0014805277076827769,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      40
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.0253245,
+      "p95": 0.0253317369,
+      "p99": 0.02533238018,
+      "min": 0.02514825,
+      "max": 0.025332541,
+      "mean": 0.02526843033333333
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.00616375,
+      "p95": 0.007084292,
+      "p99": 0.0071017256,
+      "min": 0.006007583,
+      "max": 0.007106084,
+      "mean": 0.00628829761904762
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 159.1599374792481,
+      "p95": 159.2165527270116,
+      "p99": 159.22158519347946,
+      "min": 158.69492198013538,
+      "max": 159.2228433100964,
+      "mean": 159.02590092315995
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "medium": {
+     "stable": true,
+     "cv_ttft": 0.001422224430654945,
+     "cv_decode": 0.007600074999945444,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      257
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.093835625,
+      "p95": 0.0939727256,
+      "p99": 0.09398491232,
+      "min": 0.093661333,
+      "max": 0.093987959,
+      "mean": 0.09382830566666667
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.006578542,
+      "p95": 0.00823,
+      "p99": 0.0083038336,
+      "min": 0.006355667,
+      "max": 0.008322292,
+      "mean": 0.006777730142857143
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 146.90862180887453,
+      "p95": 148.90546707332936,
+      "p99": 149.0829644301698,
+      "min": 146.61553945428358,
+      "max": 149.1273387693799,
+      "mean": 147.550500010846
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "long": {
+     "stable": true,
+     "cv_ttft": 0.011977160224731038,
+     "cv_decode": 0.003342791023012534,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      1469
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.50042025,
+      "p95": 0.5080536747000001,
+      "p99": 0.5087322013400001,
+      "min": 0.494259,
+      "max": 0.508901833,
+      "mean": 0.5011936943333334
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.006492625,
+      "p95": 0.007784125,
+      "p99": 0.0078664922,
+      "min": 0.006297708,
+      "max": 0.007887084,
+      "mean": 0.006648625000000001
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 150.26551487147748,
+      "p95": 151.0016874622837,
+      "p99": 151.06712502591094,
+      "min": 149.8771531913867,
+      "max": 151.08348441681775,
+      "mean": 150.4087174932273
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    }
+   },
+   "probe": {
+    "before_tps": 165.051,
+    "after_tps": 157.571,
+    "drift": []
+   },
+   "neighbours": {
+    "samples": 1,
+    "peak_other_cpu_percent": 1.5,
+    "peak_load1": 1.08740234375,
+    "contended": false,
+    "busiest_other_processes": [
+     {
+      "name": "airportd",
+      "peak_cpu_percent": 0.7
+     },
+     {
+      "name": "com.apple.DriverKit-AppleBCMWLAN",
+      "peak_cpu_percent": 0.4
+     },
+     {
+      "name": "WindowServer",
+      "peak_cpu_percent": 0.1
+     },
+     {
+      "name": "symptomsd",
+      "peak_cpu_percent": 0.1
+     }
+    ]
+   }
+  },
+  "qwen2.5-0.5b-q8_0": {
+   "file": "qwen2.5-0.5b-instruct-q8_0.gguf",
+   "prompts": {
+    "short": {
+     "stable": true,
+     "cv_ttft": 0.007409254188731779,
+     "cv_decode": 0.0034330254695558843,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      40
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.023829333,
+      "p95": 0.0241161711,
+      "p99": 0.02414166782,
+      "min": 0.023733791,
+      "max": 0.024148042,
+      "mean": 0.023903722000000002
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.007080375,
+      "p95": 0.008128125,
+      "p99": 0.008193825,
+      "min": 0.006956584,
+      "max": 0.00821025,
+      "mean": 0.007236204428571429
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 138.3856155506842,
+      "p95": 138.63067621469722,
+      "p99": 138.6524593848317,
+      "min": 137.54336005303043,
+      "max": 138.65790517736534,
+      "mean": 138.19562692702667
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "medium": {
+     "stable": true,
+     "cv_ttft": 0.0006139232467393138,
+     "cv_decode": 0.002029697801075994,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      257
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.085467542,
+      "p95": 0.0855513167,
+      "p99": 0.08555876334,
+      "min": 0.085437292,
+      "max": 0.085560625,
+      "mean": 0.08548848633333334
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.007101166,
+      "p95": 0.00855375,
+      "p99": 0.00862035,
+      "min": 0.006993458,
+      "max": 0.008637,
+      "mean": 0.0073048431904761905
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 136.77273516025105,
+      "p95": 137.23000283013585,
+      "p99": 137.27064884523674,
+      "min": 136.63457829621015,
+      "max": 137.28081034901194,
+      "mean": 136.89604126849105
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "long": {
+     "stable": true,
+     "cv_ttft": 0.0009979642573821144,
+     "cv_decode": 0.0029046754557619653,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      1469
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.455207333,
+      "p95": 0.4559133083,
+      "p99": 0.45597606166,
+      "min": 0.454915541,
+      "max": 0.45599175,
+      "mean": 0.4553715413333333
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.007310542,
+      "p95": 0.008517125,
+      "p99": 0.008565725,
+      "min": 0.007209375,
+      "max": 0.008577875,
+      "mean": 0.007469684523809523
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 133.96680493954747,
+      "p95": 134.26636666444816,
+      "p99": 134.2929943733282,
+      "min": 133.36032292249624,
+      "max": 134.29965130054822,
+      "mean": 133.8755930541973
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    }
+   },
+   "probe": {
+    "before_tps": 165.054,
+    "after_tps": 164.27300000000002,
+    "drift": []
+   },
+   "neighbours": {
+    "samples": 1,
+    "peak_other_cpu_percent": 9.299999999999999,
+    "peak_load1": 1.099609375,
+    "contended": false,
+    "busiest_other_processes": [
+     {
+      "name": "mdworker_shared",
+      "peak_cpu_percent": 4.0
+     },
+     {
+      "name": "Google Chrome Helper (Aperitif)",
+      "peak_cpu_percent": 0.6
+     },
+     {
+      "name": "WindowServer",
+      "peak_cpu_percent": 0.3
+     },
+     {
+      "name": "nvim",
+      "peak_cpu_percent": 0.3
+     }
+    ]
+   }
+  },
+  "qwen2.5-0.5b-fp16": {
+   "file": "qwen2.5-0.5b-instruct-fp16.gguf",
+   "prompts": {
+    "short": {
+     "stable": true,
+     "cv_ttft": 0.0036440968545337423,
+     "cv_decode": 0.004144815544354444,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      40
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.024630209,
+      "p95": 0.0247324715,
+      "p99": 0.0247415615,
+      "min": 0.024524,
+      "max": 0.024743834,
+      "mean": 0.024632681
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.011819042,
+      "p95": 0.012817458,
+      "p99": 0.013076958000000001,
+      "min": 0.011705166,
+      "max": 0.013141833,
+      "mean": 0.01196921819047619
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 83.70298064281282,
+      "p95": 83.85759552916622,
+      "p99": 83.87133907461985,
+      "min": 83.06949768622376,
+      "max": 83.87477496098326,
+      "mean": 83.5490844300066
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "medium": {
+     "stable": true,
+     "cv_ttft": 0.0006439854236181886,
+     "cv_decode": 0.0032263961557903844,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      257
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.083563791,
+      "p95": 0.0836182419,
+      "p99": 0.08362308198,
+      "min": 0.083492625,
+      "max": 0.083624292,
+      "mean": 0.083560236
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.011819125,
+      "p95": 0.013403,
+      "p99": 0.013498033599999999,
+      "min": 0.011698166,
+      "max": 0.013521792,
+      "mean": 0.012063841238095238
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 82.71624454637029,
+      "p95": 83.21567693507818,
+      "p99": 83.26007092518554,
+      "min": 82.69218147314278,
+      "max": 83.27116942271239,
+      "mean": 82.89319848074182
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "long": {
+     "stable": true,
+     "cv_ttft": 0.00252129018352245,
+     "cv_decode": 0.02922193372532488,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      1469
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.434598542,
+      "p95": 0.4366073042,
+      "p99": 0.43678586084,
+      "min": 0.434416917,
+      "max": 0.4368305,
+      "mean": 0.4352819863333333
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.012011041,
+      "p95": 0.013139333,
+      "p99": 0.016908166600000003,
+      "min": 0.0119425,
+      "max": 0.017850375,
+      "mean": 0.012411547571428573
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 82.18450355300045,
+      "p95": 82.40184484754333,
+      "p99": 82.42116407372491,
+      "min": 77.31079907613595,
+      "max": 82.42599388027031,
+      "mean": 80.64043216980224
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    }
+   },
+   "probe": {
+    "before_tps": 165.81799999999998,
+    "after_tps": 165.5395,
+    "drift": []
+   },
+   "neighbours": {
+    "samples": 2,
+    "peak_other_cpu_percent": 4.6,
+    "peak_load1": 1.00537109375,
+    "contended": false,
+    "busiest_other_processes": [
+     {
+      "name": "MTLCompilerService",
+      "peak_cpu_percent": 3.5
+     },
+     {
+      "name": "WindowServer",
+      "peak_cpu_percent": 0.3
+     },
+     {
+      "name": "nvim",
+      "peak_cpu_percent": 0.3
+     },
+     {
+      "name": "com.apple.DriverKit-AppleBCMWLAN",
+      "peak_cpu_percent": 0.3
+     }
+    ]
+   }
+  },
+  "qwen2.5-1.5b-q4_k_m": {
+   "file": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+   "prompts": {
+    "short": {
+     "stable": true,
+     "cv_ttft": 0.0017902462431188856,
+     "cv_decode": 0.007583594939085715,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      40
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.073118375,
+      "p95": 0.0732530375,
+      "p99": 0.0732650075,
+      "min": 0.072947625,
+      "max": 0.073268,
+      "mean": 0.07311133333333333
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.01267775,
+      "p95": 0.014303375,
+      "p99": 0.0143051078,
+      "min": 0.012535666,
+      "max": 0.014305541,
+      "mean": 0.012962049571428571
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 77.21053088107982,
+      "p95": 77.77586475113995,
+      "p99": 77.82611665070084,
+      "min": 76.40899552188708,
+      "max": 77.83867962559107,
+      "mean": 77.15273534285267
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "medium": {
+     "stable": true,
+     "cv_ttft": 0.0005962799196129415,
+     "cv_decode": 0.0018390294620162417,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      257
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 0.297292917,
+      "p95": 0.2975439036,
+      "p99": 0.29756621351999996,
+      "min": 0.297144042,
+      "max": 0.297571791,
+      "mean": 0.29733625
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.012667667,
+      "p95": 0.014047375,
+      "p99": 0.014148275,
+      "min": 0.012556375,
+      "max": 0.0141735,
+      "mean": 0.012855297619047619
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 77.78721250235195,
+      "p95": 77.94758183357499,
+      "p99": 77.96183688523925,
+      "min": 77.61500187107593,
+      "max": 77.96540064815532,
+      "mean": 77.78920500719441
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    },
+    "long": {
+     "stable": true,
+     "cv_ttft": 0.0021422197589378396,
+     "cv_decode": 0.0032514172129233664,
+     "requests": 3,
+     "failed": 0,
+     "prompt_tokens": [
+      1469
+     ],
+     "ttft_s": {
+      "n": 3,
+      "median": 1.546640958,
+      "p95": 1.5529268586,
+      "p99": 1.55348560532,
+      "min": 1.546533125,
+      "max": 1.553625292,
+      "mean": 1.5489331250000002
+     },
+     "itl_s": {
+      "n": 21,
+      "median": 0.012966208,
+      "p95": 0.014369583,
+      "p99": 0.0144681838,
+      "min": 0.012856542,
+      "max": 0.014492834,
+      "mean": 0.013194021857142857
+     },
+     "decode_tps": {
+      "n": 3,
+      "median": 75.95314359427896,
+      "p95": 75.97769124401363,
+      "p99": 75.97987325732339,
+      "min": 75.44455027638303,
+      "max": 75.98041876065082,
+      "mean": 75.7927042104376
+     },
+     "cached_tokens_seen": 0,
+     "max_unseen_tokens": 0
+    }
+   },
+   "probe": {
+    "before_tps": 165.36849999999998,
+    "after_tps": 166.916,
+    "drift": []
+   },
+   "neighbours": {
+    "samples": 5,
+    "peak_other_cpu_percent": 33.1,
+    "peak_load1": 1.40185546875,
+    "contended": false,
+    "busiest_other_processes": [
+     {
+      "name": "loginwindow",
+      "peak_cpu_percent": 20.3
+     },
+     {
+      "name": "WindowServer",
+      "peak_cpu_percent": 12.0
+     },
+     {
+      "name": "WindowManager",
+      "peak_cpu_percent": 2.9
+     },
+     {
+      "name": "Finder",
+      "peak_cpu_percent": 2.7
+     }
+    ]
+   }
+  }
+ },
+ "machine_after": {
+  "time": "2026-11-27T09:53:26+01:00",
+  "power": "Now drawing from 'AC Power'",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "load_average": [
+   1.36962890625,
+   1.5712890625,
+   1.962890625
+  ],
+  "memory_free_percent": 70,
+  "swap_used_mb": 0.0
+ },
+ "environment": {
+  "machine": {
+   "chip": "Apple M3",
+   "arch": "arm64",
+   "memory_gb": 16.0,
+   "cpu_cores": 8,
+   "os": "macOS-26.2-arm64-arm-64bit"
+  },
+  "conditions": {
+   "load_average_1_5_15": [
+    1.36962890625,
+    1.5712890625,
+    1.962890625
+   ],
+   "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+   "power": "Now drawing from 'AC Power'",
+   "gpu_utilization": {
+    "peak": 97,
+    "mean": 19.4,
+    "samples": 5
+   },
+   "memory_free_percent": 71,
+   "swap_used_mb": 0.0
+  },
+  "software": {
+   "python": "3.12.8",
+   "llama_cpp_commit": "cbb1c1c50bba81929387dea473873d1df87a6212"
+  },
+  "model": {
+   "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+   "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+  }
+ }
+}
