@@ -4,6 +4,7 @@ the committed inputs produce, so a number edited by hand is caught."""
 from __future__ import annotations
 
 import json
+import math
 import pathlib
 
 import pytest
@@ -25,6 +26,22 @@ def load(path: pathlib.Path):
     return json.loads(path.read_text())
 
 
+def same(a, b) -> bool:
+    """Equal, with floats compared to a relative 1e-9: Python 3.12's sum() is compensated and
+    3.11's is not, so the last bits of a recomputed float can differ between them."""
+    if isinstance(a, float) or isinstance(b, float):
+        return (
+            isinstance(a, int | float)
+            and isinstance(b, int | float)
+            and math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-12)
+        )
+    if isinstance(a, dict):
+        return isinstance(b, dict) and a.keys() == b.keys() and all(same(a[k], b[k]) for k in a)
+    if isinstance(a, list):
+        return isinstance(b, list) and len(a) == len(b) and all(map(same, a, b))
+    return a == b
+
+
 @pytest.fixture(scope="module")
 def inputs():
     summaries = {k: load(RESULTS / "gguf" / f"{k}.json") for k in dm.MODELS}
@@ -40,7 +57,15 @@ def inputs():
 
 def test_the_committed_analysis_is_exactly_what_the_committed_inputs_produce(inputs):
     recomputed = json.loads(json.dumps(decode_report.analyze(*inputs)))
-    assert recomputed == load(RESULTS / "analysis.json")
+    assert same(recomputed, load(RESULTS / "analysis.json"))
+
+
+def test_the_float_comparison_still_catches_a_hand_edit():
+    analysis = load(RESULTS / "analysis.json")
+    edited = json.loads(json.dumps(analysis))
+    edited["models"]["qwen2.5-0.5b-fp16"]["efficiency"] = 0.95
+    assert same(analysis, json.loads(json.dumps(analysis)))
+    assert not same(analysis, edited)
 
 
 def test_the_committed_tables_are_exactly_the_rendering_of_the_analysis():
@@ -49,8 +74,8 @@ def test_the_committed_tables_are_exactly_the_rendering_of_the_analysis():
 
 
 def test_the_committed_router_results_are_what_the_simulation_produces():
-    assert load(RESULTS / "router.json")["scenarios"] == json.loads(
-        json.dumps(moe_router.scenarios())
+    assert same(
+        load(RESULTS / "router.json")["scenarios"], json.loads(json.dumps(moe_router.scenarios()))
     )
 
 

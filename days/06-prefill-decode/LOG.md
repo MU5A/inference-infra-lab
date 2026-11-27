@@ -78,3 +78,9 @@ The router simulation stands in for it and is labelled S.
   pins the verdicts and the one unstable figure), the Day 6 check in `tests/test_day_docs.py`, and
   26 mutation entries for `decode_model.py`, `decode_report.py` and `moe_router.py`.
 - `ruff check .`, `ruff format --check .`: clean. `pytest -q`: 596 passed.
+- `python scripts/mutation_check.py`: all 172 caught, none missed or skipped.
+- First push (2494bc3): CI failed on Python 3.11 only, in the exact recompute check of
+  `analysis.json`; Python 3.12 passed. Python 3.12's `sum()` of floats is compensated and 3.11's is
+  not, so recomputed floats differ in the last bits. Fixed forward once: the check now compares
+  floats to a relative 1e-9, with a test that a hand edit of one figure is still caught. The Day 6
+  mutation subset (39 entries) was rerun after the change: none missed.
