@@ -130,3 +130,15 @@ def test_day_five_readme_contains_the_generated_tables_verbatim():
         "days/05-kv-cache-memory/README.md differs from results/tables.md. "
         "Regenerate with: python scripts/day05_report.py"
     )
+
+
+DAY6 = ROOT / "days" / "06-prefill-decode"
+
+
+@pytest.mark.skipif(not (DAY6 / "results" / "tables.md").exists(), reason="no Day 6 tables")
+def test_day_six_readme_contains_the_generated_tables_verbatim():
+    generated = (DAY6 / "results" / "tables.md").read_text().strip()
+    assert generated in (DAY6 / "README.md").read_text(), (
+        "days/06-prefill-decode/README.md differs from results/tables.md. "
+        "Regenerate with: python scripts/day06_report.py"
+    )
